@@ -1,0 +1,129 @@
+  <mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Persönliche Daten
+      </mat-panel-title>
+      <mat-panel-description>
+        Name, E-Mail, Kontaktdaten
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form class="t30-form">
+    <mat-form-field class="t30-half-width">
+      <input matInput placeholder="Vorname" [(ngModel)]="t30pate.vorname" name="vorname" required>
+    </mat-form-field>
+    <mat-form-field class="t30-half-width">
+      <input matInput placeholder="Nachname" [(ngModel)]="t30pate.nachname" name="nachname" required>
+    </mat-form-field>
+    <mat-form-field class="t30-full-width">
+      <input matInput placeholder="E-Mail" type="email" [(ngModel)]="t30pate.eMail" name="email" #email="ngModel" required>
+  </mat-form-field>
+  <mat-form-field class="t30-full-width">
+    <input matInput placeholder="Straße und Hausnummer" [(ngModel)]="t30pate.strasse" name="strasse">
+  </mat-form-field>
+  <mat-form-field class="t30-half-width">
+    <input matInput placeholder="PLZ" [(ngModel)]="t30pate.plz" name="plz">
+  </mat-form-field>
+  <mat-form-field class="t30-half-width">
+    <input matInput placeholder="Ort" [(ngModel)]="t30pate.ort" name="ort">
+  </mat-form-field>
+  <mat-form-field class="t30-full-width">
+    <input matInput placeholder="Telefon" [(ngModel)]="t30pate.telefon" name="telefon">
+  </mat-form-field>
+    <mat-checkbox [(ngModel)]="t30pate.mailingliste" name="mailingliste">Ich möchte auf die Tempo30-Paten Mailingliste, um Informationen zu erhalten und mich auszutauchen.</mat-checkbox>
+    <mat-checkbox [(ngModel)]="t30pate.newsletter" name="newletter">Ich möchte den ADFC Newsletter.</mat-checkbox>
+    <mat-checkbox [(ngModel)]="t30pate.speichern" name="saveData">Der ADFC darf meine Daten für diese Kampange speichern und verwenden.</mat-checkbox>
+  </form>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel *ngFor="let patenschaft of t30pate.patenschaften; let i = index">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ i+1  }}. Einrichtung
+      </mat-panel-title>
+      <mat-panel-description>
+        Schule, Kindergarten, Krankenhaus, Alten- und Pflegeheim
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <b>Angaben zur Einrichtung</b>
+    <mat-form-field class="t30-full-width">
+      <input matInput placeholder="Name der Einrichtung" [(ngModel)]="patenschaft.einrichtung.name" name="einrichtung">
+    </mat-form-field>
+    <mat-form-field class="t30-full-width">
+      <input matInput placeholder="Zusatz" [(ngModel)]="patenschaft.einrichtung.zusatz"  name="einrichtung">
+      <mat-hint>z.B. wenn es drei Standorte gibt und bei zweien Tempo 30 Sinn macht, dann bitte die zwei Aufführen und hier die Bezeichnung des Standortes angeben</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="t30-full-width">
+      <mat-select placeholder="Art der Einrichtung" [(value)]="patenschaft.einrichtung.art">
+        <mat-option value="1">Schule</mat-option>
+        <mat-option value="2">Kindergaten</mat-option>
+        <mat-option value="3">Alten- und Pflegeheim / Tagespflege</mat-option>
+        <mat-option value="4">Krankenhaus</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="t30-full-width">
+      <input matInput placeholder="Straße und Hausnummer" [(ngModel)]="patenschaft.einrichtung.strasse"  name="strasse">
+    </mat-form-field>
+    <mat-form-field class="t30-half-width">
+      <input matInput placeholder="PLZ" name="plz" [(ngModel)]="patenschaft.einrichtung.plz" >
+    </mat-form-field>
+    <mat-form-field class="t30-half-width">
+      <input matInput placeholder="Ort" name="ort" [(ngModel)]="patenschaft.einrichtung.ort" >
+    </mat-form-field>
+    <b>Angaben des Paten</b>
+        <mat-form-field class="t30-full-width">
+      <input matInput placeholder="Beziehung zur Einrichtung" [(ngModel)]="patenschaft.bezugZurEinrichtung" name="bezugZurEinrichtung">
+      <mat-hint>Sind sie z.B. Schulleiter, Nachbar, ...</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="t30-full-width">
+      <textarea matInput placeholder="Stand der Dinge" [(ngModel)]="patenschaft.einrichtung.standDerDinge"  name="standDerDinge"></textarea>
+      <mat-hint> Sind sie schon in Kontakt mit der Einrichtung, mit der Polizei, hat ein Politiker dafür/dagegen etwas gesagt?</mat-hint>
+    </mat-form-field>
+
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Bitte
+      </mat-panel-title>
+      <mat-panel-description>
+        Bitte an die Polizei
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    Bitte schicken Sie den folgenen Text an: polizei@example.com und (cc) an: laeuft@hamburg.adfc.de:
+    <pre>
+    Sehr geerte Damen und Herren,
+
+    mein Name ist {{ t30pate.vorname }} {{ t30pate.nachname }} und mir ist aufgefallen, dass an der
+    Schule Musterstraße, Musterstraße 43 leider Tempo 50 ist. Ich fordere Sie auf hier Tempo 30 einzuführen.
+
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+
+Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+
+Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.
+
+At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.
+
+Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus.
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+
+Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+
+    Viele Grüße
+
+    {{ t30pate.vorname }} {{ t30pate.nachname }}
+    </pre>
+  </mat-expansion-panel>
+
+  </mat-accordion>
