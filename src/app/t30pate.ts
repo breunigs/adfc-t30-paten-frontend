@@ -11,4 +11,6 @@ export class T30Pate {
     telefon: string;
     patenschaften: Array<T30Patenschaft>;
     speichern: boolean;
+    mailingliste: boolean;
+    newsletter: boolean;
 }

@@ -66,6 +66,8 @@ export class T30patenComponent implements OnInit {
       ort: null,
       telefon: null,
       speichern: true,
+      mailingliste: false,
+      newsletter: false,
       patenschaften: [ this.pate1, this.pate2 ],
   };
   step = 0;
@@ -113,7 +115,9 @@ export class T30patenComponent implements OnInit {
 
       this.t30pate.patenschaften.push(p);
       this.step++;
-  }
+    }
+    absenden() {
+    }
   constructor() { }
 
   ngOnInit() {
