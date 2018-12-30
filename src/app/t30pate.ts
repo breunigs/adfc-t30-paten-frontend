@@ -10,4 +10,5 @@ export class T30Pate {
     ort: string;
     telefon: string;
     patenschaften: Array<T30Patenschaft>;
+    speichern: boolean;
 }

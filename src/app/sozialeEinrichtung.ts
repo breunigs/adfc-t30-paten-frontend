@@ -9,4 +9,5 @@ export class SozialeEinrichtung {
     ort: string;
     telefon: string;
     art: string;
+    t50: boolean;
 }

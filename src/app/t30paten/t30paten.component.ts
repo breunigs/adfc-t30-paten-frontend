@@ -4,6 +4,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 
 import { T30Pate } from '../t30pate';
 import { T30Patenschaft } from '../t30patenschaft';
+import { SozialeEinrichtung } from '../sozialeEinrichtung';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class T30patenComponent implements OnInit {
         ort: 'Hamburg',
         art: '1',
         telefon: null,
+        t50: true,
    }
     einr2:SozialeEinrichtung = {
         id:43,
@@ -39,6 +41,7 @@ export class T30patenComponent implements OnInit {
         ort: 'Hamburg',
         art: '1',
         telefon: null,
+        t50: true,
    }
    pate1:T30Patenschaft = {
           id: 42,
@@ -65,7 +68,52 @@ export class T30patenComponent implements OnInit {
       speichern: true,
       patenschaften: [ this.pate1, this.pate2 ],
   };
+  step = 0;
 
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+        console.log('next step', this.step);  }
+
+  prevStep() {
+    this.step--;
+  }
+
+  lastStep() {
+        let rtn=(this.t30pate.patenschaften.length+1);
+        console.log('last step', rtn);
+        return rtn;
+  }
+
+    deletePatenschaft(index) {
+      this.t30pate.patenschaften.splice(index, 1);
+    }
+    addPatenschaft(index) {
+        let p:T30Patenschaft = {
+            id: -1,
+            bezugZurEinrichtung: '',
+            standDerDinge: '',
+            einrichtung: {
+                id:-1,
+                lat:null,
+                lon:null,
+                name:null,
+                zusatz: null,
+                strasse: null,
+                plz: null,
+                ort: null,
+                art: null,
+                telefon: null,
+                t50: true,
+            }
+        };
+
+      this.t30pate.patenschaften.push(p);
+      this.step++;
+  }
   constructor() { }
 
   ngOnInit() {

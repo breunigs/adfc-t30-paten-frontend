@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { T30patenComponent } from './t30paten/t30paten.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatFormFieldModule, MatInputModule, MatCheckboxModule, MatExpansionModule, MatSelectModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatCheckboxModule, MatExpansionModule, MatSelectModule, MatIconModule, MatButtonModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,9 @@ import { MatFormFieldModule, MatInputModule, MatCheckboxModule, MatExpansionModu
       MatCheckboxModule,
       MatSelectModule,
       ReactiveFormsModule,
+      MatIconModule,
       MatExpansionModule,
+      MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

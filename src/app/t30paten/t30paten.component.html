@@ -1,14 +1,14 @@
   <mat-accordion>
-  <mat-expansion-panel>
+  <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
     <mat-expansion-panel-header>
       <mat-panel-title>
+        <mat-icon>account_circle</mat-icon>
         Persönliche Daten
       </mat-panel-title>
       <mat-panel-description>
         Name, E-Mail, Kontaktdaten
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <form class="t30-form">
     <mat-form-field class="t30-half-width">
       <input matInput placeholder="Vorname" [(ngModel)]="t30pate.vorname" name="vorname" required>
     </mat-form-field>
@@ -30,24 +30,36 @@
   <mat-form-field class="t30-full-width">
     <input matInput placeholder="Telefon" [(ngModel)]="t30pate.telefon" name="telefon">
   </mat-form-field>
+  <div>
     <mat-checkbox [(ngModel)]="t30pate.mailingliste" name="mailingliste">Ich möchte auf die Tempo30-Paten Mailingliste, um Informationen zu erhalten und mich auszutauchen.</mat-checkbox>
+  </div>
+  <div>
     <mat-checkbox [(ngModel)]="t30pate.newsletter" name="newletter">Ich möchte den ADFC Newsletter.</mat-checkbox>
+  </div>
+  <div>
     <mat-checkbox [(ngModel)]="t30pate.speichern" name="saveData">Der ADFC darf meine Daten für diese Kampange speichern und verwenden.</mat-checkbox>
-  </form>
+    <div *ngIf="!(t30pate.speichern)"><mat-icon color="warn">warning</mat-icon>Unsere Idee ist, dass wir uns mit den Paten vernetzen, dass ist nicht dann nicht möglich! Das finden wir doof!</div>
+  </div>
+  <mat-action-row>
+    <button mat-button color="primary" (click)="nextStep()"><mat-icon>navigate_next</mat-icon>weiter zur Einrichtung</button>
+  </mat-action-row>
   </mat-expansion-panel>
-
-  <mat-expansion-panel *ngFor="let patenschaft of t30pate.patenschaften; let i = index">
+  <mat-expansion-panel *ngFor="let patenschaft of t30pate.patenschaften; let i = index"  [expanded]="step === (i+1)" (opened)="setStep(i+1)">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{ i+1  }}. Einrichtung
+        <mat-icon>business</mat-icon>
+        <mat-icon *ngIf="!(patenschaft.einrichtung.t50)" color="warn">warning</mat-icon>
+        <div *ngIf="!(patenschaft.einrichtung.name)">{{ i+1  }}. Einrichtung</div>
+        <div *ngIf="(patenschaft.einrichtung.name)">{{ patenschaft.einrichtung.name }}</div>
       </mat-panel-title>
       <mat-panel-description>
-        Schule, Kindergarten, Krankenhaus, Alten- und Pflegeheim
+        <div *ngIf="(patenschaft.einrichtung.zusatz)">{{ patenschaft.einrichtung.zusatz }}</div>
+        <div *ngIf="!(patenschaft.einrichtung.art)">Schule, Kindergarten, Krankenhaus, Alten- und Pflegeheim</div>
       </mat-panel-description>
     </mat-expansion-panel-header>
     <b>Angaben zur Einrichtung</b>
     <mat-form-field class="t30-full-width">
-      <input matInput placeholder="Name der Einrichtung" [(ngModel)]="patenschaft.einrichtung.name" name="einrichtung">
+      <input matInput placeholder="Name der Einrichtung" [(ngModel)]="patenschaft.einrichtung.name" name="einrichtung" required>
     </mat-form-field>
     <mat-form-field class="t30-full-width">
       <input matInput placeholder="Zusatz" [(ngModel)]="patenschaft.einrichtung.zusatz"  name="einrichtung">
@@ -55,7 +67,7 @@
     </mat-form-field>
 
     <mat-form-field class="t30-full-width">
-      <mat-select placeholder="Art der Einrichtung" [(value)]="patenschaft.einrichtung.art">
+      <mat-select placeholder="Art der Einrichtung" [(value)]="patenschaft.einrichtung.art" required>
         <mat-option value="1">Schule</mat-option>
         <mat-option value="2">Kindergaten</mat-option>
         <mat-option value="3">Alten- und Pflegeheim / Tagespflege</mat-option>
@@ -63,44 +75,61 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field class="t30-full-width">
-      <input matInput placeholder="Straße und Hausnummer" [(ngModel)]="patenschaft.einrichtung.strasse"  name="strasse">
+      <input matInput placeholder="Straße und Hausnummer" [(ngModel)]="patenschaft.einrichtung.strasse"  name="strasse" required>
     </mat-form-field>
     <mat-form-field class="t30-half-width">
-      <input matInput placeholder="PLZ" name="plz" [(ngModel)]="patenschaft.einrichtung.plz" >
+      <input matInput placeholder="PLZ" name="plz" [(ngModel)]="patenschaft.einrichtung.plz" required>
     </mat-form-field>
     <mat-form-field class="t30-half-width">
-      <input matInput placeholder="Ort" name="ort" [(ngModel)]="patenschaft.einrichtung.ort" >
+      <input matInput placeholder="Ort" name="ort" [(ngModel)]="patenschaft.einrichtung.ort" required>
     </mat-form-field>
+    <div>
+      <mat-checkbox  [(ngModel)]="patenschaft.einrichtung.t50" required name="istTempo50">Mindestens ein Ausgang dieser Einrichtung mündet an einer Straße mit Tempo 50 (oder mehr)</mat-checkbox>
+    </div>
+    <div *ngIf="!(patenschaft.einrichtung.t50)"><mat-icon color="warn">warning</mat-icon> Dann sind die Vorraussetzungen gemäß StVO nicht gegeben, und sie können keine Patenschaft übernehmen</div>
     <b>Angaben des Paten</b>
         <mat-form-field class="t30-full-width">
       <input matInput placeholder="Beziehung zur Einrichtung" [(ngModel)]="patenschaft.bezugZurEinrichtung" name="bezugZurEinrichtung">
       <mat-hint>Sind sie z.B. Schulleiter, Nachbar, ...</mat-hint>
     </mat-form-field>
-
     <mat-form-field class="t30-full-width">
       <textarea matInput placeholder="Stand der Dinge" [(ngModel)]="patenschaft.einrichtung.standDerDinge"  name="standDerDinge"></textarea>
       <mat-hint> Sind sie schon in Kontakt mit der Einrichtung, mit der Polizei, hat ein Politiker dafür/dagegen etwas gesagt?</mat-hint>
     </mat-form-field>
+    <mat-action-row>
+      <button mat-button color="warn" *ngIf="t30pate.patenschaften.length>1" (click)="deletePatenschaft(i)"><mat-icon>delete</mat-icon>Patenschaft löschen</button>
+      <button mat-button *ngIf="t30pate.patenschaften.length===i+1" (click)="addPatenschaft()"><mat-icon>add</mat-icon>Patenschaft hinzufügen</button>
+      <button mat-button (click)="prevStep()"><mat-icon>navigate_before</mat-icon>zurück</button>
+      <button mat-button color="primary" *ngIf="t30pate.patenschaften.length===i+1" (click)="nextStep()"><mat-icon>email</mat-icon> weiter</button>
+      <button mat-button color="primary" *ngIf="t30pate.patenschaften.length!==i+1" (click)="nextStep()"><mat-icon>navigate_next</mat-icon> weiter</button>
 
+    </mat-action-row>
   </mat-expansion-panel>
-  <mat-expansion-panel>
+  <mat-expansion-panel [expanded]="step === lastStep()" (opened)="setStep(lastStep())">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Bitte
+        <mat-icon>email</mat-icon> Bitte
       </mat-panel-title>
       <mat-panel-description>
         Bitte an die Polizei
       </mat-panel-description>
     </mat-expansion-panel-header>
 
-    Bitte schicken Sie den folgenen Text an: polizei@example.com und (cc) an: laeuft@hamburg.adfc.de:
-    <pre>
-    Sehr geerte Damen und Herren,
+    <div *ngFor="let patenschaft of t30pate.patenschaften; let p = index" >
+    <div><b>Von:</b> {{ t30pate.vorname }} {{ t30pate.nachname }} &lt;{{ t30pate.eMail }}&gt; </div>
+    <div><b>An:</b>Polzei Hamburg &lt;polizei@example.com&gt;</div>
+    <div><b>CC:</b>ADFC Hamburg &lt;laeuft@hamburg.adfc.de&gt;</div>
+    <mat-form-field class="t30-full-width">
+          <input matInput placeholder="Betreff" name="subject" value="Bitte um Prüfung von Tempo 30 vor der Einrichtung {{ patenschaft.einrichtung.name }}, {{ patenschaft.einrichtung.zusatz }}">
+    </mat-form-field>
 
-    mein Name ist {{ t30pate.vorname }} {{ t30pate.nachname }} und mir ist aufgefallen, dass an der
-    Schule Musterstraße, Musterstraße 43 leider Tempo 50 ist. Ich fordere Sie auf hier Tempo 30 einzuführen.
+    <mat-form-field class="t30-full-width">
+      <textarea class="t30-email-area" matInput placeholder="eMail" name="standDerDinge">
+Sehr geehrte Damen und Herren,
 
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+mein Name ist {{ t30pate.vorname }} {{ t30pate.nachname }} und mir ist aufgefallen, dass an der {{ patenschaft.einrichtung.name }}, {{ patenschaft.einrichtung.zusatz }} leider Tempo 50 ist. Ich fordere Sie auf hier Tempo 30 einzuführen.
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
 Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
 
@@ -123,7 +152,16 @@ Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lo
     Viele Grüße
 
     {{ t30pate.vorname }} {{ t30pate.nachname }}
-    </pre>
+
+      </textarea>
+    </mat-form-field>
+    </div>
+
+        <mat-action-row>
+      <button mat-button (click)="prevStep()"><mat-icon>navigate_before</mat-icon>zurück</button>
+      <button mat-raised-button color="primary" (click)="absenden()"><mat-icon>send</mat-icon> Absenden</button>
+    </mat-action-row>
+
   </mat-expansion-panel>
 
   </mat-accordion>
