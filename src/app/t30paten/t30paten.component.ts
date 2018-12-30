@@ -6,6 +6,7 @@ import { T30Pate } from '../t30pate';
 import { T30Patenschaft } from '../t30patenschaft';
 import { SozialeEinrichtung } from '../sozialeEinrichtung';
 
+import * as sozialeEinrichtungen from "../../assets/sozEinr.json";
 
 @Component({
   selector: 'app-t30paten',
@@ -17,6 +18,7 @@ export class T30patenComponent implements OnInit {
     Validators.required,
     Validators.email,
   ]);
+    isLoading=false;
     einr1:SozialeEinrichtung = {
         id:42,
         lat:52.123,
@@ -71,14 +73,14 @@ export class T30patenComponent implements OnInit {
       patenschaften: [ this.pate1, this.pate2 ],
   };
   step = 0;
-
+    filteredUsers = [];
   setStep(index: number) {
     this.step = index;
   }
 
   nextStep() {
     this.step++;
-        console.log('next step', this.step);  }
+  }
 
   prevStep() {
     this.step--;
@@ -86,7 +88,6 @@ export class T30patenComponent implements OnInit {
 
   lastStep() {
         let rtn=(this.t30pate.patenschaften.length+1);
-        console.log('last step', rtn);
         return rtn;
   }
 
@@ -117,6 +118,43 @@ export class T30patenComponent implements OnInit {
       this.step++;
     }
     absenden() {
+    }
+    changeEinrichtungsName(nr, search) {
+        let newUsers=[]
+        this.isLoading=true;
+        if (search.length>2) {
+            let lowerSearch= search.toLowerCase();
+            for (let entry of sozialeEinrichtungen.default) {
+                let idx=entry.Name.toLowerCase().indexOf(lowerSearch);
+                if (idx != -1) {
+                    entry.idx=idx;
+                    newUsers.push(entry);
+                    if (newUsers.length > 40) {
+                        break;
+                    }
+                }
+            }
+            this.filteredUsers=newUsers;
+            this.isLoading=false;
+        } else {
+            this.filteredUsers=newUsers;
+        }
+    }
+    displayEinrichtungsName(eintrag) {
+        if (eintrag) {
+            return eintrag;
+        }
+    }
+    setAcEinrichtung(i,eintrag) {
+        let e = eintrag.option.value;
+        this.t30pate.patenschaften[i].einrichtung.name= e.Name;
+        this.t30pate.patenschaften[i].einrichtung.zusatz = "";
+        this.t30pate.patenschaften[i].einrichtung.strasse= e.Strasse+ ' ' + e.Nummer;
+        this.t30pate.patenschaften[i].einrichtung.plz=e.PLZ;
+        this.t30pate.patenschaften[i].einrichtung.ort= "Hamburg";
+        this.t30pate.patenschaften[i].einrichtung.art=String(e.art);
+        this.t30pate.patenschaften[i].einrichtung.id=String(e.id);
+
     }
   constructor() { }
 

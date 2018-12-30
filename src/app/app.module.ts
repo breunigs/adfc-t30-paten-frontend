@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { T30patenComponent } from './t30paten/t30paten.component';
 
-import { MatFormFieldModule, MatInputModule, MatCheckboxModule, MatExpansionModule, MatSelectModule, MatIconModule, MatButtonModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatCheckboxModule, MatExpansionModule, MatSelectModule, MatIconModule, MatButtonModule, MatAutocompleteModule, MatProgressSpinnerModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -27,6 +27,8 @@ import { MatFormFieldModule, MatInputModule, MatCheckboxModule, MatExpansionModu
       MatIconModule,
       MatExpansionModule,
       MatButtonModule,
+      MatAutocompleteModule,
+      MatProgressSpinnerModule
   ],
   providers: [{provide: APP_BASE_HREF, useValue: document.body.dataset.baseUrl}],
   bootstrap: [AppComponent]

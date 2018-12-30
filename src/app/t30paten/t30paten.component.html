@@ -59,21 +59,35 @@
     </mat-expansion-panel-header>
     <b>Angaben zur Einrichtung</b>
     <mat-form-field class="t30-full-width">
-      <input matInput placeholder="Name der Einrichtung" [(ngModel)]="patenschaft.einrichtung.name" name="einrichtung" required>
+      <input matInput placeholder="Name der Einrichtung" #einrichtungField="ngModel"  [(ngModel)]="patenschaft.einrichtung.name" (ngModelChange)="changeEinrichtungsName(i,$event)"  [matAutocomplete]="auto" name="einrichtung" required>
     </mat-form-field>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayEinrichtungsName" (optionSelected)="setAcEinrichtung(i,$event)">
+    <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
+    <ng-container *ngIf="!isLoading">
+      <mat-option *ngFor="let einr of filteredUsers" [value]="einr" >
+        <span>{{ einr.Name }}</span>
+        <small>|{{einr.Strasse}} {{einr.Nummer}}, {{einr.PLZ}} Hamburg {{einr.Bezirk}} (Nr. {{einr.id}})</small>
+      </mat-option>
+    </ng-container>
+  </mat-autocomplete>
     <mat-form-field class="t30-full-width">
       <input matInput placeholder="Zusatz" [(ngModel)]="patenschaft.einrichtung.zusatz"  name="einrichtung">
       <mat-hint>z.B. wenn es drei Standorte gibt und bei zweien Tempo 30 Sinn macht, dann bitte die zwei Aufführen und hier die Bezeichnung des Standortes angeben</mat-hint>
     </mat-form-field>
 
-    <mat-form-field class="t30-full-width">
+    <mat-form-field class="t30-half-width">
       <mat-select placeholder="Art der Einrichtung" [(value)]="patenschaft.einrichtung.art" required>
-        <mat-option value="1">Schule</mat-option>
-        <mat-option value="2">Kindergaten</mat-option>
+        <mat-option value="1">Kindergaten</mat-option>
+        <mat-option value="2">Schule</mat-option>
         <mat-option value="3">Alten- und Pflegeheim / Tagespflege</mat-option>
         <mat-option value="4">Krankenhaus</mat-option>
       </mat-select>
     </mat-form-field>
+    <mat-form-field class="t30-half-width">
+      <input matInput placeholder="Einrichtungs Nummer" [(ngModel)]="patenschaft.einrichtung.id" readonly="true"  name="einrichtungNr">
+      <mat-hint>Wird vom ADFC genutzt um diesen Ort wieder zu finden</mat-hint>
+    </mat-form-field>
+
     <mat-form-field class="t30-full-width">
       <input matInput placeholder="Straße und Hausnummer" [(ngModel)]="patenschaft.einrichtung.strasse"  name="strasse" required>
     </mat-form-field>
