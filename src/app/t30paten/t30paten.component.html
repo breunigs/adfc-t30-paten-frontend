@@ -91,16 +91,51 @@
     <mat-form-field class="t30-full-width">
       <input matInput placeholder="Straße und Hausnummer" [(ngModel)]="patenschaft.einrichtung.strasse"  name="strasse" required>
     </mat-form-field>
+    <div>
+      <mat-checkbox  [(ngModel)]="patenschaft.einrichtung.t50" required name="istTempo50">Mindestens ein Ausgang dieser Einrichtung mündet an einer Straße mit hoher Geschwindigkeit (mehr als Tempo 30)</mat-checkbox>
+    </div>
+    <div *ngIf="!(patenschaft.einrichtung.t50)"><mat-icon color="warn">warning</mat-icon> Dann sind die Vorraussetzungen gemäß StVO nicht gegeben, und sie können keine Patenschaft übernehmen</div>
+    <mat-form-field class="t30-full-width">
+      <input matInput placeholder="Straße für die Tempo 30 angefragt werden soll" [(ngModel)]="patenschaft.einrichtung.t50strasse"  name="t50strasse" required>
+      <mat-hint>ggf. um ein "von Hausnummer ... bis Hausnummer ... ergänzen"</mat-hint>
+    </mat-form-field>
     <mat-form-field class="t30-half-width">
       <input matInput placeholder="PLZ" name="plz" [(ngModel)]="patenschaft.einrichtung.plz" required>
     </mat-form-field>
     <mat-form-field class="t30-half-width">
       <input matInput placeholder="Ort" name="ort" [(ngModel)]="patenschaft.einrichtung.ort" required>
     </mat-form-field>
-    <div>
-      <mat-checkbox  [(ngModel)]="patenschaft.einrichtung.t50" required name="istTempo50">Mindestens ein Ausgang dieser Einrichtung mündet an einer Straße mit Tempo 50 (oder mehr)</mat-checkbox>
+
+    <div class="t30-full-width-flex">
+    <div class="t30-map-div">
+      <yaga-map class="t30-map"  zoom="17" [(lat)]="patenschaft.einrichtung.mapLat" [(lng)]="patenschaft.einrichtung.mapLon" >
+        <yaga-tile-layer [(url)]="tileLayerUrl"></yaga-tile-layer>
+        <yaga-zoom-control></yaga-zoom-control>
+        <yaga-marker [(lat)]="patenschaft.einrichtung.lat" [(lng)]="patenschaft.einrichtung.lon" draggable="true">
+          <yaga-icon
+             iconUrl="assets/marker-icon.png"
+             shadowUrl="assets/marker-shadow.png"
+
+             [(iconSize)]="marker.iconSize"
+             [(iconAnchor)]="marker.iconAnchor"
+             [(popupAnchor)]="marker.popupAnchor"
+             [(tooltipAnchor)]="marker.tooltipAnchor"
+             [(shadowSize)]="marker.shadowSize"
+             ></yaga-icon>
+        </yaga-marker>
+      </yaga-map>
     </div>
-    <div *ngIf="!(patenschaft.einrichtung.t50)"><mat-icon color="warn">warning</mat-icon> Dann sind die Vorraussetzungen gemäß StVO nicht gegeben, und sie können keine Patenschaft übernehmen</div>
+    <div class="t30-daneben-div">
+      <mat-form-field class="t30-half-width">
+        <input matInput placeholder="Latitude" name="lat" [(ngModel)]="patenschaft.einrichtung.lat" required>
+      </mat-form-field>
+      <mat-form-field class="t30-half-width">
+        <input matInput placeholder="Longitude" name="lon" [(ngModel)]="patenschaft.einrichtung.lon" required>
+      </mat-form-field>
+
+    </div>
+</div>
+
     <b>Angaben des Paten</b>
         <mat-form-field class="t30-full-width">
       <input matInput placeholder="Beziehung zur Einrichtung" [(ngModel)]="patenschaft.bezugZurEinrichtung" name="bezugZurEinrichtung">
