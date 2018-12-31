@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import { FormBuilder, FormControl, FormArray, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { OSM_TILE_LAYER_URL }   from '@yaga/leaflet-ng2';
 import { T30Pate } from '../t30pate';
@@ -16,17 +16,45 @@ import * as sozialeEinrichtungen from "../../assets/sozEinr.json";
 })
 export class T30patenComponent implements OnInit {
     public tileLayerUrl: string = OSM_TILE_LAYER_URL;
-    public mapZoom: number = 12;
-    public mapLon: number=10;
-    public mapLat: number=52.2;
-    public markerLon: number=10;
-    public markerLat: number=52.2;
      hamburgLat=53.551086;
-     hamburgLon=9.993682;
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
+    hamburgLon=9.993682;
+
+    t30pate = this.fb.group({
+        vorname: ['', Validators.required],
+        nachname: ['', Validators.required],
+        eMail: ['', [ Validators.required, Validators.email ] ],
+        strasse: [''],
+        plz: ['', Validators.maxLength(5) ],
+        ort: [''],
+        telefon: [''],
+        speichern: [true, Validators.required],
+        mailingliste: [false, Validators.required],
+        newsletter: [false, Validators.required],
+        patenschaften: this.fb.array([
+            this.fb.group({
+                id: [-1],
+                bezugZurEinrichtung: ['', Validators.required],
+                standDerDinge: [''],
+                einrichtung: this.fb.group({
+                    id:[-1],
+                    lat: [this.hamburgLat, Validators.required],
+                    lon: [this.hamburgLon, Validators.required],
+                    mapLat:  [this.hamburgLat],
+                    mapLon: [this.hamburgLon],
+                    name: ['', Validators.required],
+                    zusatz: [''],
+                    strasse: ['', Validators.required],
+                    t50strasse: ['', Validators.required],
+                    plz: ['', Validators.required ],
+                    ort: ['Hamburg', Validators.required],
+                    art: ['1', Validators.required],
+                    telefon: [''],
+                    t50:  [true, Validators.requiredTrue],
+                }),
+            })
+        ]),
+    });
+
     public isLoading: boolean=false;
     public marker= {
         draggable: true,
@@ -37,44 +65,11 @@ export class T30patenComponent implements OnInit {
         shadowSize: new Point(41, 41)
     }
 
-  t30pate: T30Pate = {
-      id: -1,
-      vorname: null,
-      nachname: null,
-      eMail: null,
-      passwort: null,
-      strasse: null,
-      plz: null,
-      ort: null,
-      telefon: null,
-      speichern: true,
-      mailingliste: false,
-      newsletter: false,
-      patenschaften: [ {
-          id: -1,
-          bezugZurEinrichtung: null,
-          standDerDinge: null,
-          einrichtung: {
-              id:-1,
-              lat: this.hamburgLat,
-              lon: this.hamburgLon,
-              mapLat: this.hamburgLat,
-              mapLon: this.hamburgLon,
-              name: null,
-              zusatz: null,
-              strasse: null,
-              t50strasse: null,
-              plz: null,
-              ort: 'Hamburg',
-              art: '1',
-              telefon: null,
-              t50: true,
-          }
-      }],
-  };
+
   step = 0;
     filteredUsers = [];
-  setStep(index: number) {
+
+    setStep(index: number) {
     this.step = index;
   }
 
@@ -86,42 +81,48 @@ export class T30patenComponent implements OnInit {
     this.step--;
   }
 
-  lastStep() {
-        let rtn=(this.t30pate.patenschaften.length+1);
+    ps() {
+        return this.t30pate.controls.patenschaften as FormArray
+    }
+    lastStep() {
+
+        let rtn=this.ps().length+1;
         return rtn;
-  }
+    }
     deletePatenschaft(index) {
-      this.t30pate.patenschaften.splice(index, 1);
+        this.ps().removeAt(index);
     }
     addPatenschaft(index) {
-        let p:T30Patenschaft = {
-            id: -1,
-            bezugZurEinrichtung: '',
-            standDerDinge: '',
-            einrichtung: {
-                id:-1,
-                lat: this.hamburgLat,
-                lon: this.hamburgLon,
-                mapLat: this.hamburgLat,
-                mapLon: this.hamburgLon,
-                name:null,
-                zusatz: null,
-                strasse: null,
-                t50strasse: null,
-                plz: null,
-                ort: null,
-                art: null,
-                telefon: null,
-                t50: true,
-            }
-        };
+        let p= this.fb.group({
+                id: [-1],
+                bezugZurEinrichtung: ['', Validators.required],
+                standDerDinge: [''],
+                einrichtung: this.fb.group({
+                    id:[-1],
+                    lat: [this.hamburgLat, Validators.required],
+                    lon: [this.hamburgLon, Validators.required],
+                    mapLat:  [this.hamburgLat],
+                    mapLon: [this.hamburgLon],
+                    name: ['', Validators.required],
+                    zusatz: [''],
+                    strasse: ['', Validators.required],
+                    t50strasse: ['', Validators.required],
+                    plz: ['', Validators.required],
+                    ort: ['Hamburg', Validators.required],
+                    art: ['1', Validators.required],
+                    telefon: [''],
+                    t50:  [true],
+                }),
+            })
 
-      this.t30pate.patenschaften.push(p);
+        this.ps().push(p);
       this.step++;
     }
     absenden() {
     }
+
     changeEinrichtungsName(nr, search) {
+        console.log('changeEinrName',nr,search);
         let newUsers=[]
         this.isLoading=true;
         if (search.length>2) {
@@ -148,22 +149,26 @@ export class T30patenComponent implements OnInit {
         }
     }
     setAcEinrichtung(i,eintrag) {
-        let e = eintrag.option.value;
-        this.t30pate.patenschaften[i].einrichtung.name= e.Name;
-        this.t30pate.patenschaften[i].einrichtung.zusatz = "";
-        this.t30pate.patenschaften[i].einrichtung.strasse= e.Strasse+ ' ' + e.Nummer;
-        this.t30pate.patenschaften[i].einrichtung.t50strasse= e.Strasse;
-        this.t30pate.patenschaften[i].einrichtung.plz=e.PLZ;
-        this.t30pate.patenschaften[i].einrichtung.ort= "Hamburg";
-        this.t30pate.patenschaften[i].einrichtung.art=String(e.art);
-        this.t30pate.patenschaften[i].einrichtung.id=e.id;
-        this.t30pate.patenschaften[i].einrichtung.lat=e.lat;
-        this.t30pate.patenschaften[i].einrichtung.lon=e.lon;
-        this.t30pate.patenschaften[i].einrichtung.mapLat=e.lat;
-        this.t30pate.patenschaften[i].einrichtung.mapLon=e.lon;
 
+        let e = eintrag.option.value;
+        let einr = this.ps().at(i).get('einrichtung')
+        einr.patchValue({
+            name:e.Name,
+            zusatz:'',
+            strasse: e.Strasse+ ' ' + e.Nummer,
+            t50strasse: e.Strasse,
+            plz: e.PLZ,
+            ort: 'Hamburg',
+            id: e.id,
+            art: String(e.art),
+            lat: e.lat,
+            lon: e.lon,
+            mapLat: e.lat,
+            mapLon: e.lon,
+
+        });
     }
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
   }

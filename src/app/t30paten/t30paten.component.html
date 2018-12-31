@@ -1,3 +1,4 @@
+<form [formGroup]="t30pate">
   <mat-accordion>
   <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
     <mat-expansion-panel-header>
@@ -10,56 +11,58 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
     <mat-form-field class="t30-half-width">
-      <input matInput placeholder="Vorname" [(ngModel)]="t30pate.vorname" name="vorname" required>
+      <input matInput placeholder="Vorname" formControlName="vorname" name="vorname">
     </mat-form-field>
     <mat-form-field class="t30-half-width">
-      <input matInput placeholder="Nachname" [(ngModel)]="t30pate.nachname" name="nachname" required>
+      <input matInput placeholder="Nachname" formControlName="nachname" name="nachname">
     </mat-form-field>
     <mat-form-field class="t30-full-width">
-      <input matInput placeholder="E-Mail" type="email" [(ngModel)]="t30pate.eMail" name="email" #email="ngModel" required>
+      <input matInput placeholder="E-Mail" type="email" formControlName="eMail" name="email">
   </mat-form-field>
   <mat-form-field class="t30-full-width">
-    <input matInput placeholder="Straße und Hausnummer" [(ngModel)]="t30pate.strasse" name="strasse">
+    <input matInput placeholder="Straße und Hausnummer" formControlName="strasse" name="strasse">
   </mat-form-field>
   <mat-form-field class="t30-half-width">
-    <input matInput placeholder="PLZ" [(ngModel)]="t30pate.plz" name="plz">
+    <input matInput placeholder="PLZ" formControlName="plz" name="plz">
   </mat-form-field>
   <mat-form-field class="t30-half-width">
-    <input matInput placeholder="Ort" [(ngModel)]="t30pate.ort" name="ort">
+    <input matInput placeholder="Ort" formControlName="ort" name="ort">
   </mat-form-field>
   <mat-form-field class="t30-full-width">
-    <input matInput placeholder="Telefon" [(ngModel)]="t30pate.telefon" name="telefon">
+    <input matInput placeholder="Telefon" formControlName="telefon" name="telefon">
   </mat-form-field>
   <div>
-    <mat-checkbox [(ngModel)]="t30pate.mailingliste" name="mailingliste">Ich möchte auf die Tempo30-Paten Mailingliste, um Informationen zu erhalten und mich auszutauchen.</mat-checkbox>
+    <mat-checkbox formControlName="mailingliste" name="mailingliste">Ich möchte auf die Tempo30-Paten Mailingliste, um Informationen zu erhalten und mich auszutauchen.</mat-checkbox>
   </div>
   <div>
-    <mat-checkbox [(ngModel)]="t30pate.newsletter" name="newletter">Ich möchte den ADFC Newsletter.</mat-checkbox>
+    <mat-checkbox formControlName="newsletter" name="newletter">Ich möchte den ADFC Newsletter.</mat-checkbox>
   </div>
   <div>
-    <mat-checkbox [(ngModel)]="t30pate.speichern" name="saveData">Der ADFC darf meine Daten für diese Kampange speichern und verwenden.</mat-checkbox>
-    <div *ngIf="!(t30pate.speichern)"><mat-icon color="warn">warning</mat-icon>Unsere Idee ist, dass wir uns mit den Paten vernetzen, dass ist nicht dann nicht möglich! Das finden wir doof!</div>
+    <mat-checkbox formControlName="speichern" name="saveData">Der ADFC darf meine Daten für diese Kampange speichern und verwenden.</mat-checkbox>
+    <div *ngIf="!(t30pate.controls.speichern.value)"><mat-icon color="warn">warning</mat-icon>Unsere Idee ist, dass wir uns mit den Paten vernetzen, dass ist nicht dann nicht möglich! Das finden wir doof!</div>
   </div>
   <mat-action-row>
     <button mat-button color="primary" (click)="nextStep()"><mat-icon>navigate_next</mat-icon>weiter zur Einrichtung</button>
   </mat-action-row>
   </mat-expansion-panel>
-  <mat-expansion-panel *ngFor="let patenschaft of t30pate.patenschaften; let i = index"  [expanded]="step === (i+1)" (opened)="setStep(i+1)">
+  <div formArrayName="patenschaften">
+  <mat-expansion-panel *ngFor="let patenschaft of t30pate.get('patenschaften').controls; let i = index"  [expanded]="step === (i+1)" (opened)="setStep(i+1)" [formGroupName]="i">
     <mat-expansion-panel-header>
       <mat-panel-title>
         <mat-icon>business</mat-icon>
-        <mat-icon *ngIf="!(patenschaft.einrichtung.t50)" color="warn">warning</mat-icon>
-        <div *ngIf="!(patenschaft.einrichtung.name)">{{ i+1  }}. Einrichtung</div>
-        <div *ngIf="(patenschaft.einrichtung.name)">{{ patenschaft.einrichtung.name }}</div>
+        <mat-icon *ngIf="!(patenschaft.get('einrichtung.t50').value)" color="warn">warning</mat-icon>
+        <div *ngIf="!(patenschaft.get('einrichtung.name').value)">{{ i+1  }}. Einrichtung</div>
+        <div *ngIf="(patenschaft.get('einrichtung.name').value)">{{ patenschaft.get('einrichtung.name').value }}</div>
       </mat-panel-title>
       <mat-panel-description>
-        <div *ngIf="(patenschaft.einrichtung.zusatz)">{{ patenschaft.einrichtung.zusatz }}</div>
-        <div *ngIf="!(patenschaft.einrichtung.art)">Schule, Kindergarten, Krankenhaus, Alten- und Pflegeheim</div>
+        <div *ngIf="(patenschaft.get('einrichtung.zusatz').value)">{{ patenschaft.get('einrichtung.zusatz').value }}</div>
+        <div *ngIf="!(patenschaft.get('einrichtung.art').value)">Schule, Kindergarten, Krankenhaus, Alten- und Pflegeheim</div>
       </mat-panel-description>
     </mat-expansion-panel-header>
+    <div formGroupName="einrichtung">
     <b>Angaben zur Einrichtung</b>
     <mat-form-field class="t30-full-width">
-      <input matInput placeholder="Name der Einrichtung" #einrichtungField="ngModel"  [(ngModel)]="patenschaft.einrichtung.name" (ngModelChange)="changeEinrichtungsName(i,$event)"  [matAutocomplete]="auto" name="einrichtung" required>
+      <input matInput placeholder="Name der Einrichtung"  formControlName="name" [matAutocomplete]="auto" name="einrichtung"(ngModelChange)="changeEinrichtungsName(i,$event)"   >
     </mat-form-field>
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayEinrichtungsName" (optionSelected)="setAcEinrichtung(i,$event)">
     <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
@@ -71,12 +74,12 @@
     </ng-container>
   </mat-autocomplete>
     <mat-form-field class="t30-full-width">
-      <input matInput placeholder="Zusatz" [(ngModel)]="patenschaft.einrichtung.zusatz"  name="einrichtung">
+      <input matInput placeholder="Zusatz" formControlName="zusatz"  name="einrichtung">
       <mat-hint>z.B. wenn es drei Standorte gibt und bei zweien Tempo 30 Sinn macht, dann bitte die zwei Aufführen und hier die Bezeichnung des Standortes angeben</mat-hint>
     </mat-form-field>
 
     <mat-form-field class="t30-half-width">
-      <mat-select placeholder="Art der Einrichtung" [(value)]="patenschaft.einrichtung.art" required>
+      <mat-select placeholder="Art der Einrichtung" formControlName="art" >
         <mat-option value="1">Kindergaten</mat-option>
         <mat-option value="2">Schule</mat-option>
         <mat-option value="3">Alten- und Pflegeheim / Tagespflege</mat-option>
@@ -84,34 +87,34 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field class="t30-half-width">
-      <input matInput placeholder="Einrichtungs Nummer" [(ngModel)]="patenschaft.einrichtung.id" readonly="true"  name="einrichtungNr">
+      <input matInput placeholder="Einrichtungs Nummer" formControlName="id" readonly="true"  name="einrichtungNr">
       <mat-hint>Wird vom ADFC genutzt um diesen Ort wieder zu finden</mat-hint>
     </mat-form-field>
 
     <mat-form-field class="t30-full-width">
-      <input matInput placeholder="Straße und Hausnummer" [(ngModel)]="patenschaft.einrichtung.strasse"  name="strasse" required>
+      <input matInput placeholder="Straße und Hausnummer" formControlName="strasse"  name="strasse" >
     </mat-form-field>
     <div>
-      <mat-checkbox  [(ngModel)]="patenschaft.einrichtung.t50" required name="istTempo50">Mindestens ein Ausgang dieser Einrichtung mündet an einer Straße mit hoher Geschwindigkeit (mehr als Tempo 30)</mat-checkbox>
+      <mat-checkbox  formControlName="t50" name="istTempo50">Mindestens ein Ausgang dieser Einrichtung mündet an einer Straße mit hoher Geschwindigkeit (mehr als Tempo 30)</mat-checkbox>
     </div>
-    <div *ngIf="!(patenschaft.einrichtung.t50)"><mat-icon color="warn">warning</mat-icon> Dann sind die Vorraussetzungen gemäß StVO nicht gegeben, und sie können keine Patenschaft übernehmen</div>
+   <div *ngIf="!(patenschaft.get('einrichtung.t50').value)"><mat-icon color="warn">warning</mat-icon> Dann sind die Vorraussetzungen gemäß StVO nicht gegeben, und sie können keine Patenschaft übernehmen</div>
     <mat-form-field class="t30-full-width">
-      <input matInput placeholder="Straße für die Tempo 30 angefragt werden soll" [(ngModel)]="patenschaft.einrichtung.t50strasse"  name="t50strasse" required>
+      <input matInput placeholder="Straße für die Tempo 30 angefragt werden soll" formControlName="t50strasse"  name="t50strasse">
       <mat-hint>ggf. um ein "von Hausnummer ... bis Hausnummer ... ergänzen"</mat-hint>
     </mat-form-field>
     <mat-form-field class="t30-half-width">
-      <input matInput placeholder="PLZ" name="plz" [(ngModel)]="patenschaft.einrichtung.plz" required>
+      <input matInput placeholder="PLZ" name="plz" formControlName="plz">
     </mat-form-field>
     <mat-form-field class="t30-half-width">
-      <input matInput placeholder="Ort" name="ort" [(ngModel)]="patenschaft.einrichtung.ort" required>
+      <input matInput placeholder="Ort" name="ort" formControlName="ort">
     </mat-form-field>
 
     <div class="t30-full-width-flex">
     <div class="t30-map-div">
-      <yaga-map class="t30-map"  zoom="17" [(lat)]="patenschaft.einrichtung.mapLat" [(lng)]="patenschaft.einrichtung.mapLon" >
+      <yaga-map class="t30-map"  zoom="17" [(lat)]="patenschaft.get('einrichtung.mapLat').value" [(lng)]="patenschaft.get('einrichtung.mapLon').value" >
         <yaga-tile-layer [(url)]="tileLayerUrl"></yaga-tile-layer>
         <yaga-zoom-control></yaga-zoom-control>
-        <yaga-marker [(lat)]="patenschaft.einrichtung.lat" [(lng)]="patenschaft.einrichtung.lon" draggable="true">
+        <yaga-marker [(lat)]="patenschaft.get('einrichtung.lat').value" [(lng)]="patenschaft.get('einrichtung.lon').value" draggable="true">
           <yaga-icon
              iconUrl="assets/marker-icon.png"
              shadowUrl="assets/marker-shadow.png"
@@ -127,33 +130,35 @@
     </div>
     <div class="t30-daneben-div">
       <mat-form-field class="t30-half-width">
-        <input matInput placeholder="Latitude" name="lat" [(ngModel)]="patenschaft.einrichtung.lat" required>
+        <input matInput placeholder="Latitude" name="lat" formControlName="lat">
       </mat-form-field>
       <mat-form-field class="t30-half-width">
-        <input matInput placeholder="Longitude" name="lon" [(ngModel)]="patenschaft.einrichtung.lon" required>
+        <input matInput placeholder="Longitude" name="lon" formControlName="lon">
       </mat-form-field>
 
     </div>
-</div>
+    </div>
+    </div>
 
     <b>Angaben des Paten</b>
         <mat-form-field class="t30-full-width">
-      <input matInput placeholder="Beziehung zur Einrichtung" [(ngModel)]="patenschaft.bezugZurEinrichtung" name="bezugZurEinrichtung">
+      <input matInput placeholder="Beziehung zur Einrichtung" formControlName="bezugZurEinrichtung" name="bezugZurEinrichtung">
       <mat-hint>Sind sie z.B. Schulleiter, Nachbar, ...</mat-hint>
     </mat-form-field>
     <mat-form-field class="t30-full-width">
-      <textarea matInput placeholder="Stand der Dinge" [(ngModel)]="patenschaft.einrichtung.standDerDinge"  name="standDerDinge"></textarea>
+      <textarea matInput placeholder="Stand der Dinge" formControlName="standDerDinge"  name="standDerDinge"></textarea>
       <mat-hint> Sind sie schon in Kontakt mit der Einrichtung, mit der Polizei, hat ein Politiker dafür/dagegen etwas gesagt?</mat-hint>
     </mat-form-field>
     <mat-action-row>
-      <button mat-button color="warn" *ngIf="t30pate.patenschaften.length>1" (click)="deletePatenschaft(i)"><mat-icon>delete</mat-icon>Patenschaft löschen</button>
-      <button mat-button *ngIf="t30pate.patenschaften.length===i+1" (click)="addPatenschaft()"><mat-icon>add</mat-icon>Patenschaft hinzufügen</button>
+      <button mat-button color="warn" *ngIf="t30pate.get('patenschaften').controls.length>1" (click)="deletePatenschaft(i)"><mat-icon>delete</mat-icon>Patenschaft löschen</button>
+      <button mat-button *ngIf="t30pate.get('patenschaften').controls.length===i+1" (click)="addPatenschaft()"><mat-icon>add</mat-icon>Patenschaft hinzufügen</button>
       <button mat-button (click)="prevStep()"><mat-icon>navigate_before</mat-icon>zurück</button>
-      <button mat-button color="primary" *ngIf="t30pate.patenschaften.length===i+1" (click)="nextStep()"><mat-icon>email</mat-icon> weiter</button>
-      <button mat-button color="primary" *ngIf="t30pate.patenschaften.length!==i+1" (click)="nextStep()"><mat-icon>navigate_next</mat-icon> weiter</button>
-
+      <button mat-button color="primary" *ngIf="t30pate.get('patenschaften').controls.length===i+1" (click)="nextStep()"><mat-icon>email</mat-icon> weiter</button>
+      <button mat-button color="primary" *ngIf="t30pate.get('patenschaften').controls.length!==i+1" (click)="nextStep()"><mat-icon>navigate_next</mat-icon> weiter</button>
     </mat-action-row>
+
   </mat-expansion-panel>
+  </div>
   <mat-expansion-panel [expanded]="step === lastStep()" (opened)="setStep(lastStep())">
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -164,19 +169,19 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
 
-    <div *ngFor="let patenschaft of t30pate.patenschaften; let p = index" >
-    <div><b>Von:</b> {{ t30pate.vorname }} {{ t30pate.nachname }} &lt;{{ t30pate.eMail }}&gt; </div>
+    <div *ngFor="let patenschaft of t30pate.get('patenschaften').controls; let p = index" >
+    <div><b>Von:</b> {{ t30pate.get('vorname').value }} {{ t30pate.get('nachname').value }} &lt;{{ t30pate.get('eMail').value }}&gt; </div>
     <div><b>An:</b>Polzei Hamburg &lt;polizei@example.com&gt;</div>
     <div><b>CC:</b>ADFC Hamburg &lt;laeuft@hamburg.adfc.de&gt;</div>
     <mat-form-field class="t30-full-width">
-          <input matInput placeholder="Betreff" name="subject" value="Bitte um Prüfung von Tempo 30 vor der Einrichtung {{ patenschaft.einrichtung.name }}, {{ patenschaft.einrichtung.zusatz }}">
+          <input matInput placeholder="Betreff" name="subject" value="Bitte um Prüfung von Tempo 30 vor der Einrichtung {{ patenschaft.get('einrichtung.name').value }}, {{ patenschaft.get('einrichtung.zusatz').value }}">
     </mat-form-field>
 
     <mat-form-field class="t30-full-width">
       <textarea class="t30-email-area" matInput placeholder="eMail" name="standDerDinge">
 Sehr geehrte Damen und Herren,
 
-mein Name ist {{ t30pate.vorname }} {{ t30pate.nachname }} und mir ist aufgefallen, dass an der {{ patenschaft.einrichtung.name }}, {{ patenschaft.einrichtung.zusatz }} leider Tempo 50 ist. Ich fordere Sie auf hier Tempo 30 einzuführen.
+mein Name ist {{ t30pate.vorname }} {{ t30pate.nachname }} und mir ist aufgefallen, dass an der {{ patenschaft.get('einrichtung.name').value }}, {{ patenschaft.get('einrichtung.zusatz').value }} leider Tempo 50 ist. Ich fordere Sie auf hier Tempo 30 einzuführen.
 
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
@@ -200,7 +205,7 @@ Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lo
 
     Viele Grüße
 
-    {{ t30pate.vorname }} {{ t30pate.nachname }}
+    {{ t30pate.get('vorname').value }} {{ t30pate.get('nachname').value }}
 
       </textarea>
     </mat-form-field>
@@ -211,7 +216,6 @@ Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lo
       <button mat-button (click)="prevStep()"><mat-icon>navigate_before</mat-icon>zurück</button>
       <button mat-raised-button color="primary" (click)="absenden()"><mat-icon>send</mat-icon> Absenden</button>
     </mat-action-row>
-
   </mat-expansion-panel>
-
   </mat-accordion>
+</form>
