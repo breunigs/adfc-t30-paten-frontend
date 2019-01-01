@@ -48,23 +48,23 @@ export class T30patenComponent implements OnInit {
   }
 
   ps() {
-    return this.t30pate.controls.patenschaften as FormArray
+    return this.t30pate.controls.patenschaften as FormArray;
   }
   lastStep() {
 
-    let rtn = this.ps().length + 1;
+    const rtn = this.ps().length + 1;
     return rtn;
   }
   deletePatenschaft(index) {
     this.ps().removeAt(index);
   }
   addPatenschaft(index) {
-    let p = this.fb.group({
+    const p = this.fb.group({
       id: [-1],
       bezugZurEinrichtung: ['', Validators.required],
       standDerDinge: [''],
       einrichtung: T30sozialeEinrichtungComponent.buildItem(this.fb),
-    })
+    });
 
     this.ps().push(p);
     this.step++;

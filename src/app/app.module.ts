@@ -3,8 +3,9 @@ import { NgModule, PlatformRef } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {APP_BASE_HREF} from '@angular/common';
-import { YagaModule }   from '@yaga/leaflet-ng2';
-import { MatFormFieldModule, MatInputModule, MatCheckboxModule, MatExpansionModule, MatSelectModule, MatIconModule, MatButtonModule, MatAutocompleteModule, MatProgressSpinnerModule } from '@angular/material';
+import { YagaModule } from '@yaga/leaflet-ng2';
+import { MatFormFieldModule, MatInputModule, MatCheckboxModule, MatExpansionModule,
+  MatSelectModule, MatIconModule, MatButtonModule, MatAutocompleteModule, MatProgressSpinnerModule } from '@angular/material';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppRoutingModule } from './app-routing.module';
