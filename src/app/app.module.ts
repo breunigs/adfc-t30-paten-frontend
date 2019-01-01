@@ -10,13 +10,15 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { T30patenComponent } from './t30paten/t30paten.component';
+import { T30sozialeEinrichtungComponent } from './t30soziale-einrichtung/t30soziale-einrichtung.component';
 
 const platform: PlatformRef = platformBrowserDynamic();
 
 @NgModule({
   declarations: [
     AppComponent,
-    T30patenComponent
+    T30patenComponent,
+    T30sozialeEinrichtungComponent
   ],
   imports: [
     BrowserModule,
