@@ -1,4 +1,4 @@
-<form [formGroup]="t30pate">
+<form [formGroup]="t30pate" (ngSubmit)="onSubmit()">
   <mat-accordion>
     <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
       <mat-expansion-panel-header>
@@ -7,47 +7,51 @@
           Persönliche Daten
         </mat-panel-title>
         <mat-panel-description>
+          <mat-icon *ngIf="!(t30pate.get('pate').valid)">error_outline</mat-icon>
+          <mat-icon *ngIf="(t30pate.get('pate').valid)">check_circle_outline</mat-icon>
           Name, E-Mail, Kontaktdaten
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <mat-form-field class="t30-half-width">
-        <input matInput placeholder="Vorname" formControlName="vorname">
-      </mat-form-field>
-      <mat-form-field class="t30-half-width">
-        <input matInput placeholder="Nachname" formControlName="nachname">
-      </mat-form-field>
-      <mat-form-field class="t30-full-width">
-        <input matInput placeholder="E-Mail" type="email" formControlName="eMail">
-      </mat-form-field>
-      <mat-form-field class="t30-full-width">
-        <input matInput placeholder="Straße und Hausnummer" formControlName="strasse">
-      </mat-form-field>
-      <mat-form-field class="t30-half-width">
-        <input matInput placeholder="PLZ" formControlName="plz">
-      </mat-form-field>
-      <mat-form-field class="t30-half-width">
-        <input matInput placeholder="Ort" formControlName="ort">
-      </mat-form-field>
-      <mat-form-field class="t30-full-width">
-        <input matInput placeholder="Telefon" formControlName="telefon">
-      </mat-form-field>
-      <div>
-        <mat-checkbox formControlName="mailingliste">
-          Ich möchte auf die Tempo30-Paten Mailingliste, um Informationen zu erhalten und mich auszutauchen.
-        </mat-checkbox>
-      </div>
-      <div>
-        <mat-checkbox formControlName="newsletter">
-          Ich möchte den ADFC Newsletter.
-        </mat-checkbox>
-      </div>
-      <div>
-        <mat-checkbox formControlName="speichern">
-          Der ADFC darf meine Daten für diese Kampange speichern und verwenden.
-        </mat-checkbox>
-        <div *ngIf="!(t30pate.controls.speichern.value)">
-          <mat-icon color="warn">warning</mat-icon>
-          Unsere Idee ist, dass wir uns mit den Paten vernetzen, dass ist nicht dann nicht möglich! Das finden wir doof!
+      <div formGroupName="pate">
+        <mat-form-field class="t30-half-width">
+          <input matInput placeholder="Vorname" formControlName="vorname">
+        </mat-form-field>
+        <mat-form-field class="t30-half-width">
+          <input matInput placeholder="Nachname" formControlName="nachname">
+        </mat-form-field>
+        <mat-form-field class="t30-full-width">
+          <input matInput placeholder="E-Mail" type="email" formControlName="eMail">
+        </mat-form-field>
+        <mat-form-field class="t30-full-width">
+          <input matInput placeholder="Straße und Hausnummer" formControlName="strasse">
+        </mat-form-field>
+        <mat-form-field class="t30-half-width">
+          <input matInput placeholder="PLZ" formControlName="plz">
+        </mat-form-field>
+        <mat-form-field class="t30-half-width">
+          <input matInput placeholder="Ort" formControlName="ort">
+        </mat-form-field>
+        <mat-form-field class="t30-full-width">
+          <input matInput placeholder="Telefon" formControlName="telefon">
+        </mat-form-field>
+        <div>
+          <mat-checkbox formControlName="mailingliste">
+            Ich möchte auf die Tempo30-Paten Mailingliste, um Informationen zu erhalten und mich auszutauchen.
+          </mat-checkbox>
+        </div>
+        <div>
+          <mat-checkbox formControlName="newsletter">
+            Ich möchte den ADFC Newsletter.
+          </mat-checkbox>
+        </div>
+        <div>
+          <mat-checkbox formControlName="speichern">
+            Der ADFC darf meine Daten für diese Kampange speichern und verwenden.
+          </mat-checkbox>
+          <div *ngIf="!(t30pate.get('pate.speichern').value)">
+            <mat-icon color="warn">warning</mat-icon>
+            Unsere Idee ist, dass wir uns mit den Paten vernetzen, dass ist nicht dann nicht möglich! Das finden wir doof!
+          </div>
         </div>
       </div>
       <mat-action-row>
@@ -66,6 +70,8 @@
             <div *ngIf="(patenschaft.get('einrichtung.name').value)">{{ patenschaft.get('einrichtung.name').value }}</div>
           </mat-panel-title>
           <mat-panel-description>
+            <mat-icon *ngIf="!(patenschaft.valid)">error_outline</mat-icon>
+            <mat-icon *ngIf="(patenschaft.valid)">check_circle_outline</mat-icon>
             <div *ngIf="(patenschaft.get('einrichtung.zusatz').value)">{{ patenschaft.get('einrichtung.zusatz').value }}</div>
             <div *ngIf="!(patenschaft.get('einrichtung.art').value)">Schule, Kindergarten, Krankenhaus, Alten- und Pflegeheim</div>
           </mat-panel-description>
@@ -112,57 +118,33 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
 
-      <div *ngFor="let patenschaft of t30pate.get('patenschaften').controls; let p = index">
-        <div><b>Von:</b> {{ t30pate.get('vorname').value }} {{ t30pate.get('nachname').value }} &lt;{{ t30pate.get('eMail').value }}&gt; </div>
-        <div><b>An:</b>Polzei Hamburg &lt;polizei@example.com&gt;</div>
-        <div><b>CC:</b>ADFC Hamburg &lt;laeuft@hamburg.adfc.de&gt;</div>
-        <mat-form-field class="t30-full-width">
-          <input matInput placeholder="Betreff" value="Bitte um Prüfung von Tempo 30 vor der Einrichtung {{ patenschaft.get('einrichtung.name').value }}, {{ patenschaft.get('einrichtung.zusatz').value }}">
-        </mat-form-field>
+      <div *ngFor="let patenschaft of t30pate.get('patenschaften').controls; let p = index;">
+        <div [formGroup]="t30pate.get('emails').at(p)">
+          <h2>{{p+1}}. E-Mail</h2>
+          <div><b>Von:</b> {{ t30pate.get('pate.vorname').value }} {{ t30pate.get('pate.nachname').value }} &lt;{{ t30pate.get('pate.eMail').value }}&gt; </div>
+          <div><b>An:</b>Polzei Hamburg &lt;polizei@example.com&gt;</div>
+          <div><b>CC:</b>ADFC Hamburg &lt;laeuft@hamburg.adfc.de&gt;</div>
+          <mat-form-field class="t30-full-width">
+            <input matInput placeholder="Betreff" formControlName="subject" >
+          </mat-form-field>
 
-        <mat-form-field class="t30-full-width">
-          <textarea class="t30-email-area" matInput placeholder="eMail">
-Sehr geehrte Damen und Herren,
-
-mein Name ist {{ t30pate.get('vorname').value }} {{ t30pate.get('nachname').value }} und mir ist aufgefallen, dass an der {{ patenschaft.get('einrichtung.name').value }}, {{ patenschaft.get('einrichtung.zusatz').value }} leider Tempo 50 ist. Ich fordere Sie auf hier Tempo 30 einzuführen.
-
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
-Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-
-Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-
-Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-
-Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.
-
-At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.
-
-Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus.
-
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
-Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-
-Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-
-    Viele Grüße
-
-    {{ t30pate.get('vorname').value }} {{ t30pate.get('nachname').value }}
-
-      </textarea>
-        </mat-form-field>
+          <mat-form-field class="t30-full-width">
+            <textarea class="t30-email-area" matInput formControlName="mailtext" placeholder="E-Mail">
+            </textarea>
+          </mat-form-field>
+        </div>
       </div>
-
-      Durch das Absenden aktzeptieren Sie die Datenschutzvereinbarung mit dem ADFC Hamburg.
       <mat-action-row>
         <button mat-button (click)="prevStep()">
           <mat-icon>navigate_before</mat-icon>zurück
         </button>
-        <button mat-raised-button color="primary" (click)="absenden()">
-          <mat-icon>send</mat-icon> Absenden
-        </button>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
+  Durch das Absenden aktzeptieren Sie die Datenschutzvereinbarung mit dem ADFC Hamburg.
+  <mat-action-row>
+    <button mat-raised-button color="primary" type="submit">
+      <mat-icon>send</mat-icon> Absenden
+    </button>
+  </mat-action-row>
 </form>
