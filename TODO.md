@@ -1,7 +1,6 @@
 
 Frontend T30 Paten
 
-* Bei Klick auf die Karte den Marker versetzen
 * Wenn man die Straße oder PLZ ändert, neue Position ermitteln (mit Button)
 * Schadstoff / Lärmwerte ermitteln und ausgeben.
 * Validatoren

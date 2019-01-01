@@ -122,6 +122,16 @@ export class T30sozialeEinrichtungComponent implements OnInit {
       lon: this.lon
     });
   }
+  mapDblClick(event) {
+    if (event.latlng) {
+      this.lat = event.latlng.lat;
+      this.lon = event.latlng.lng;
+      this.einrichtung.patchValue({
+        lat: this.lat,
+        lon: this.lon
+      });
+    }
+  }
   ngOnInit() {
     this.einrichtung.get('lat').valueChanges.subscribe(x => this.changeLatFB(x));
     this.einrichtung.get('lon').valueChanges.subscribe(x => this.changeLonFB(x));
