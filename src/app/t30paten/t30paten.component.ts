@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormArray, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import { FormBuilder, FormControl, FormArray, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { T30Pate } from '../t30pate';
 import { T30Patenschaft } from '../t30patenschaft';
@@ -13,32 +13,29 @@ import { T30sozialeEinrichtungComponent } from '../t30soziale-einrichtung/t30soz
 })
 export class T30patenComponent implements OnInit {
 
-    t30pate = this.fb.group({
-        vorname: ['', Validators.required],
-        nachname: ['', Validators.required],
-        eMail: ['', [ Validators.required, Validators.email ] ],
-        strasse: [''],
-        plz: ['', Validators.maxLength(5) ],
-        ort: [''],
-        telefon: [''],
-        speichern: [true, Validators.required],
-        mailingliste: [false, Validators.required],
-        newsletter: [false, Validators.required],
-        patenschaften: this.fb.array([
-            this.fb.group({
-                id: [-1],
-                bezugZurEinrichtung: ['', Validators.required],
-                standDerDinge: [''],
-                einrichtung: T30sozialeEinrichtungComponent.buildItem(this.fb),
-            })
-        ]),
-    });
-
-
-
+  t30pate = this.fb.group({
+    vorname: ['', Validators.required],
+    nachname: ['', Validators.required],
+    eMail: ['', [Validators.required, Validators.email]],
+    strasse: [''],
+    plz: ['', Validators.maxLength(5)],
+    ort: [''],
+    telefon: [''],
+    speichern: [true, Validators.required],
+    mailingliste: [false, Validators.required],
+    newsletter: [false, Validators.required],
+    patenschaften: this.fb.array([
+      this.fb.group({
+        id: [-1],
+        bezugZurEinrichtung: ['', Validators.required],
+        standDerDinge: [''],
+        einrichtung: T30sozialeEinrichtungComponent.buildItem(this.fb),
+      })
+    ]),
+  });
   step = 0;
 
-    setStep(index: number) {
+  setStep(index: number) {
     this.step = index;
   }
 
@@ -50,30 +47,30 @@ export class T30patenComponent implements OnInit {
     this.step--;
   }
 
-    ps() {
-        return this.t30pate.controls.patenschaften as FormArray
-    }
-    lastStep() {
+  ps() {
+    return this.t30pate.controls.patenschaften as FormArray
+  }
+  lastStep() {
 
-        let rtn=this.ps().length+1;
-        return rtn;
-    }
-    deletePatenschaft(index) {
-        this.ps().removeAt(index);
-    }
-    addPatenschaft(index) {
-        let p= this.fb.group({
-                id: [-1],
-                bezugZurEinrichtung: ['', Validators.required],
-                standDerDinge: [''],
-                einrichtung: T30sozialeEinrichtungComponent.buildItem(this.fb),
-            })
+    let rtn = this.ps().length + 1;
+    return rtn;
+  }
+  deletePatenschaft(index) {
+    this.ps().removeAt(index);
+  }
+  addPatenschaft(index) {
+    let p = this.fb.group({
+      id: [-1],
+      bezugZurEinrichtung: ['', Validators.required],
+      standDerDinge: [''],
+      einrichtung: T30sozialeEinrichtungComponent.buildItem(this.fb),
+    })
 
-        this.ps().push(p);
-      this.step++;
-    }
-    absenden() {
-    }
+    this.ps().push(p);
+    this.step++;
+  }
+  absenden() {
+  }
 
   constructor(private fb: FormBuilder) { }
 

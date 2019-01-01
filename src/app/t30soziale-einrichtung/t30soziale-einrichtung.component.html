@@ -1,18 +1,25 @@
 <div [formGroup]="einrichtung">
 <mat-form-field class="t30-full-width">
-  <input matInput placeholder="Name der Einrichtung"  formControlName="name" [matAutocomplete]="auto" name="einrichtung"(ngModelChange)="changeEinrichtungsName(i,$event)"   >
+  <input matInput
+  placeholder="Name der Einrichtung"
+  formControlName="name"
+  [matAutocomplete]="auto"
+  (ngModelChange)="changeEinrichtungsName(i,$event)">
 </mat-form-field>
-<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayEinrichtungsName" (optionSelected)="setAcEinrichtung(i,$event)">
+<mat-autocomplete
+ #auto="matAutocomplete"
+[displayWith]="displayEinrichtungsName"
+(optionSelected)="setAcEinrichtung(i,$event)">
 <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
 <ng-container *ngIf="!isLoading">
   <mat-option *ngFor="let einr of filteredUsers" [value]="einr" >
     <span>{{ einr.Name }}</span>
-    <small>|{{einr.Strasse}} {{einr.Nummer}}, {{einr.PLZ}} Hamburg {{einr.Bezirk}} (Nr. {{einr.id}})</small>
+    <small>|{{einr.Strasse}} {{einr.Nummer}}|{{einr.PLZ}} Hamburg |{{einr.Bezirk}}| (Nr. {{einr.id}})</small>
   </mat-option>
 </ng-container>
 </mat-autocomplete>
 <mat-form-field class="t30-full-width">
-  <input matInput placeholder="Zusatz" formControlName="zusatz"  name="einrichtung">
+  <input matInput placeholder="Zusatz" formControlName="zusatz">
   <mat-hint>z.B. wenn es drei Standorte gibt und bei zweien Tempo 30 Sinn macht, dann bitte die zwei Aufführen und hier die Bezeichnung des Standortes angeben</mat-hint>
 </mat-form-field>
 
@@ -25,26 +32,26 @@
   </mat-select>
 </mat-form-field>
 <mat-form-field class="t30-half-width">
-  <input matInput placeholder="Einrichtungs Nummer" formControlName="id" readonly="true"  name="einrichtungNr">
+  <input matInput placeholder="Einrichtungs Nummer" formControlName="id" readonly="true" >
   <mat-hint>Wird vom ADFC genutzt um diesen Ort wieder zu finden</mat-hint>
 </mat-form-field>
 
 <mat-form-field class="t30-full-width">
-  <input matInput placeholder="Straße und Hausnummer" formControlName="strasse"  name="strasse" >
+  <input matInput placeholder="Straße und Hausnummer" formControlName="strasse">
 </mat-form-field>
 <div>
-  <mat-checkbox  formControlName="t50" name="istTempo50">Mindestens ein Ausgang dieser Einrichtung mündet an einer Straße mit hoher Geschwindigkeit (mehr als Tempo 30)</mat-checkbox>
+  <mat-checkbox  formControlName="t50">Mindestens ein Ausgang dieser Einrichtung mündet an einer Straße mit hoher Geschwindigkeit (mehr als Tempo 30)</mat-checkbox>
 </div>
 <div *ngIf="!(einrichtung.get('t50').value)"><mat-icon color="warn">warning</mat-icon> Dann sind die Vorraussetzungen gemäß StVO nicht gegeben, und sie können keine Patenschaft übernehmen</div>
 <mat-form-field class="t30-full-width">
-  <input matInput placeholder="Straße für die Tempo 30 angefragt werden soll" formControlName="t50strasse"  name="t50strasse">
+  <input matInput placeholder="Straße für die Tempo 30 angefragt werden soll" formControlName="t50strasse"  >
   <mat-hint>ggf. um ein "von Hausnummer ... bis Hausnummer ... ergänzen"</mat-hint>
 </mat-form-field>
 <mat-form-field class="t30-half-width">
-  <input matInput placeholder="PLZ" name="plz" formControlName="plz">
+  <input matInput placeholder="PLZ"  formControlName="plz">
 </mat-form-field>
 <mat-form-field class="t30-half-width">
-  <input matInput placeholder="Ort" name="ort" formControlName="ort">
+  <input matInput placeholder="Ort"  formControlName="ort">
 </mat-form-field>
 
 <div class="t30-full-width-flex">
@@ -71,10 +78,10 @@
 </div>
 <div class="t30-daneben-div">
   <mat-form-field class="t30-half-width">
-    <input matInput placeholder="Latitude" name="lat" formControlName="lat">
+    <input matInput placeholder="Latitude" formControlName="lat">
   </mat-form-field>
   <mat-form-field class="t30-half-width">
-    <input matInput placeholder="Longitude" name="lon" formControlName="lon">
+    <input matInput placeholder="Longitude" formControlName="lon">
   </mat-form-field>
 </div>
 </div>
