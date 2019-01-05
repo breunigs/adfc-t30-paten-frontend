@@ -5,6 +5,7 @@ import { T30Pate } from '../t30pate';
 import { T30Patenschaft } from '../t30patenschaft';
 import { SozialeEinrichtung } from '../sozialeEinrichtung';
 import { T30sozialeEinrichtungComponent } from '../t30soziale-einrichtung/t30soziale-einrichtung.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-t30paten',
@@ -12,7 +13,6 @@ import { T30sozialeEinrichtungComponent } from '../t30soziale-einrichtung/t30soz
   styleUrls: ['./t30paten.component.css']
 })
 export class T30patenComponent implements OnInit {
-
   t30pate = this.fb.group({
     pate: this.fb.group({
       vorname: ['', Validators.required],
@@ -86,7 +86,7 @@ export class T30patenComponent implements OnInit {
     this.step++;
   }
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private router: Router) { }
 
   ngOnInit() {
     this.t30pate.valueChanges.subscribe(val => {
@@ -144,5 +144,6 @@ https://hamburg.adfc.de/hast-nicht-gesehen-FIXME `;
 
   onSubmit() {
     console.log(this.t30pate);
+    this.router.navigate(['token', false]);
   }
 }

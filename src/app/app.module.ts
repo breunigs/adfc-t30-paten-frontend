@@ -12,6 +12,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { T30patenComponent } from './t30paten/t30paten.component';
 import { T30sozialeEinrichtungComponent } from './t30soziale-einrichtung/t30soziale-einrichtung.component';
+import { TokenEingebenComponent } from './token-eingeben/token-eingeben.component';
+import { TokenBestaetigungComponent } from './token-bestaetigung/token-bestaetigung.component';
+import { EmailVersandComponent } from './email-versand/email-versand.component';
+import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common';
 
 const platform: PlatformRef = platformBrowserDynamic();
 
@@ -19,7 +23,10 @@ const platform: PlatformRef = platformBrowserDynamic();
   declarations: [
     AppComponent,
     T30patenComponent,
-    T30sozialeEinrichtungComponent
+    T30sozialeEinrichtungComponent,
+    TokenEingebenComponent,
+    TokenBestaetigungComponent,
+    EmailVersandComponent
   ],
   imports: [
     BrowserModule,
@@ -38,8 +45,11 @@ const platform: PlatformRef = platformBrowserDynamic();
       MatProgressSpinnerModule,
       YagaModule
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: document.body.dataset.baseUrl}],
-  bootstrap: [AppComponent]
+  providers: [
+    {provide: APP_BASE_HREF, useValue: document.body.dataset.baseUrl},
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
 
