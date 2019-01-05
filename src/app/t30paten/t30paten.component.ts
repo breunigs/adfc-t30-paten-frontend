@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormArray, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { T30Pate } from '../t30pate';
-import { T30Patenschaft } from '../t30patenschaft';
-import { SozialeEinrichtung } from '../sozialeEinrichtung';
+import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { T30sozialeEinrichtungComponent } from '../t30soziale-einrichtung/t30soziale-einrichtung.component';
 import { Router } from '@angular/router';
 
@@ -66,11 +62,13 @@ export class T30patenComponent implements OnInit {
     const rtn = this.ps().length + 1;
     return rtn;
   }
+
   deletePatenschaft(index) {
     this.ps().removeAt(index);
     this.emailsGroup().removeAt(index);
   }
-  addPatenschaft(index) {
+
+  addPatenschaft() {
     const p = this.fb.group({
       id: [-1],
       bezugZurEinrichtung: ['', Validators.required],

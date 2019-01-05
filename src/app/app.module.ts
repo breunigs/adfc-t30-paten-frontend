@@ -15,7 +15,7 @@ import { T30sozialeEinrichtungComponent } from './t30soziale-einrichtung/t30sozi
 import { TokenEingebenComponent } from './token-eingeben/token-eingeben.component';
 import { TokenBestaetigungComponent } from './token-bestaetigung/token-bestaetigung.component';
 import { EmailVersandComponent } from './email-versand/email-versand.component';
-import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 
 const platform: PlatformRef = platformBrowserDynamic();
 

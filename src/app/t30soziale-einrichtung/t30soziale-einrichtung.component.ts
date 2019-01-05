@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormControl, FormArray, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Point } from 'leaflet';
 import { OSM_TILE_LAYER_URL } from '@yaga/leaflet-ng2';
 import * as sozialeEinrichtungen from '../../assets/sozEinr.json';
