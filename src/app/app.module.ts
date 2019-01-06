@@ -1,12 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, PlatformRef } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {APP_BASE_HREF} from '@angular/common';
 import { YagaModule } from '@yaga/leaflet-ng2';
 import { MatFormFieldModule, MatInputModule, MatCheckboxModule, MatExpansionModule,
   MatSelectModule, MatIconModule, MatButtonModule, MatAutocompleteModule, MatProgressSpinnerModule } from '@angular/material';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,7 +16,6 @@ import { TokenBestaetigungComponent } from './token-bestaetigung/token-bestaetig
 import { EmailVersandComponent } from './email-versand/email-versand.component';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 
-const platform: PlatformRef = platformBrowserDynamic();
 
 @NgModule({
   declarations: [
@@ -52,9 +50,3 @@ const platform: PlatformRef = platformBrowserDynamic();
   bootstrap: [AppComponent],
 })
 export class AppModule { }
-
-document.addEventListener('DOMContentLoaded', () => {
-    platform.bootstrapModule(AppModule);
-});
-
-platformBrowserDynamic().bootstrapModule(AppModule).catch((err: any) => console.error(err));
