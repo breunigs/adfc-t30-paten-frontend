@@ -56,3 +56,5 @@ export class AppModule { }
 document.addEventListener('DOMContentLoaded', () => {
     platform.bootstrapModule(AppModule);
 });
+
+platformBrowserDynamic().bootstrapModule(AppModule).catch((err: any) => console.error(err));

@@ -1,14 +1,14 @@
-<form [formGroup]="t30pate" (ngSubmit)="onSubmit()">
+<form [formGroup]="t30pate">
   <mat-accordion>
     <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
       <mat-expansion-panel-header>
         <mat-panel-title>
+          <mat-icon *ngIf="(!t30pate.get('pate').valid) && displayValidatorMarker" color="warn">error_outline</mat-icon>
+          <mat-icon *ngIf="(t30pate.get('pate').valid) && displayValidatorMarker" class="t30-yes">check_circle_outline</mat-icon>
           <mat-icon>account_circle</mat-icon>
           Persönliche Daten
         </mat-panel-title>
         <mat-panel-description>
-          <mat-icon *ngIf="!(t30pate.get('pate').valid)">error_outline</mat-icon>
-          <mat-icon *ngIf="(t30pate.get('pate').valid)">check_circle_outline</mat-icon>
           Name, E-Mail, Kontaktdaten
         </mat-panel-description>
       </mat-expansion-panel-header>
@@ -61,17 +61,17 @@
       </mat-action-row>
     </mat-expansion-panel>
     <div formArrayName="patenschaften">
-      <mat-expansion-panel *ngFor="let patenschaft of t30pate.get('patenschaften').controls; let i = index" [expanded]="step === (i+1)" (opened)="setStep(i+1)" [formGroupName]="i">
+      <mat-expansion-panel *ngFor="let patenschaft of t30pate.get('patenschaften')['controls']; let i = index" [expanded]="step === (i+1)" (opened)="setStep(i+1)" [formGroupName]="i">
         <mat-expansion-panel-header>
           <mat-panel-title>
+            <mat-icon *ngIf="(!(patenschaft.valid)) && displayValidatorMarker" color="warn">error_outline</mat-icon>
+            <mat-icon *ngIf="(patenschaft.valid && displayValidatorMarker)" class="t30-yes">check_circle_outline</mat-icon>
             <mat-icon>business</mat-icon>
             <mat-icon *ngIf="!(patenschaft.get('einrichtung.t50').value)" color="warn">warning</mat-icon>
             <div *ngIf="!(patenschaft.get('einrichtung.name').value)">{{ i+1  }}. Einrichtung</div>
             <div *ngIf="(patenschaft.get('einrichtung.name').value)">{{ patenschaft.get('einrichtung.name').value }}</div>
           </mat-panel-title>
           <mat-panel-description>
-            <mat-icon *ngIf="!(patenschaft.valid)">error_outline</mat-icon>
-            <mat-icon *ngIf="(patenschaft.valid)">check_circle_outline</mat-icon>
             <div *ngIf="(patenschaft.get('einrichtung.zusatz').value)">{{ patenschaft.get('einrichtung.zusatz').value }}</div>
             <div *ngIf="!(patenschaft.get('einrichtung.art').value)">Schule, Kindergarten, Krankenhaus, Alten- und Pflegeheim</div>
           </mat-panel-description>
@@ -111,6 +111,8 @@
     <mat-expansion-panel [expanded]="step === lastStep()" (opened)="setStep(lastStep())">
       <mat-expansion-panel-header>
         <mat-panel-title>
+          <mat-icon *ngIf="(!t30pate.get('emails').valid) && displayValidatorMarker" color="warn">error_outline</mat-icon>
+          <mat-icon *ngIf="(t30pate.get('emails').valid) && displayValidatorMarker" class="t30-yes">check_circle_outline</mat-icon>
           <mat-icon>email</mat-icon> Bitte
         </mat-panel-title>
         <mat-panel-description>
@@ -118,7 +120,7 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
 
-      <div *ngFor="let patenschaft of t30pate.get('patenschaften').controls; let p = index;">
+      <div *ngFor="let patenschaft of t30pate.get('patenschaften')['controls']; let p = index;">
         <div [formGroup]="t30pate.get('emails').at(p)">
           <h2>{{p+1}}. E-Mail</h2>
           <div><b>Von:</b> {{ t30pate.get('pate.vorname').value }} {{ t30pate.get('pate.nachname').value }} &lt;{{ t30pate.get('pate.eMail').value }}&gt; </div>
@@ -143,7 +145,7 @@
   </mat-accordion>
   Durch das Absenden aktzeptieren Sie die Datenschutzvereinbarung mit dem ADFC Hamburg.
   <mat-action-row>
-    <button mat-raised-button color="primary" type="submit">
+    <button mat-raised-button color="primary" (click)="onSubmit()">
       <mat-icon>send</mat-icon> Absenden
     </button>
   </mat-action-row>

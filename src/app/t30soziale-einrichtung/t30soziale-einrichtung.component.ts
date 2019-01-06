@@ -55,7 +55,7 @@ export class T30sozialeEinrichtungComponent implements OnInit {
     });
   }
 
-  changeEinrichtungsName(nr, search) {
+  changeEinrichtungsName(search) {
     this.isLoading = true;
     const newUsers = [];
     if (search.length > 2) {
@@ -81,7 +81,7 @@ export class T30sozialeEinrichtungComponent implements OnInit {
       return eintrag;
     }
   }
-  setAcEinrichtung(i, eintrag) {
+  setAcEinrichtung(eintrag) {
 
     const e = eintrag.option.value;
     this.einrichtung.patchValue({

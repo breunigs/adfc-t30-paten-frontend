@@ -4,12 +4,12 @@
   placeholder="Name der Einrichtung"
   formControlName="name"
   [matAutocomplete]="auto"
-  (ngModelChange)="changeEinrichtungsName(i,$event)">
+  (ngModelChange)="changeEinrichtungsName($event)">
 </mat-form-field>
 <mat-autocomplete
  #auto="matAutocomplete"
 [displayWith]="displayEinrichtungsName"
-(optionSelected)="setAcEinrichtung(i,$event)">
+(optionSelected)="setAcEinrichtung($event)">
 <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
 <ng-container *ngIf="!isLoading">
   <mat-option *ngFor="let einr of filteredUsers" [value]="einr" >
@@ -67,7 +67,7 @@
     <yaga-marker
     [(lat)]="lat"
     [(lng)]="lon"
-    (moveend)="mapMoveEnd($event);"
+    (moveend)="mapMoveEnd();"
      draggable="true">
       <yaga-icon
          iconUrl="assets/marker-icon.png"

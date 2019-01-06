@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormArray, FormGroup, FormControl, AbstractControl, Validators } from '@angular/forms';
 import { T30sozialeEinrichtungComponent } from '../t30soziale-einrichtung/t30soziale-einrichtung.component';
 import { Router } from '@angular/router';
+import { T30PatenService } from '../t30-paten.service';
+import { T30Pate } from '../t30pate';
 
 @Component({
   selector: 'app-t30paten',
@@ -9,6 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./t30paten.component.css']
 })
 export class T30patenComponent implements OnInit {
+  displayValidatorMarker = false;
   t30pate = this.fb.group({
     pate: this.fb.group({
       vorname: ['', Validators.required],
@@ -58,7 +61,6 @@ export class T30patenComponent implements OnInit {
     return this.t30pate.controls.emails as FormArray;
   }
   lastStep() {
-
     const rtn = this.ps().length + 1;
     return rtn;
   }
@@ -84,7 +86,7 @@ export class T30patenComponent implements OnInit {
     this.step++;
   }
 
-  constructor(private fb: FormBuilder, private router: Router) { }
+  constructor(private fb: FormBuilder, private router: Router, private service: T30PatenService) { }
 
   ngOnInit() {
     this.t30pate.valueChanges.subscribe(val => {
@@ -132,16 +134,40 @@ Diese E-Mail wurde durch das T30-Tool des ADFC-Hamburg verschickt, mehr Infos da
 https://hamburg.adfc.de/hast-nicht-gesehen-FIXME `;
         /* tslint:disable:max-line-length */
         if (newEMailText !== val.emails[index].mailtext) {
-          console.log(newEMailText);
           this.emailsGroup().at(index).get('mailtext').setValue(newEMailText);
         }
         index++;
       }
     });
   }
+validateAllFormFields(control: AbstractControl) {
+    if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+    } else if (control instanceof FormGroup) {
+      Object.keys(control.controls).forEach(field => {
+          this.validateAllFormFields( control.get(field));
+        });
+    } else if (control instanceof FormArray) {
+        let i = 0;
+        while (i < control.length) {
+          this.validateAllFormFields(control.at(i));
+          i++;
+        }
+    } else {
+      console.error('Unkown Control: ', control);
+    }
+
+  }
 
   onSubmit() {
-    console.log(this.t30pate);
-    this.router.navigate(['token', false]);
+    // FIXME muss eigentlich in die if Anweisung
+    this.service.submitFirstPate(this.t30pate.value as T30Pate);
+    this.validateAllFormFields(this.t30pate);
+    this.t30pate.get('patenschaften').markAsDirty();
+    if (this.t30pate.valid) {
+      this.router.navigate(['token', false]);
+    } else {
+      this.displayValidatorMarker = true;
+    }
   }
 }
