@@ -161,11 +161,12 @@ validateAllFormFields(control: AbstractControl) {
 
   onSubmit() {
     // FIXME muss eigentlich in die if Anweisung
-    this.service.submitFirstPate(this.t30pate.value as T30Pate);
     this.validateAllFormFields(this.t30pate);
     this.t30pate.get('patenschaften').markAsDirty();
     if (this.t30pate.valid) {
-      this.router.navigate(['token', false]);
+      this.service.submitFirstPate(new T30Pate(this.t30pate.value)).subscribe(results => {
+        this.router.navigate(['token', false]);
+      });
     } else {
       this.displayValidatorMarker = true;
     }

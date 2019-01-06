@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {APP_BASE_HREF} from '@angular/common';
 import { YagaModule } from '@yaga/leaflet-ng2';
 import { MatFormFieldModule, MatInputModule, MatCheckboxModule, MatExpansionModule,
   MatSelectModule, MatIconModule, MatButtonModule, MatAutocompleteModule, MatProgressSpinnerModule } from '@angular/material';
@@ -14,8 +13,8 @@ import { T30sozialeEinrichtungComponent } from './t30soziale-einrichtung/t30sozi
 import { TokenEingebenComponent } from './token-eingeben/token-eingeben.component';
 import { TokenBestaetigungComponent } from './token-bestaetigung/token-bestaetigung.component';
 import { EmailVersandComponent } from './email-versand/email-versand.component';
-import {HashLocationStrategy, LocationStrategy} from '@angular/common';
-
+import { HashLocationStrategy, LocationStrategy} from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -41,10 +40,10 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
       MatButtonModule,
       MatAutocompleteModule,
       MatProgressSpinnerModule,
-      YagaModule
+      YagaModule,
+      HttpClientModule,
   ],
   providers: [
-    {provide: APP_BASE_HREF, useValue: document.body.dataset.baseUrl},
     {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent],

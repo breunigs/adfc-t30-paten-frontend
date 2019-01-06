@@ -1,4 +1,3 @@
-import { T30Patenschaft } from './t30patenschaft';
 export class T30Pate {
     id: number;
     vorname: string;
@@ -9,8 +8,10 @@ export class T30Pate {
     plz: string;
     ort: string;
     telefon: string;
-    patenschaften: Array<T30Patenschaft>;
     speichern: boolean;
     mailingliste: boolean;
     newsletter: boolean;
+    public constructor(init?: Partial<T30Pate>) {
+        Object.assign(this, init);
+    }
 }
