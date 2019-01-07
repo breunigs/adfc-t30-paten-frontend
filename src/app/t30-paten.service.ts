@@ -33,12 +33,22 @@ export class T30PatenService {
      }));
   }
   testToken(token: String) {
-    return (token === 'OKAY');
+    return this.http.get<any>(this.baseUrl + 'test-token.php?token=' + token, httpOptions)
+     .pipe(
+       map( res => {
+       if (res.error) {
+         throw new NotificationError(res.error);
+       }
+     }));
   }
   submitToken(token: String) {
-      if (this.testToken(token)) {
-        return true;
-      }
-      return false;
-  }
+    return this.http.get<any>(this.baseUrl + 'submit-token.php?token=' +  token, httpOptions)
+     .pipe(
+       map( res => {
+       if (res.error) {
+         throw new NotificationError(res.error);
+       }
+       return res['ok']===1;
+     }));
+   }
 }

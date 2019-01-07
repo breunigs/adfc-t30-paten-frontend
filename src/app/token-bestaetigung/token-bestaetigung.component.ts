@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 
+import { T30PatenService } from '../t30-paten.service';
+
 @Component({
   selector: 'app-token-bestaetigung',
   templateUrl: './token-bestaetigung.component.html',
@@ -13,7 +15,10 @@ export class TokenBestaetigungComponent implements OnInit, OnDestroy {
   token: string;
   private sub: any;
 
-  constructor(private router: Router, private route: ActivatedRoute, @Inject(DOCUMENT) private document: any) {
+  constructor(private router: Router,
+      private route: ActivatedRoute,
+      @Inject(DOCUMENT) private document: any,
+      private service: T30PatenService) {
   }
 
   ngOnInit() {
@@ -26,14 +31,13 @@ export class TokenBestaetigungComponent implements OnInit, OnDestroy {
     this.document.location.href = 'https://hamburg.adfc.de/laeuft/';
   }
   onSubmit() {
-    // FIXME checkToken via API Call if successfull:
-    if (this.token === 'OKAY') {
-       this.router.navigate(['mailSend']);
-    } else {
-      // FIXME
-      this.router.navigate(['token', true]);
-    }
-
+    this.service.submitToken(this.token).subscribe(okay => {
+      if (okay) {
+         this.router.navigate(['mailSend']);
+       } else {
+         this.router.navigate(['token', true]);
+       }
+     });
   }
   ngOnDestroy() {
     this.sub.unsubscribe();

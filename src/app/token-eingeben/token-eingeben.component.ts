@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
+import { T30PatenService } from '../t30-paten.service';
+
 @Component({
   selector: 'app-token-eingeben',
   templateUrl: './token-eingeben.component.html',
@@ -15,7 +17,7 @@ export class TokenEingebenComponent implements OnInit, OnDestroy {
   });
   fehler = false;
   private sub: any;
-  constructor(private router: Router, private fb: FormBuilder, private route: ActivatedRoute) { }
+  constructor(private router: Router, private fb: FormBuilder, private route: ActivatedRoute, private service: T30PatenService) { }
 
   ngOnInit() {
       this.sub = this.route.params.subscribe(params => {
@@ -26,11 +28,9 @@ export class TokenEingebenComponent implements OnInit, OnDestroy {
 
   onSubmit() {
       const token = this.tokenForm.get('token').value;
-      if (token === 'OKAY') {
-        this.router.navigate(['submitToken', this.tokenForm.get('token').value]);
-      } else {
-        this.fehler = true;
-      }
+     this.service.testToken(token).subscribe(results => {
+        this.router.navigate(['submitToken', token]);
+      });
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
