@@ -16,9 +16,9 @@ export class TokenBestaetigungComponent implements OnInit, OnDestroy {
   private sub: any;
 
   constructor(private router: Router,
-      private route: ActivatedRoute,
-      @Inject(DOCUMENT) private document: any,
-      private service: T30PatenService) {
+    private route: ActivatedRoute,
+    @Inject(DOCUMENT) private document: any,
+    private service: T30PatenService) {
   }
 
   ngOnInit() {
@@ -33,11 +33,11 @@ export class TokenBestaetigungComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.service.submitToken(this.token).subscribe(okay => {
       if (okay) {
-         this.router.navigate(['mailSend']);
-       } else {
-         this.router.navigate(['token', true]);
-       }
-     });
+        this.router.navigate(['mailSend']);
+      } else {
+        this.router.navigate(['token', true]);
+      }
+    });
   }
   ngOnDestroy() {
     this.sub.unsubscribe();

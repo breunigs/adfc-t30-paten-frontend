@@ -8,9 +8,9 @@ describe('TokenEingebenComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TokenEingebenComponent ]
+      declarations: [TokenEingebenComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

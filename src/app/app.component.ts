@@ -15,11 +15,11 @@ export class AppComponent implements OnInit, OnDestroy {
   sub: any;
   constructor(private snackBar: MatSnackBar, private errorService: ErrorNotifierService) {
   }
-  ngOnInit()  {
+  ngOnInit() {
     this.sub = this.errorService.messages.subscribe(e => {
       console.log('Fehler empfangen:', e);
       this.snackBar.open(e, 'Okay');
-      });
+    });
   }
   ngOnDestroy() {
     this.sub.unsubscribe();

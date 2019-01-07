@@ -1,8 +1,8 @@
 export class NotificationError extends Error {
-    constructor(m: string) {
-        super(m);
+  constructor(m: string) {
+    super(m);
 
-        // Set the prototype explicitly.
-        Object.setPrototypeOf(this, NotificationError.prototype);
-    }
+    // Set the prototype explicitly.
+    Object.setPrototypeOf(this, NotificationError.prototype);
+  }
 }

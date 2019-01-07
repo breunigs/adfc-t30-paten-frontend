@@ -140,19 +140,19 @@ https://hamburg.adfc.de/hast-nicht-gesehen-FIXME `;
       }
     });
   }
-validateAllFormFields(control: AbstractControl) {
+  validateAllFormFields(control: AbstractControl) {
     if (control instanceof FormControl) {
-        control.markAsTouched({ onlySelf: true });
+      control.markAsTouched({ onlySelf: true });
     } else if (control instanceof FormGroup) {
       Object.keys(control.controls).forEach(field => {
-          this.validateAllFormFields( control.get(field));
-        });
+        this.validateAllFormFields(control.get(field));
+      });
     } else if (control instanceof FormArray) {
-        let i = 0;
-        while (i < control.length) {
-          this.validateAllFormFields(control.at(i));
-          i++;
-        }
+      let i = 0;
+      while (i < control.length) {
+        this.validateAllFormFields(control.at(i));
+        i++;
+      }
     } else {
       console.error('Unkown Control: ', control);
     }

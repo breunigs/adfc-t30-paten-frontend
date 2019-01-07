@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class ErrorNotifierService {
-    public messages = new Subject<string>();
+  public messages = new Subject<string>();
   public addError(error: string) {
     this.messages.next(error);
   }

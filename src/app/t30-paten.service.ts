@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 import { NotificationError } from './notification-error';
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':  'application/json',
+    'Content-Type': 'application/json',
     'X-T30-Frontend-Version': environment.VERSION,
     'X-T30-Frontend-Production': String(environment.production),
     // 'Authorization': 'my-auth-token'
@@ -25,30 +25,30 @@ export class T30PatenService {
   submitFirstPate(pate: T30Pate) {
     // FIXME statt any einen Typ angeben
     return this.http.post<any>(this.baseUrl + 'antrag-submit.php', pate, httpOptions)
-     .pipe(
-       map( res => {
-       if (res.error) {
-         throw new NotificationError(res.error);
-       }
-     }));
+      .pipe(
+        map(res => {
+          if (res.error) {
+            throw new NotificationError(res.error);
+          }
+        }));
   }
   testToken(token: String) {
     return this.http.get<any>(this.baseUrl + 'test-token.php?token=' + token, httpOptions)
-     .pipe(
-       map( res => {
-       if (res.error) {
-         throw new NotificationError(res.error);
-       }
-     }));
+      .pipe(
+        map(res => {
+          if (res.error) {
+            throw new NotificationError(res.error);
+          }
+        }));
   }
   submitToken(token: String) {
-    return this.http.get<any>(this.baseUrl + 'submit-token.php?token=' +  token, httpOptions)
-     .pipe(
-       map( res => {
-       if (res.error) {
-         throw new NotificationError(res.error);
-       }
-       return res['ok']===1;
-     }));
-   }
+    return this.http.get<any>(this.baseUrl + 'submit-token.php?token=' + token, httpOptions)
+      .pipe(
+        map(res => {
+          if (res.error) {
+            throw new NotificationError(res.error);
+          }
+          return res['ok'] === 1;
+        }));
+  }
 }

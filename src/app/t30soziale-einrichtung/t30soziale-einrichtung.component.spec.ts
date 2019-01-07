@@ -8,9 +8,9 @@ describe('T30sozaleEinrichtungComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ T30sozaleEinrichtungComponent ]
+      declarations: [T30sozaleEinrichtungComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

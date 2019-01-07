@@ -20,17 +20,17 @@ export class TokenEingebenComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private fb: FormBuilder, private route: ActivatedRoute, private service: T30PatenService) { }
 
   ngOnInit() {
-      this.sub = this.route.params.subscribe(params => {
-        this.fehler = (params['fehler'] === 'true');
-      });
-      console.log('x');
+    this.sub = this.route.params.subscribe(params => {
+      this.fehler = (params['fehler'] === 'true');
+    });
+    console.log('x');
   }
 
   onSubmit() {
-      const token = this.tokenForm.get('token').value;
-     this.service.testToken(token).subscribe(results => {
-        this.router.navigate(['submitToken', token]);
-      });
+    const token = this.tokenForm.get('token').value;
+    this.service.testToken(token).subscribe(results => {
+      this.router.navigate(['submitToken', token]);
+    });
   }
   ngOnDestroy() {
     this.sub.unsubscribe();

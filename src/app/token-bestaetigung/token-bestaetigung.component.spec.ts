@@ -8,9 +8,9 @@ describe('TokenBestaetigungComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TokenBestaetigungComponent ]
+      declarations: [TokenBestaetigungComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
