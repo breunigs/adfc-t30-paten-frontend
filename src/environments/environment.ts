@@ -5,8 +5,7 @@
 export const environment = {
   production: false,
   VERSION: require('../../package.json').version,
-  API_BASE_URL: 'https://merlin.anders.hamburg/t30-paten-backen/master/'
-
+  API_BASE_URL: 'https://merlin.anders.hamburg/adfc/t30-paten-backend/'
 };
 
 /*

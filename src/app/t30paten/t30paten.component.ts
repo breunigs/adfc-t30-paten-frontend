@@ -160,7 +160,6 @@ validateAllFormFields(control: AbstractControl) {
   }
 
   onSubmit() {
-    // FIXME muss eigentlich in die if Anweisung
     this.validateAllFormFields(this.t30pate);
     this.t30pate.get('patenschaften').markAsDirty();
     if (this.t30pate.valid) {
