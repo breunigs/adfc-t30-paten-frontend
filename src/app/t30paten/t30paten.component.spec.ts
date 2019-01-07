@@ -8,9 +8,9 @@ describe('T30patenComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ T30patenComponent ]
+      declarations: [T30patenComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
