@@ -36,21 +36,25 @@
         </mat-form-field>
         <div>
           <mat-checkbox formControlName="mailingliste">
-            Ich möchte auf die Tempo30-Paten Mailingliste, um Informationen zu erhalten und mich auszutauchen.
+            Ich möchte auf die ADFC-Mailingliste "Tempo 30 vor sozialen
+            Einrichtungen", um Informationen zu erhalten und mich auszutauschen.
           </mat-checkbox>
         </div>
         <div>
           <mat-checkbox formControlName="newsletter">
-            Ich möchte den ADFC Newsletter.
+            Ich möchte den Newsletter des ADFC Hamburg bekommen (1 x im Monat,
+            gemischte ADFC-Themen).
           </mat-checkbox>
         </div>
         <div>
           <mat-checkbox formControlName="speichern">
-            Der ADFC darf meine Daten für diese Kampange speichern und verwenden.
+            Der ADFC Hamburg darf meine Daten für diese Kampagne speichern und
+            verwenden und mich kontaktieren.
           </mat-checkbox>
           <div *ngIf="!(t30pate.get('pate.speichern').value)">
             <mat-icon color="warn">warning</mat-icon>
-            Unsere Idee ist, dass wir uns mit den Paten vernetzen, dass ist nicht dann nicht möglich! Das finden wir doof!
+            Wir möchten gerne mit dir gemeinsam Tempo 30 vor sozialen Einrichtungen
+            durchsetzen. Das ist nur möglich, wenn wir Kontakt mit dir aufnehmen können.
           </div>
         </div>
       </div>
@@ -79,21 +83,21 @@
         <b>Angaben zur Einrichtung</b>
         <app-t30soziale-einrichtung [einrichtung]="patenschaft.get('einrichtung')">
         </app-t30soziale-einrichtung>
-        <b>Angaben des Paten</b>
         <mat-form-field class="t30-full-width">
-          <input matInput placeholder="Beziehung zur Einrichtung" formControlName="bezugZurEinrichtung">
-          <mat-hint>Sind sie z.B. Schulleiter, Nachbar, ...</mat-hint>
+          <input matInput placeholder="Dein Bezug zur Einrichtung" formControlName="bezugZurEinrichtung">
+          <mat-hint>Schülerin, Nachbar, Leiterin, Angehörige, Mitarbeiter...</mat-hint>
         </mat-form-field>
+        <p>Bitte informiere ggf. die Einrichtung, dass Du Tempo 30 für sie beantragt hast.</p>
         <mat-form-field class="t30-full-width">
           <textarea matInput placeholder="Stand der Dinge" formControlName="standDerDinge"></textarea>
           <mat-hint> Sind sie schon in Kontakt mit der Einrichtung, mit der Polizei, hat ein Politiker dafür/dagegen etwas gesagt?</mat-hint>
         </mat-form-field>
         <mat-action-row>
           <button mat-button color="warn" *ngIf="t30pate.get('patenschaften').controls.length>1" (click)="deletePatenschaft(i)">
-            <mat-icon>delete</mat-icon>Patenschaft löschen
+            <mat-icon>delete</mat-icon>Einrichtung/Standort löschen
           </button>
           <button mat-button *ngIf="t30pate.get('patenschaften').controls.length===i+1" (click)="addPatenschaft()">
-            <mat-icon>add</mat-icon>Patenschaft hinzufügen
+            <mat-icon>add</mat-icon>Einrichtung/Standort hinzufügen
           </button>
           <button mat-button (click)="prevStep()">
             <mat-icon>navigate_before</mat-icon>zurück
@@ -113,10 +117,10 @@
         <mat-panel-title>
           <mat-icon *ngIf="(!t30pate.get('emails').valid) && displayValidatorMarker" color="warn">error_outline</mat-icon>
           <mat-icon *ngIf="(t30pate.get('emails').valid) && displayValidatorMarker" class="t30-yes">check_circle_outline</mat-icon>
-          <mat-icon>email</mat-icon> Bitte
+          <mat-icon>email</mat-icon> Forderungsmail
         </mat-panel-title>
         <mat-panel-description>
-          Bitte an die Polizei
+          Forderungsmail an das zuständige Polizeikommissariat, der Bezirksversammlung und der Verkehrsbehörde zur Kenntnis
         </mat-panel-description>
       </mat-expansion-panel-header>
 
