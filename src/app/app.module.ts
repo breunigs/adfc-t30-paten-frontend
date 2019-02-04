@@ -8,6 +8,8 @@ import {
   MatSelectModule, MatIconModule, MatButtonModule, MatAutocompleteModule, MatProgressSpinnerModule
 } from '@angular/material';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { T30patenComponent } from './t30paten/t30paten.component';
@@ -15,9 +17,11 @@ import { T30sozialeEinrichtungComponent } from './t30soziale-einrichtung/t30sozi
 import { TokenEingebenComponent } from './token-eingeben/token-eingeben.component';
 import { TokenBestaetigungComponent } from './token-bestaetigung/token-bestaetigung.component';
 import { EmailVersandComponent } from './email-versand/email-versand.component';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ErrorHandleService } from './error-handle.service';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { MainComponent } from './main/main.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,10 @@ import { ErrorHandleService } from './error-handle.service';
     T30sozialeEinrichtungComponent,
     TokenEingebenComponent,
     TokenBestaetigungComponent,
-    EmailVersandComponent
+    EmailVersandComponent,
+    LoginComponent,
+    RegisterComponent,
+    MainComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +55,7 @@ import { ErrorHandleService } from './error-handle.service';
     HttpClientModule,
   ],
   providers: [
+    ErrorHandleService,
     { provide: ErrorHandler, useClass: ErrorHandleService },
     { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],

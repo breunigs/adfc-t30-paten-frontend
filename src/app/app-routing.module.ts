@@ -5,9 +5,15 @@ import { TokenEingebenComponent } from './token-eingeben/token-eingeben.componen
 import { TokenBestaetigungComponent } from './token-bestaetigung/token-bestaetigung.component';
 import { EmailVersandComponent } from './email-versand/email-versand.component';
 import { T30patenComponent } from './t30paten/t30paten.component';
+import { MainComponent } from './main/main.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [{
   path: '',
+  component: MainComponent,
+}, {
+  path: 'paten',
   component: T30patenComponent,
 }, {
   path: 'token/:fehler',
@@ -18,6 +24,16 @@ const routes: Routes = [{
 }, {
   path: 'mailSend',
   component: EmailVersandComponent,
+}, {
+  path: 'login',
+  component: LoginComponent
+}, {
+  path: 'register',
+  component: RegisterComponent
+}, {
+  // otherwise redirect to home
+  path: '**',
+  redirectTo: ''
 }
 ];
 

@@ -1,0 +1,68 @@
+<div class='hgroup'>
+  <h1>Registieren</h1>
+  <h3>ADFC Tempo 30 vor sozialen Einrichtungen</h3>
+</div>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <mat-form-field class="t30-half-width">
+        <input matInput placeholder="Vorname" formControlName="vorname" autocomplete="given-name" required>
+      </mat-form-field>
+      <mat-form-field class="t30-half-width">
+        <input matInput placeholder="Nachname" formControlName="nachname" autocomplete="family-name" required>
+      </mat-form-field>
+      <mat-form-field class="t30-full-width">
+        <input matInput placeholder="E-Mail" type="email" formControlName="email" autocomplete="email" required>
+      </mat-form-field>
+      <mat-form-field class="t30-full-width">
+        <input matInput placeholder="Straße und Hausnummer" formControlName="strasse" autocomplete="street-address">
+      </mat-form-field>
+      <mat-form-field class="t30-half-width">
+        <input matInput placeholder="PLZ" formControlName="plz" autocomplete="postal-code">
+      </mat-form-field>
+      <mat-form-field class="t30-half-width">
+        <input matInput placeholder="Ort" formControlName="ort" autocomplete="address-level1">
+      </mat-form-field>
+      <mat-form-field class="t30-full-width">
+        <input matInput placeholder="Telefon" formControlName="telefon" autocomplete="tel">
+      </mat-form-field>
+      <div>
+        <mat-checkbox class="t30-cb" formControlName="mailingliste">
+          Ich möchte auf die ADFC-Mailingliste "Tempo 30 vor sozialen
+          Einrichtungen", um Informationen zu erhalten und mich auszutauschen.
+        </mat-checkbox>
+        <div *ngIf="(registerForm.get('mailingliste').value)">
+          <mat-icon>email</mat-icon> Du erhältst eine seperate E-Mail von unserer Mailinglisten-Software, um dich anzumelden.
+        </div>
+      </div>
+      <div>
+        <mat-checkbox formControlName="newsletter">
+          Ich möchte den Newsletter des ADFC Hamburg bekommen (1 x im Monat,
+          gemischte ADFC-Themen).
+        </mat-checkbox>
+        <div *ngIf="(registerForm.get('newsletter').value)">
+          <mat-icon>email</mat-icon> Du erhältst eine seperate E-Mail von unserer Newsletter-Software, um dich anzumelden.
+        </div>
+      </div>
+      <div>
+        <mat-checkbox formControlName="speichern">
+          Der ADFC Hamburg darf meine Daten für diese Kampagne speichern und
+          verwenden und mich kontaktieren.
+          Ich stimme der Datenschutzvereinbarung zu.
+        </mat-checkbox>
+        <div *ngIf="!(registerForm.get('speichern').value)">
+          <mat-icon color="warn">warning</mat-icon>
+          Wir möchten gerne mit dir gemeinsam Tempo 30 vor sozialen Einrichtungen
+          durchsetzen. Das ist nur möglich, wenn wir Kontakt mit dir aufnehmen können.
+          Ohne diese Einwilligung kannst du unser Tool nicht benutzen.
+        </div>
+      </div>
+      <mat-action-row>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!(registerForm.get('speichern').value)">
+        <mat-icon>send</mat-icon> Registieren
+        </button>
+        <img *ngIf="loading" class="pl-3" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+
+        <button mat-raised-button colort="accent" routerLink="/login">Ich habe mich schon registiert.</button>
+    </mat-action-row>
+    </div>
+</form>
