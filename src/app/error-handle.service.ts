@@ -30,7 +30,7 @@ export class ErrorHandleService implements ErrorHandler {
     } else {
       // A client-side or network error occurred.
       console.error('An error occurred:', error.message);
-      this.clientNotifierService.addError('Fehler im Netzwerk');
+      this.clientNotifierService.addError('Fehler' + error.message);
       // throw error;
     }
   }

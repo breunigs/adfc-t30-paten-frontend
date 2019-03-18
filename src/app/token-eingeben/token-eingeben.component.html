@@ -2,8 +2,6 @@
 <p *ngIf="!fehler">Bitte klicken Sie auf den Link innerhalb von 12h, da wir sonst die Daten wieder löschen.</p>
 <p *ngIf="!fehler">Alternativ können sie auch hier den in der E-Mail angebenen Token eingeben:</p>
 <p *ngIf="fehler">Der eingebene Token ist ungültig, weil er bereits benutzt wurde oder er falsch eingeben wurde.</p>
-<p><b>
-    <!-- FIXME -->Demo:</b>Bitte gehe davon aus, dass du ein Token: mit der Zeichenkette: OKAY bekommen hast</p>
 <form [formGroup]="tokenForm" (ngSubmit)="onSubmit()">
   <mat-form-field class="t30-half-width">
     <input matInput placeholder="Token" formControlName="token">

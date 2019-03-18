@@ -1,14 +1,16 @@
-<p>Hallo, vielen Dank dass du dich angemeldet hat. </p>
-  <h2>Meine Tempo 30 Eingaben<h2>
-    <button mat-raised-button color="primary" type="submit">
-      <mat-icon>send</mat-icon> Neuen Antrag vorbereiten
+<p>Hallo, Du bist angemeldet. </p>
+  <h2>Meine Tempo 30 Eingaben</h2>
+    <button mat-raised-button color="primary" routerLink="/sozialeEinrichtungen" type="submit">
+      <mat-icon>add_box</mat-icon> Neuen Antrag vorbereiten
       </button>
-  <h2>Meine Korrekturen</h2>
+  <!-- <h2>Meine Korrekturen</h2>
   <button mat-raised-button color="primary" type="submit">
     <mat-icon>send</mat-icon> Neuen Antrag vorbereiten
-    </button>
+    </button> -->
     <h2>Weitere Aktionen</h2>
-    <button mat-raised-button color="primary" type="submit">
-
-    <mat-icon>send</mat-icon>Abmelden
-      </button>
+    <button mat-raised-button color="primary" routerLink="/profile" type="submit">
+      <mat-icon>account_circle</mat-icon>Profil-Daten ansehen/ändern
+    </button>
+    <button mat-raised-button color="primary" routerLink="/login" type="submit">
+      <mat-icon>power_settings_new</mat-icon>Abmelden
+    </button>

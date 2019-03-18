@@ -29,7 +29,7 @@ export class TokenEingebenComponent implements OnInit, OnDestroy {
   onSubmit() {
     const token = this.tokenForm.get('token').value;
     this.service.testToken(token).subscribe(results => {
-      this.router.navigate(['submitToken', token]);
+      this.router.navigate(['', token]);
     });
   }
   ngOnDestroy() {
