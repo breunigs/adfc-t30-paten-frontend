@@ -10,7 +10,7 @@ import { ErrorNotifierService } from './error-notifier.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'ADFC Tempo 30 Paten';
+  title = 'ADFC Tempo 30 vor sozialen Einrichtungen';
   public version: string = environment.VERSION;
   sub: any;
   constructor(private snackBar: MatSnackBar, private errorService: ErrorNotifierService) {
