@@ -5,6 +5,7 @@ import { TokenEingebenComponent } from './token-eingeben/token-eingeben.componen
 import { TokenBestaetigungComponent } from './token-bestaetigung/token-bestaetigung.component';
 import { EmailVersandComponent } from './email-versand/email-versand.component';
 import { T30patenComponent } from './t30paten/t30paten.component';
+import { T30sozialeEinrichtungComponent } from './t30soziale-einrichtung/t30soziale-einrichtung.component';
 import { MainComponent } from './main/main.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -31,11 +32,13 @@ const routes: Routes = [{
   path: 'register',
   component: RegisterComponent
 }, {
+  path: 'sozialeEinrichtungen',
+  component: T30sozialeEinrichtungComponent
+}, {
   // otherwise redirect to home
   path: '**',
   redirectTo: ''
-}
-];
+}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
