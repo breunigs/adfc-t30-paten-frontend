@@ -13,32 +13,16 @@ import { T30Pate } from '../t30pate';
 export class T30patenComponent implements OnInit {
   displayValidatorMarker = false;
   t30pate = this.fb.group({
-    pate: this.fb.group({
-      vorname: ['', Validators.required],
-      nachname: ['', Validators.required],
-      eMail: ['', [Validators.required, Validators.email]],
-      strasse: [''],
-      plz: ['', Validators.maxLength(5)],
-      ort: [''],
-      telefon: [''],
-      speichern: [true, Validators.required],
-      mailingliste: [false, Validators.required],
-      newsletter: [false, Validators.required],
-    }),
-    patenschaften: this.fb.array([
-      this.fb.group({
+    patenschaft:   this.fb.group({
         id: [-1],
         bezugZurEinrichtung: ['', Validators.required],
         standDerDinge: [''],
         einrichtung: T30sozialeEinrichtungComponent.buildItem(this.fb),
-      })
-    ]),
-    emails: this.fb.array([
-      this.fb.group({
+      }),
+    email: this.fb.group({
         subject: ['', Validators.required],
         mailtext: ['', Validators.required]
-      })
-    ])
+    })
   });
   step = 0;
 
@@ -54,54 +38,18 @@ export class T30patenComponent implements OnInit {
     this.step--;
   }
 
-  ps() {
-    return this.t30pate.controls.patenschaften as FormArray;
-  }
-  emailsGroup() {
-    return this.t30pate.controls.emails as FormArray;
-  }
-  lastStep() {
-    const rtn = this.ps().length + 1;
-    return rtn;
-  }
-
-  deletePatenschaft(index) {
-    this.ps().removeAt(index);
-    this.emailsGroup().removeAt(index);
-  }
-
-  addPatenschaft() {
-    const p = this.fb.group({
-      id: [-1],
-      bezugZurEinrichtung: ['', Validators.required],
-      standDerDinge: [''],
-      einrichtung: T30sozialeEinrichtungComponent.buildItem(this.fb),
-    });
-    this.ps().push(p);
-    const emailC = this.fb.group({
-      subject: ['', Validators.required],
-      mailtext: ['', Validators.required]
-    });
-    this.emailsGroup().push(emailC);
-    this.step++;
-  }
-
   constructor(private fb: FormBuilder, private router: Router, private service: T30PatenService) { }
 
   ngOnInit() {
     this.t30pate.valueChanges.subscribe(val => {
-      const pate = val.pate;
-      let index = 0;
-      while ((index < val.patenschaften.length) && (index < val.emails.length)) {
-
-        const einr = val.patenschaften[index].einrichtung;
-
-        const newSubject = `Bitte um Prüfung von Tempo 30 vor der Einrichtung ${einr.name} ${einr.zusatz}`;
-        if (newSubject !== val.emails[index].subject) {
-          this.emailsGroup().at(index).get('subject').setValue(newSubject);
-        }
-        /* tslint:disable:max-line-length */
-        const newEMailText = `Sehr geehrte Damen und Herren,
+      const pate = {vorname: 'Hugo', nachname: 'Speichenbruch'};
+      const einr = val.patenschaft.einrichtung;
+      const newSubject = `Bitte um Prüfung von Tempo 30 vor der Einrichtung ${einr.name} ${einr.zusatz}`;
+      if (newSubject !== val.email.subject) {
+          this.t30pate.get('email').get('subject').setValue(newSubject);
+      }
+      /* tslint:disable:max-line-length */
+      const newEMailText = `Sehr geehrte Damen und Herren,
 mein Name ist ${pate.vorname} ${pate.nachname} und mir ist aufgefallen, dass an der ${einr.name}, ${einr.zusatz} leider Tempo 50 ist.
 Ich fordere Sie auf hier Tempo 30 einzuführen.
 
@@ -132,12 +80,11 @@ ${pate.vorname} ${pate.nachname}
 --
 Diese E-Mail wurde durch das T30-Tool des ADFC-Hamburg verschickt, mehr Infos dazu unter
 https://hamburg.adfc.de/hast-nicht-gesehen-FIXME `;
-        /* tslint:disable:max-line-length */
-        if (newEMailText !== val.emails[index].mailtext) {
-          this.emailsGroup().at(index).get('mailtext').setValue(newEMailText);
-        }
-        index++;
+      /* tslint:disable:max-line-length */
+      if (newEMailText !== val.email.mailtext) {
+        this.t30pate.get('email').get('mailtext').setValue(newEMailText);
       }
+
     });
   }
   validateAllFormFields(control: AbstractControl) {
@@ -161,7 +108,7 @@ https://hamburg.adfc.de/hast-nicht-gesehen-FIXME `;
 
   onSubmit() {
     this.validateAllFormFields(this.t30pate);
-    this.t30pate.get('patenschaften').markAsDirty();
+    this.t30pate.get('patenschaft').markAsDirty();
     if (this.t30pate.valid) {
       this.service.submitFirstPate(new T30Pate(this.t30pate.value)).subscribe(results => {
         this.router.navigate(['token', false]);

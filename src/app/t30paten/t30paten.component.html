@@ -1,156 +1,71 @@
 <form [formGroup]="t30pate">
   <mat-accordion>
-    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
+    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" formGroupName="patenschaft">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <mat-icon *ngIf="(!t30pate.get('pate').valid) && displayValidatorMarker" color="warn">error_outline</mat-icon>
-          <mat-icon *ngIf="(t30pate.get('pate').valid) && displayValidatorMarker" class="t30-yes">check_circle_outline</mat-icon>
-          <mat-icon>account_circle</mat-icon>
-          Persönliche Daten
+          <mat-icon *ngIf="(!(t30pate.get('patenschaft').valid)) && displayValidatorMarker" color="warn">error_outline</mat-icon>
+          <mat-icon *ngIf="(t30pate.get('patenschaft').valid && displayValidatorMarker)" class="t30-yes">check_circle_outline</mat-icon>
+          <mat-icon>business</mat-icon>
+         <mat-icon *ngIf="!(t30pate.get('patenschaft.einrichtung.t50').value)" color="warn">warning</mat-icon>
         </mat-panel-title>
-        <mat-panel-description>
-          Name, E-Mail, Kontaktdaten
+        <mat-panel-description> Angaben zur Einrichtung
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <div formGroupName="pate">
-        <mat-form-field class="t30-half-width">
-          <input matInput placeholder="Vorname" formControlName="vorname">
-        </mat-form-field>
-        <mat-form-field class="t30-half-width">
-          <input matInput placeholder="Nachname" formControlName="nachname">
-        </mat-form-field>
-        <mat-form-field class="t30-full-width">
-          <input matInput placeholder="E-Mail" type="email" formControlName="eMail">
-        </mat-form-field>
-        <mat-form-field class="t30-full-width">
-          <input matInput placeholder="Straße und Hausnummer" formControlName="strasse">
-        </mat-form-field>
-        <mat-form-field class="t30-half-width">
-          <input matInput placeholder="PLZ" formControlName="plz">
-        </mat-form-field>
-        <mat-form-field class="t30-half-width">
-          <input matInput placeholder="Ort" formControlName="ort">
-        </mat-form-field>
-        <mat-form-field class="t30-full-width">
-          <input matInput placeholder="Telefon" formControlName="telefon">
-        </mat-form-field>
-        <div>
-          <mat-checkbox formControlName="mailingliste">
-            Ich möchte auf die ADFC-Mailingliste "Tempo 30 vor sozialen
-            Einrichtungen", um Informationen zu erhalten und mich auszutauschen.
-          </mat-checkbox>
-        </div>
-        <div>
-          <mat-checkbox formControlName="newsletter">
-            Ich möchte den Newsletter des ADFC Hamburg bekommen (1 x im Monat,
-            gemischte ADFC-Themen).
-          </mat-checkbox>
-        </div>
-        <div>
-          <mat-checkbox formControlName="speichern">
-            Der ADFC Hamburg darf meine Daten für diese Kampagne speichern und
-            verwenden und mich kontaktieren.
-          </mat-checkbox>
-          <div *ngIf="!(t30pate.get('pate.speichern').value)">
-            <mat-icon color="warn">warning</mat-icon>
-            Wir möchten gerne mit dir gemeinsam Tempo 30 vor sozialen Einrichtungen
-            durchsetzen. Das ist nur möglich, wenn wir Kontakt mit dir aufnehmen können.
-          </div>
-        </div>
-      </div>
+      <b>Angaben zur Einrichtung</b>
+       <app-t30soziale-einrichtung [einrichtung]="t30pate.get('patenschaft.einrichtung')">
+      </app-t30soziale-einrichtung>
+      <b>Stand der Dinge</b>
+      <mat-form-field class="t30-full-width">
+        <input matInput placeholder="Dein Bezug zur Einrichtung" formControlName="bezugZurEinrichtung">
+        <mat-hint>Schülerin, Nachbar, Leiterin, Angehörige, Mitarbeiter...</mat-hint>
+      </mat-form-field>
+      <p>Bitte informiere ggf. die Einrichtung, dass Du Tempo 30 für sie beantragt hast.</p>
+      <mat-form-field class="t30-full-width">
+        <textarea matInput placeholder="Stand der Dinge" formControlName="standDerDinge"></textarea>
+        <mat-hint> Sind sie schon in Kontakt mit der Einrichtung, mit der Polizei, hat ein Politiker dafür/dagegen etwas gesagt?</mat-hint>
+      </mat-form-field>
       <mat-action-row>
-        <button mat-button color="primary" (click)="nextStep()">
-          <mat-icon>navigate_next</mat-icon>weiter zur Einrichtung
+        <button mat-raised-button color="basic" (click)="onSubmit()">
+          <mat-icon>save</mat-icon> Speichern und später weiter bearbeiten
+        </button>
+        <button mat-button color="primary"  (click)="nextStep()">
+          <mat-icon>email</mat-icon> weiter
         </button>
       </mat-action-row>
-    </mat-expansion-panel>
-    <div formArrayName="patenschaften">
-      <mat-expansion-panel *ngFor="let patenschaft of t30pate.get('patenschaften')['controls']; let i = index" [expanded]="step === (i+1)" (opened)="setStep(i+1)" [formGroupName]="i">
+      </mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" formGroupName="email">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <mat-icon *ngIf="(!(patenschaft.valid)) && displayValidatorMarker" color="warn">error_outline</mat-icon>
-            <mat-icon *ngIf="(patenschaft.valid && displayValidatorMarker)" class="t30-yes">check_circle_outline</mat-icon>
-            <mat-icon>business</mat-icon>
-            <mat-icon *ngIf="!(patenschaft.get('einrichtung.t50').value)" color="warn">warning</mat-icon>
-            <div *ngIf="!(patenschaft.get('einrichtung.name').value)">{{ i+1  }}. Einrichtung</div>
-            <div *ngIf="(patenschaft.get('einrichtung.name').value)">{{ patenschaft.get('einrichtung.name').value }}</div>
+            <mat-icon *ngIf="(!t30pate.get('email').valid) && displayValidatorMarker" color="warn">error_outline</mat-icon>
+            <mat-icon *ngIf="(t30pate.get('email').valid) && displayValidatorMarker" class="t30-yes">check_circle_outline</mat-icon>
+            <mat-icon>email</mat-icon> Forderungsmail
           </mat-panel-title>
           <mat-panel-description>
-            <div *ngIf="(patenschaft.get('einrichtung.zusatz').value)">{{ patenschaft.get('einrichtung.zusatz').value }}</div>
-            <div *ngIf="!(patenschaft.get('einrichtung.art').value)">Schule, Kindergarten, Krankenhaus, Alten- und Pflegeheim</div>
+            Forderungsmail an das zuständige Polizeikommissariat, der Bezirksversammlung und der Verkehrsbehörde zur Kenntnis
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <b>Angaben zur Einrichtung</b>
-        <app-t30soziale-einrichtung [einrichtung]="patenschaft.get('einrichtung')">
-        </app-t30soziale-einrichtung>
-        <mat-form-field class="t30-full-width">
-          <input matInput placeholder="Dein Bezug zur Einrichtung" formControlName="bezugZurEinrichtung">
-          <mat-hint>Schülerin, Nachbar, Leiterin, Angehörige, Mitarbeiter...</mat-hint>
-        </mat-form-field>
-        <p>Bitte informiere ggf. die Einrichtung, dass Du Tempo 30 für sie beantragt hast.</p>
-        <mat-form-field class="t30-full-width">
-          <textarea matInput placeholder="Stand der Dinge" formControlName="standDerDinge"></textarea>
-          <mat-hint> Sind sie schon in Kontakt mit der Einrichtung, mit der Polizei, hat ein Politiker dafür/dagegen etwas gesagt?</mat-hint>
-        </mat-form-field>
+            <div><b>Von:</b><!-- {{ t30pate.get('pate.vorname').value }} {{ t30pate.get('pate.nachname').value }} &lt;{{ t30pate.get('pate.eMail').value }}&gt; --> </div>
+            <div><b>An:</b>Polzei Hamburg &lt;polizei@example.com&gt;</div>
+            <div><b>CC:</b>ADFC Hamburg &lt;laeuft@hamburg.adfc.de&gt;</div>
+            <mat-form-field class="t30-full-width">
+              <input matInput placeholder="Betreff" formControlName="subject">
+            </mat-form-field>
+            <mat-form-field class="t30-full-width">
+              <textarea class="t30-email-area" matInput formControlName="mailtext" placeholder="E-Mail">
+            </textarea>
+            </mat-form-field>
+        Durch das Absenden aktzeptieren Sie die Datenschutzvereinbarung mit dem ADFC Hamburg.
         <mat-action-row>
-          <button mat-button color="warn" *ngIf="t30pate.get('patenschaften').controls.length>1" (click)="deletePatenschaft(i)">
-            <mat-icon>delete</mat-icon>Einrichtung/Standort löschen
-          </button>
-          <button mat-button *ngIf="t30pate.get('patenschaften').controls.length===i+1" (click)="addPatenschaft()">
-            <mat-icon>add</mat-icon>Einrichtung/Standort hinzufügen
-          </button>
           <button mat-button (click)="prevStep()">
             <mat-icon>navigate_before</mat-icon>zurück
           </button>
-          <button mat-button color="primary" *ngIf="t30pate.get('patenschaften').controls.length===i+1" (click)="nextStep()">
-            <mat-icon>email</mat-icon> weiter
+          <button mat-raised-button color="primary" (click)="onSubmit()">
+            <mat-icon>save</mat-icon> Speichern und später weiter bearbeiten
           </button>
-          <button mat-button color="primary" *ngIf="t30pate.get('patenschaften').controls.length!==i+1" (click)="nextStep()">
-            <mat-icon>navigate_next</mat-icon> weiter
+          <button mat-raised-button color="accent" (click)="sendEmail()">
+            <mat-icon>email</mat-icon> E-Mail Absenden
           </button>
         </mat-action-row>
-
       </mat-expansion-panel>
-    </div>
-    <mat-expansion-panel [expanded]="step === lastStep()" (opened)="setStep(lastStep())">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <mat-icon *ngIf="(!t30pate.get('emails').valid) && displayValidatorMarker" color="warn">error_outline</mat-icon>
-          <mat-icon *ngIf="(t30pate.get('emails').valid) && displayValidatorMarker" class="t30-yes">check_circle_outline</mat-icon>
-          <mat-icon>email</mat-icon> Forderungsmail
-        </mat-panel-title>
-        <mat-panel-description>
-          Forderungsmail an das zuständige Polizeikommissariat, der Bezirksversammlung und der Verkehrsbehörde zur Kenntnis
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-
-      <div *ngFor="let patenschaft of t30pate.get('patenschaften')['controls']; let p = index;">
-        <div [formGroup]="t30pate.get('emails').at(p)">
-          <h2>{{p+1}}. E-Mail</h2>
-          <div><b>Von:</b> {{ t30pate.get('pate.vorname').value }} {{ t30pate.get('pate.nachname').value }} &lt;{{ t30pate.get('pate.eMail').value }}&gt; </div>
-          <div><b>An:</b>Polzei Hamburg &lt;polizei@example.com&gt;</div>
-          <div><b>CC:</b>ADFC Hamburg &lt;laeuft@hamburg.adfc.de&gt;</div>
-          <mat-form-field class="t30-full-width">
-            <input matInput placeholder="Betreff" formControlName="subject" >
-          </mat-form-field>
-
-          <mat-form-field class="t30-full-width">
-            <textarea class="t30-email-area" matInput formControlName="mailtext" placeholder="E-Mail">
-            </textarea>
-          </mat-form-field>
-        </div>
-      </div>
-      <mat-action-row>
-        <button mat-button (click)="prevStep()">
-          <mat-icon>navigate_before</mat-icon>zurück
-        </button>
-      </mat-action-row>
-    </mat-expansion-panel>
   </mat-accordion>
-  Durch das Absenden aktzeptieren Sie die Datenschutzvereinbarung mit dem ADFC Hamburg.
-  <mat-action-row>
-    <button mat-raised-button color="primary" (click)="onSubmit()">
-      <mat-icon>send</mat-icon> Absenden
-    </button>
-  </mat-action-row>
 </form>

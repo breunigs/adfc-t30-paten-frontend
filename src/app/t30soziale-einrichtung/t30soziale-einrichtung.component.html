@@ -21,17 +21,13 @@
     </mat-hint>
   </mat-form-field>
 
-  <mat-form-field class="t30-half-width">
+  <mat-form-field class="t30-full-width">
     <mat-select placeholder="Art der Einrichtung" formControlName="art">
       <mat-option value="1">Kindergaten</mat-option>
       <mat-option value="2">Schule</mat-option>
       <mat-option value="3">Alten- und Pflegeheim / Tagespflege</mat-option>
       <mat-option value="4">Krankenhaus</mat-option>
     </mat-select>
-  </mat-form-field>
-  <mat-form-field class="t30-half-width">
-    <input matInput placeholder="Einrichtungs Nummer" formControlName="id" readonly="true">
-    <mat-hint>Wird vom ADFC genutzt um diesen Ort wieder zu finden</mat-hint>
   </mat-form-field>
   <b>Meldeadresse der Einrichtung</b>
   <mat-form-field class="t30-full-width">
@@ -44,8 +40,7 @@
     <mat-icon color="warn">warning</mat-icon> Dann sind die Vorraussetzungen gemäß StVO nicht gegeben, und sie können keine Patenschaft übernehmen
   </div>
   <mat-form-field class="t30-full-width">
-    <input matInput placeholder="an Einrichtung grenzende Straßen, in denen Tempo 30 eingeführt werden soll" formControlName="t50strasse">
-    <textarea class="t30-email-area" matInput formControlName="mailtext" placeholder="E-Mail">
+    <textarea placeholder="an Einrichtung grenzende Straßen, in denen Tempo 30 eingeführt werden soll" class="t30-t50-area" matInput formControlName="t50strassen" >
     </textarea>
     <mat-hint>ggf.  Hausnummern "Nr. ... bis ... " ergänzen"</mat-hint>
   </mat-form-field>
@@ -55,7 +50,6 @@
   <mat-form-field class="t30-half-width">
     <input matInput placeholder="Ort" formControlName="ort">
   </mat-form-field>
-
   <div class="t30-full-width-flex">
     <div class="t30-map-div">
       <yaga-map class="t30-map" zoom="17" [(lat)]="mapLat" [(lng)]="mapLon" (dblclick)="mapDblClick($event)">
@@ -67,12 +61,7 @@
       </yaga-map>
       <mat-hint>Bitte ggf. Position korrigiren: Marker mit der Maus verschieben oder Doppelkick auf neue Position</mat-hint>
     </div>
-    <div class="t30-daneben-div">
-      <mat-form-field class="t30-half-width">
-        <input matInput placeholder="Latitude" formControlName="lat">
-      </mat-form-field>
-      <mat-form-field class="t30-half-width">
-        <input matInput placeholder="Longitude" formControlName="lon">
-      </mat-form-field>
+   <div class="t30-daneben-div">
+     {{ lat }} {{lon }}
     </div>
   </div>
