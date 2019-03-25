@@ -22,14 +22,36 @@ export class T30PatenService {
 
   constructor(private http: HttpClient) {
   }
-  submitFirstPate(pate: T30Pate) {
+  loadPatenschaft(id: number) {
+    return this.http.get<any>(this.baseUrl + 'pate-load.php?id=' + id, httpOptions)
+      .pipe(
+        map(res => {
+          console.log('res', res);
+          if (res.error) {
+            throw new NotificationError(res.error);
+          }
+          return res;
+        }));
+  }
+  savePatenschaft(pate: T30Pate) {
     // FIXME statt any einen Typ angeben
-    return this.http.post<any>(this.baseUrl + 'antrag-submit.php', pate, httpOptions)
+    return this.http.post<any>(this.baseUrl + 'pate-save.php', pate, httpOptions)
       .pipe(
         map(res => {
           if (res.error) {
             throw new NotificationError(res.error);
           }
+        }));
+  }
+  list() {
+    return this.http.get<any>(this.baseUrl + 'pate-list.php', httpOptions)
+      .pipe(
+        map(res => {
+          console.log('res', res);
+          if (res.error) {
+            throw new NotificationError(res.error);
+          }
+          return res;
         }));
   }
   testToken(token: String) {

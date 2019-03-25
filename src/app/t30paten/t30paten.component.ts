@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, FormGroup, FormControl, AbstractControl, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+
 import { T30sozialeEinrichtungComponent } from '../t30soziale-einrichtung/t30soziale-einrichtung.component';
-import { Router } from '@angular/router';
 import { T30PatenService } from '../t30-paten.service';
 import { T30Pate } from '../t30pate';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-t30paten',
@@ -12,12 +14,15 @@ import { T30Pate } from '../t30pate';
 })
 export class T30patenComponent implements OnInit {
   displayValidatorMarker = false;
+  id = -1;
   t30pate = this.fb.group({
+    id: [-1],
+    mailSend: [false],
+    sendMailNow: [false],
+    einrichtung: T30sozialeEinrichtungComponent.buildItem(this.fb),
     patenschaft:   this.fb.group({
-        id: [-1],
         bezugZurEinrichtung: ['', Validators.required],
         standDerDinge: [''],
-        einrichtung: T30sozialeEinrichtungComponent.buildItem(this.fb),
       }),
     email: this.fb.group({
         subject: ['', Validators.required],
@@ -38,19 +43,40 @@ export class T30patenComponent implements OnInit {
     this.step--;
   }
 
-  constructor(private fb: FormBuilder, private router: Router, private service: T30PatenService) { }
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private service: T30PatenService,
+    private authenticationService: AuthenticationService,
+) { }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      console.log('x1', params);
+      this.id = params['id'];
+      if (String(this.id) !== '-1') {
+        this.service.loadPatenschaft(this.id).subscribe( data => {
+          console.log(data);
+          if (data.mailSend) {
+            this.step = 1;
+          } else {
+            this.step = 2;
+          }
+          this.t30pate.setValue(data);
+        });
+      }
+    });
     this.t30pate.valueChanges.subscribe(val => {
-      const pate = {vorname: 'Hugo', nachname: 'Speichenbruch'};
-      const einr = val.patenschaft.einrichtung;
+      const pate = this.authenticationService.getCurrentUser();
+      const einr = val.einrichtung;
       const newSubject = `Bitte um Prüfung von Tempo 30 vor der Einrichtung ${einr.name} ${einr.zusatz}`;
       if (newSubject !== val.email.subject) {
           this.t30pate.get('email').get('subject').setValue(newSubject);
       }
       /* tslint:disable:max-line-length */
       const newEMailText = `Sehr geehrte Damen und Herren,
-mein Name ist ${pate.vorname} ${pate.nachname} und mir ist aufgefallen, dass an der ${einr.name}, ${einr.zusatz} leider Tempo 50 ist.
+mein Name ist ${pate.firstName} ${pate.lastName} und mir ist aufgefallen, dass an der ${einr.name}, ${einr.zusatz} leider Tempo 50 ist.
 Ich fordere Sie auf hier Tempo 30 einzuführen.
 
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
@@ -75,7 +101,7 @@ Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lo
 
 Viele Grüße
 
-${pate.vorname} ${pate.nachname}
+${pate.firstName} ${pate.lastName}
 
 --
 Diese E-Mail wurde durch das T30-Tool des ADFC-Hamburg verschickt, mehr Infos dazu unter
@@ -103,15 +129,16 @@ https://hamburg.adfc.de/hast-nicht-gesehen-FIXME `;
     } else {
       console.error('Unkown Control: ', control);
     }
-
   }
 
-  onSubmit() {
+  onSave(step: number, sendMail: boolean) {
     this.validateAllFormFields(this.t30pate);
+    this.t30pate.get('id').setValue(this.id);
+    this.t30pate.get('sendMailNow').setValue(sendMail);
     this.t30pate.get('patenschaft').markAsDirty();
     if (this.t30pate.valid) {
-      this.service.submitFirstPate(new T30Pate(this.t30pate.value)).subscribe(results => {
-        this.router.navigate(['token', false]);
+      this.service.savePatenschaft(new T30Pate(this.t30pate.value)).subscribe(results => {
+        this.router.navigate(['main']);
       });
     } else {
       this.displayValidatorMarker = true;

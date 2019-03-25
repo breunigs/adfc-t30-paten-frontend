@@ -3,8 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import {  ErrorHandleService } from '../error-handle.service';
+import { ErrorHandleService } from '../error-handle.service';
 import { AuthenticationService } from '../authentication.service';
+
 @Component({
   templateUrl: 'login.component.html',
   styleUrls: ['./login.component.css']
@@ -23,7 +24,7 @@ export class LoginComponent implements OnInit {
         private errorHandleService: ErrorHandleService,
     ) {
         // redirect to home if already logged in
-        if (this.authenticationService.currentUserValue) {
+        if (this.authenticationService.currentUser) {
             this.router.navigate(['/']);
         }
     }
@@ -58,8 +59,18 @@ export class LoginComponent implements OnInit {
         this.loading = true;
         console.log('xx');
         if (this.loginForm.get('passwordResend').value) {
-          this.errorHandleService.handleError('Not implemented yet.');
-          this.loading = false;
+          this.authenticationService.passwordReset(this.loginForm.get('email').value).pipe(first())
+          .subscribe(
+            data => {
+              this.errorHandleService.handleError('Sofern Ihre E-Mail korrekt war, ' +
+                'haben Ihnen einen Link zum neu setzen des Passwortes geschickt');
+              this.loading = false;
+            },
+            error => {
+              this.errorHandleService.handleError('Fehler ' + error);
+              this.loading = false;
+            }
+          );
         } else {
         this.authenticationService.login(this.loginForm.get('email').value, this.loginForm.get('password').value)
             .pipe(first())

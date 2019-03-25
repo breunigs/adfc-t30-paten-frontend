@@ -5,9 +5,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { YagaModule } from '@yaga/leaflet-ng2';
 import {
   MatFormFieldModule, MatInputModule, MatCheckboxModule, MatExpansionModule,
-  MatSelectModule, MatIconModule, MatButtonModule, MatAutocompleteModule, MatProgressSpinnerModule
+  MatSelectModule, MatIconModule, MatButtonModule, MatAutocompleteModule, MatProgressSpinnerModule,
+  MatTableModule, MatSnackBarModule, MatSortModule,
 } from '@angular/material';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+// import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -51,6 +52,8 @@ import { MainComponent } from './main/main.component';
     MatAutocompleteModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    MatSortModule,
+    MatTableModule,
     YagaModule,
     HttpClientModule,
   ],

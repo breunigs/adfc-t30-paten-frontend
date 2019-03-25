@@ -13,18 +13,18 @@ export class UserService {
     }
 
     getById(id: number) {
-        return this.http.get(this.baseUrl + '/get_user.php?id='+id);
+        return this.http.get(this.baseUrl + '/get_user.php?id=' + id);
     }
 
     register(user: User) {
-        return this.http.post(this.baseUrl+ '/register_user.php',user);
+        return this.http.post(this.baseUrl + '/register_user.php', user);
     }
 
     update(user: User) {
-        return this.http.put(this.baseUrl + '/change_user.php?id='+user.id, user);
+        return this.http.put(this.baseUrl + '/change_user.php?id=' + user.id, user);
     }
 
     delete(id: number) {
-        return this.http.delete(this.baseUrl+ '/delete_user.php?id='+id);
+        return this.http.delete(this.baseUrl + '/delete_user.php?id=' + id);
     }
 }
