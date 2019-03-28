@@ -51,6 +51,16 @@ export class T30patenComponent implements OnInit {
     private authenticationService: AuthenticationService,
 ) { }
 
+  getFirstName() {
+    return this.authenticationService.getCurrentUser().firstName;
+  }
+
+  getLastName() {
+    return this.authenticationService.getCurrentUser().lastName;
+  }
+  getEMail() {
+    return this.authenticationService.getCurrentUser().eMail;
+  }
   ngOnInit() {
     this.route.params.subscribe(params => {
       console.log('x1', params);
