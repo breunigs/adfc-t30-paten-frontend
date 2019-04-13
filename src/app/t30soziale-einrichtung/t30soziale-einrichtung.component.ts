@@ -35,6 +35,8 @@ export class T30sozialeEinrichtungComponent implements OnInit {
   lon = HAMBURG_LON;
   mapLat = HAMBURG_LAT;
   mapLon = HAMBURG_LON;
+  newLat = HAMBURG_LAT;
+  newLon = HAMBURG_LON;
 
   static buildItem(fb: FormBuilder) {
     return fb.group({
@@ -43,6 +45,8 @@ export class T30sozialeEinrichtungComponent implements OnInit {
       lon: [HAMBURG_LON, Validators.required],
       mapLat: [HAMBURG_LAT],
       mapLon: [HAMBURG_LON],
+      newLat: [HAMBURG_LAT],
+      newLon: [HAMBURG_LON],
       name: ['', Validators.required],
       zusatz: [''],
       strasse: ['', Validators.required],
@@ -96,7 +100,8 @@ export class T30sozialeEinrichtungComponent implements OnInit {
       lon: e.lon,
       mapLat: e.lat,
       mapLon: e.lon,
-
+      newLat: e.lat,
+      newLon: e.lon,
     });
   }
 
@@ -106,28 +111,42 @@ export class T30sozialeEinrichtungComponent implements OnInit {
     if (this.lat !== value) {
       this.lat = value;
       this.mapLat = value;
+      this.newLat = value;
     }
   }
   changeLonFB(value) {
     if (this.lon !== value) {
       this.lon = value;
       this.mapLon = value;
+      this.newLon = value;
     }
   }
-
+  isMarkerMoved() {
+    return ((this.lat !== this.newLat) || (this.lon !== this.newLon));
+  }
   mapMoveEnd() {
     this.einrichtung.patchValue({
-      lat: this.lat,
-      lon: this.lon
+      newLat: this.newLat,
+      newLon: this.newLon
+    });
+  }
+  posReset() {
+    this.newLat = this.lat;
+    this.newLon = this.lon;
+  }
+  posAenderung() {
+    this.einrichtung.patchValue({
+      lat: this.newLat,
+      lon: this.newLon
     });
   }
   mapDblClick(event) {
     if (event.latlng) {
-      this.lat = event.latlng.lat;
-      this.lon = event.latlng.lng;
+      this.newLat = event.latlng.lat;
+      this.newLon = event.latlng.lng;
       this.einrichtung.patchValue({
-        lat: this.lat,
-        lon: this.lon
+        newLat: this.newLat,
+        newLon: this.newLon
       });
     }
   }

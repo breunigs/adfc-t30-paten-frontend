@@ -73,6 +73,8 @@ export class T30patenComponent implements OnInit {
           } else {
             this.step = 2;
           }
+          data.einrichtung.newLat = data.einrichtung.lat;
+          data.einrichtung.newLon = data.einrichtung.lon;
           this.t30pate.get('email').get('mailtext').markAsDirty();
           this.t30pate.get('email').get('subject').markAsDirty();
           this.t30pate.setValue(data);
