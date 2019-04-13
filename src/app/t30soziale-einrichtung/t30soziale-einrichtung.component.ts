@@ -88,7 +88,6 @@ export class T30sozialeEinrichtungComponent implements OnInit {
       name: e.Name,
       zusatz: '',
       strasse: e.Strasse + ' ' + e.Nummer,
-      t50strassen: e.Strasse,
       plz: e.PLZ,
       ort: 'Hamburg',
       id: e.id,
