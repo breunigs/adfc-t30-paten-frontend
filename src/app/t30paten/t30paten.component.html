@@ -72,10 +72,10 @@
             <div><b>CC:</b> ADFC Hamburg &lt;laeuft@hamburg.adfc.de&gt;</div>
             <div *ngIf="t30pate.get('mailSend').value"><mat-icon>report</mat-icon><b>Die E-Mail wurde bereits verschickt und kann nicht mehr bearbeitet werden</b></div>
             <mat-form-field class="t30-full-width">
-              <input matInput placeholder="Betreff" formControlName="subject" readonly="t30pate.get('mailSend').value">
+              <input matInput placeholder="Betreff" formControlName="subject">
             </mat-form-field>
             <mat-form-field class="t30-full-width">
-              <textarea class="t30-email-area" matInput formControlName="mailtext" placeholder="E-Mail" readonly="t30pate.get('mailSend').value">
+              <textarea class="t30-email-area" matInput formControlName="mailtext" placeholder="E-Mail">
             </textarea>
             </mat-form-field>
         Durch das Absenden aktzeptieren Sie die Datenschutzvereinbarung mit dem ADFC Hamburg.

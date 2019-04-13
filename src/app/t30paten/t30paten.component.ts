@@ -73,7 +73,14 @@ export class T30patenComponent implements OnInit {
           } else {
             this.step = 2;
           }
+          this.t30pate.get('email').get('mailtext').markAsDirty();
+          this.t30pate.get('email').get('subject').markAsDirty();
           this.t30pate.setValue(data);
+          if (data.mailSend) {
+            console.log('disable');
+            this.t30pate.get('email').get('subject').disable();
+            this.t30pate.get('email').get('mailtext').disable();
+          }
         });
       }
     });
@@ -81,7 +88,7 @@ export class T30patenComponent implements OnInit {
       const pate = this.authenticationService.getCurrentUser();
       const einr = val.einrichtung;
       const newSubject = `Bitte um Prüfung von Tempo 30 vor der Einrichtung ${einr.name} ${einr.zusatz}`;
-      if (newSubject !== val.email.subject) {
+      if ((!this.t30pate.get('email').get('subject').dirty) && (newSubject !== val.email.subject)) {
           this.t30pate.get('email').get('subject').setValue(newSubject);
       }
       /* tslint:disable:max-line-length */
@@ -117,7 +124,7 @@ ${pate.firstName} ${pate.lastName}
 Diese E-Mail wurde durch das T30-Tool des ADFC-Hamburg verschickt, mehr Infos dazu unter
 https://hamburg.adfc.de/hast-nicht-gesehen-FIXME `;
       /* tslint:disable:max-line-length */
-      if (newEMailText !== val.email.mailtext) {
+      if ((!this.t30pate.get('email').get('mailtext').dirty) && (newEMailText !== val.email.mailtext)) {
         this.t30pate.get('email').get('mailtext').setValue(newEMailText);
       }
 
