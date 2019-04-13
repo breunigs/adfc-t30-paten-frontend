@@ -15,6 +15,12 @@
        <app-t30soziale-einrichtung [einrichtung]="t30pate.get('einrichtung')">
       </app-t30soziale-einrichtung>
       <mat-action-row>
+        <button mat-button color="warn" (click)="mainMenu()">
+          <mat-icon>cancel</mat-icon> Änderungen verwerfen und zum Hauptmenü
+        </button>
+        <button mat-raised-button *ngIf="!(t30pate.get('mailSend').value)" color="primary" (click)="onSave(1, false)">
+          <mat-icon>save</mat-icon> Speichern und später weiter bearbeiten
+        </button>
         <button mat-button color="primary"  (click)="nextStep()">
           <mat-icon>send</mat-icon> weiter
         </button>
@@ -31,20 +37,21 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <mat-form-field class="t30-full-width">
-        <input matInput placeholder="Dein Bezug zur Einrichtung" formControlName="bezugZurEinrichtung">
-        <mat-hint>Schülerin, Nachbar, Leiterin, Angehörige, Mitarbeiter...</mat-hint>
-      </mat-form-field>
-      <p>Bitte informiere ggf. die Einrichtung, dass Du Tempo 30 für sie beantragt hast.</p>
-      <mat-form-field class="t30-full-width">
-        <textarea matInput placeholder="Stand der Dinge" formControlName="standDerDinge"></textarea>
+        <textarea id="standDerDinge" matInput placeholder="Stand der Dinge" formControlName="standDerDinge"></textarea>
         <mat-hint> Sind sie schon in Kontakt mit der Einrichtung, mit der Polizei, hat ein Politiker dafür/dagegen etwas gesagt?</mat-hint>
       </mat-form-field>
       <mat-action-row>
         <button mat-button (click)="prevStep()">
           <mat-icon>navigate_before</mat-icon>zurück
         </button>
+        <button mat-button color="warn" (click)="mainMenu()">
+          <mat-icon>cancel</mat-icon> Änderungen verwerfen und zum Hauptmenü
+        </button>
         <button mat-raised-button *ngIf="t30pate.get('mailSend').value" color="primary" (click)="onSave(2, false)">
           <mat-icon>save</mat-icon> Speichern
+        </button>
+        <button mat-raised-button *ngIf="!(t30pate.get('mailSend').value)" color="primary" (click)="onSave(2, false)">
+          <mat-icon>save</mat-icon> Speichern und später weiter bearbeiten
         </button>
         <button mat-button *ngIf="!(t30pate.get('mailSend').value)" color="primary"  (click)="nextStep()">
           <mat-icon>email</mat-icon> weiter
@@ -78,12 +85,14 @@
               <textarea class="t30-email-area" matInput formControlName="mailtext" placeholder="E-Mail">
             </textarea>
             </mat-form-field>
-        Durch das Absenden aktzeptieren Sie die Datenschutzvereinbarung mit dem ADFC Hamburg.
         <mat-action-row>
           <button mat-button (click)="prevStep()">
             <mat-icon>navigate_before</mat-icon>zurück
           </button>
-          <button mat-raised-button *ngIf="!(t30pate.get('mailSend').value)" color="primary" (click)="onSave(2, false)">
+          <button mat-button color="warn" (click)="mainMenu()">
+            <mat-icon>cancel</mat-icon> Änderungen verwerfen und zum Hauptmenü
+          </button>
+            <button mat-raised-button *ngIf="!(t30pate.get('mailSend').value)" color="primary" (click)="onSave(2, false)">
             <mat-icon>save</mat-icon> Speichern und später weiter bearbeiten
           </button>
           <button mat-raised-button *ngIf="!(t30pate.get('mailSend').value)" color="accent" (click)="onSave(2, true)">

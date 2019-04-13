@@ -56,6 +56,7 @@ export class T30sozialeEinrichtungComponent implements OnInit {
       art: ['1', Validators.required],
       telefon: [''],
       t50: [true],
+      bezugZurEinrichtung: ['', Validators.required],
     });
   }
 

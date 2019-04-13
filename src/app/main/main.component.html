@@ -41,17 +41,21 @@
      <tr mat-header-row *matHeaderRowDef="displayedPatenColumns"></tr>
      <tr mat-row *matRowDef="let row; columns: displayedPatenColumns;"></tr>
   </table>
+  <mat-action-row>
   <button mat-raised-button color="primary" routerLink="/patenschaft/-1" type="submit">
       <mat-icon>add_box</mat-icon> Neuen Antrag vorbereiten
   </button>
+  </mat-action-row>
   <!-- <h2>Meine Korrekturen</h2>
   <button mat-raised-button color="primary" type="submit">
     <mat-icon>send</mat-icon> Neuen Antrag vorbereiten
     </button> -->
     <h2>Weitere Aktionen</h2>
-    <button mat-raised-button color="primary" routerLink="/profile" type="submit">
-      <mat-icon>account_circle</mat-icon>Profil-Daten ansehen/ändern
-    </button>
-    <button mat-raised-button color="primary" (click)="logout()">
-      <mat-icon>power_settings_new</mat-icon>Abmelden
-    </button>
+    <mat-action-row>
+      <button mat-raised-button color="primary" routerLink="/profile" type="submit">
+        <mat-icon>account_circle</mat-icon>Profil-Daten ansehen/ändern
+      </button>
+      <button mat-raised-button color="primary" (click)="logout()">
+        <mat-icon>power_settings_new</mat-icon>Abmelden
+      </button>
+    </mat-action-row>

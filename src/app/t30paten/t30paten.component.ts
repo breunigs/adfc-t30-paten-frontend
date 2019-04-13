@@ -21,7 +21,6 @@ export class T30patenComponent implements OnInit {
     sendMailNow: [false],
     einrichtung: T30sozialeEinrichtungComponent.buildItem(this.fb),
     patenschaft:   this.fb.group({
-        bezugZurEinrichtung: ['', Validators.required],
         standDerDinge: [''],
       }),
     email: this.fb.group({
@@ -60,6 +59,11 @@ export class T30patenComponent implements OnInit {
   }
   getEMail() {
     return this.authenticationService.getCurrentUser().eMail;
+  }
+  mainMenu() {
+    // FIXME Fragen ob Änderungen wirklich verworfen werden sollen
+    console.log(this.t30pate.dirty);
+      this.router.navigate(['main']);
   }
   ngOnInit() {
     this.route.params.subscribe(params => {

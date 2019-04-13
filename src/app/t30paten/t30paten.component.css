@@ -16,3 +16,6 @@
 .t30-yes {
   color: green;
 }
+textarea#standDerDinge {
+  height: 200px;
+}
