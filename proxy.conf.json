@@ -1,6 +1,9 @@
 {
   "/t30": {
     "target": "http://localhost:1234",
-    "secure": false
+      "secure": false,
+      "pathRewrite": {
+          "^/t30": ""
+      }
   }
 }
