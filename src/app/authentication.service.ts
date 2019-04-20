@@ -1,5 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -27,13 +27,16 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
-        return this.http.post<any>(this.baseUrl + 'auth-users.php', { username, password })
-            .pipe(map(user => {
+        return this.http.post<any>(this.baseUrl + 'portal.php', {
+          'concern': 'login',
+          'username': username,
+          'password': password,
+        }).pipe(map(user => {
                 console.log('x-login', user);
                 // login successful if there's a jwt token in the response
-                if (user && user.sessionId) {
+                if (user && user.token) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    localStorage.setItem('access_token', user.token);
                     this.currentUser = user;
                 }
                 return user;
@@ -45,20 +48,24 @@ export class AuthenticationService {
     getCurrentUser() {
       return this.currentUser;
     }
+    authError() {
+      this.currentUser = null;
+      localStorage.removeItem('access_token');
+    }
     getSessionId() {
       return this.currentUser.sessionId;
     }
     logout() {
         if (this.currentUser) {
-          const params = new HttpParams().set('sessionId', this.currentUser.sessionId);
-          this.http.get<any>(this.baseUrl + 'logout.php', { params: params }).subscribe(results => {
+          this.currentUser = null;
+          return this.http.post<any>(this.baseUrl + 'portal.php', {
+            'concern': 'logout',
+          }).subscribe(results => {
             console.log(results);
           });
         }
         // remove user from local storage to log user out
-        localStorage.getItem('currentUser');
-        this.currentUser = null;
-        localStorage.removeItem('currentUser');
+        localStorage.removeItem('access_token');
         this.router.navigate(['/login']);
     }
 }

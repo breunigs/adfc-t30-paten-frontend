@@ -23,6 +23,12 @@ import { ErrorHandleService } from './error-handle.service';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { MainComponent } from './main/main.component';
+import { JwtModule } from '@auth0/angular-jwt';
+
+
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
 
 @NgModule({
   declarations: [
@@ -56,6 +62,13 @@ import { MainComponent } from './main/main.component';
     MatTableModule,
     YagaModule,
     HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        headerName: 'Access-Control-Allow-Credentials',
+        whitelistedDomains: ['tools.adfc-hamburg.de'],
+      }
+    })
   ],
   providers: [
     ErrorHandleService,
