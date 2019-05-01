@@ -3,6 +3,11 @@
 <button mat-raised-button color="primary" routerLink="/patenschaft/-1" type="submit">
     <mat-icon>add_box</mat-icon> Fehlende soziale Einrichtung melden
 </button>
+</mat-action-row> <br>
+
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Suche nach Name, Straße, Plz">
+</mat-form-field>
 <table mat-table [dataSource]="sozEinrList" matSort class="mat-elevation-z8">
    <ng-container matColumnDef="Name">
      <!-- TODO mat-sort-header does not work -->
@@ -34,7 +39,7 @@
    <tr mat-row *matRowDef="let row; columns: displayedSozEinrColumns;"></tr>
 
 </table>
-<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+<mat-paginator [pageSizeOptions]="[10, 25, 100, 200]"></mat-paginator>
 <mat-action-row>
 <button mat-raised-button color="primary" routerLink="/patenschaft/-1" type="submit">
     <mat-icon>add_box</mat-icon> Fehlende soziale Einrichtung melden
