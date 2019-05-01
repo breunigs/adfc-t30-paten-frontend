@@ -5,9 +5,9 @@
      [routerLink]="link.path"
      routerLinkActive #rla="routerLinkActive"
      [active]="rla.isActive"
-     [ngClass]="{adfcT30TabExtra: link.extra }">
+     [ngClass]="{'adfc-t30-tab-extra': link.extra }">
 
-      {{ link.label }} <mat-icon *ngIf="link.icon!==undefined">{{ link.icon }}</mat-icon>
+      {{ link.label }} &nbsp; <mat-icon *ngIf="link.icon!==undefined">{{ link.icon }}</mat-icon>
   </a>
 </nav>
 

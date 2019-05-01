@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AuthenticationService } from '../authentication.service';
 import { T30PatenService } from '../t30-paten.service';
 
 @Component({
@@ -12,7 +11,6 @@ export class MainComponent implements OnInit {
   public displayedPatenColumns: string[] = [ 'name', 'strasse', 'plz', 'ort', 'status', 'aktion', ];
   public patenList = [];
   constructor(
-    private authenticationService: AuthenticationService,
     private patenService: T30PatenService,
   ) { }
 
@@ -24,8 +22,5 @@ export class MainComponent implements OnInit {
     );
   }
 
-  logout() {
-    console.log('xxx logout');
-    this.authenticationService.logout();
-  }
+
 }

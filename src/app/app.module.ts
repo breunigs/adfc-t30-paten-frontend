@@ -6,7 +6,7 @@ import { YagaModule } from '@yaga/leaflet-ng2';
 import {
   MatFormFieldModule, MatInputModule, MatCheckboxModule, MatExpansionModule,
   MatSelectModule, MatIconModule, MatButtonModule, MatAutocompleteModule, MatProgressSpinnerModule,
-  MatTableModule, MatTabsModule, MatSnackBarModule, MatSortModule,
+  MatTableModule, MatTabsModule, MatSnackBarModule, MatSortModule, MatPaginatorModule, MatPaginatorIntl
 } from '@angular/material';
 // import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
@@ -27,6 +27,7 @@ import { AbmeldenAskComponent } from './abmelden-ask/abmelden-ask.component';
 import { SozialeEinrichtungsKarteComponent } from './soziale-einrichtungs-karte/soziale-einrichtungs-karte.component';
 import { SozialeEinrichtungsListeComponent } from './soziale-einrichtungs-liste/soziale-einrichtungs-liste.component';
 import { ProfileComponent } from './profile/profile.component';
+import { getGermanPaginatorIntl } from './german-paginator-intl';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { ProfileComponent } from './profile/profile.component';
     MatButtonModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
+    MatPaginatorModule,
     MatSnackBarModule,
     MatSortModule,
     MatTableModule,
@@ -69,7 +71,8 @@ import { ProfileComponent } from './profile/profile.component';
   providers: [
     ErrorHandleService,
     { provide: ErrorHandler, useClass: ErrorHandleService },
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: MatPaginatorIntl, useValue: getGermanPaginatorIntl() }
   ],
   bootstrap: [AppComponent],
 })
