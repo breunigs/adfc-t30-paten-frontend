@@ -48,6 +48,9 @@ export class AuthenticationService {
     getSessionId() {
       return this.currentUser.sessionId;
     }
+    isLoggedIn(): boolean {
+      return (this.currentUser !== null);
+    }
     logout() {
         if (this.currentUser) {
           const params = new HttpParams().set('sessionId', this.currentUser.sessionId);

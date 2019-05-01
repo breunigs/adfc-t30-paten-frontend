@@ -6,7 +6,7 @@ import { YagaModule } from '@yaga/leaflet-ng2';
 import {
   MatFormFieldModule, MatInputModule, MatCheckboxModule, MatExpansionModule,
   MatSelectModule, MatIconModule, MatButtonModule, MatAutocompleteModule, MatProgressSpinnerModule,
-  MatTableModule, MatSnackBarModule, MatSortModule,
+  MatTableModule, MatTabsModule, MatSnackBarModule, MatSortModule,
 } from '@angular/material';
 // import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
@@ -23,6 +23,10 @@ import { ErrorHandleService } from './error-handle.service';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { MainComponent } from './main/main.component';
+import { AbmeldenAskComponent } from './abmelden-ask/abmelden-ask.component';
+import { SozialeEinrichtungsKarteComponent } from './soziale-einrichtungs-karte/soziale-einrichtungs-karte.component';
+import { SozialeEinrichtungsListeComponent } from './soziale-einrichtungs-liste/soziale-einrichtungs-liste.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +39,10 @@ import { MainComponent } from './main/main.component';
     LoginComponent,
     RegisterComponent,
     MainComponent,
+    AbmeldenAskComponent,
+    SozialeEinrichtungsKarteComponent,
+    SozialeEinrichtungsListeComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +62,7 @@ import { MainComponent } from './main/main.component';
     MatSnackBarModule,
     MatSortModule,
     MatTableModule,
+    MatTabsModule,
     YagaModule,
     HttpClientModule,
   ],

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { AbmeldenAskComponent } from './abmelden-ask/abmelden-ask.component';
 import { TokenEingebenComponent } from './token-eingeben/token-eingeben.component';
 import { TokenBestaetigungComponent } from './token-bestaetigung/token-bestaetigung.component';
 import { EmailVersandComponent } from './email-versand/email-versand.component';
@@ -9,9 +10,12 @@ import { MainComponent } from './main/main.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './auth.guard';
+import { SozialeEinrichtungsKarteComponent } from './soziale-einrichtungs-karte/soziale-einrichtungs-karte.component';
+import { SozialeEinrichtungsListeComponent } from './soziale-einrichtungs-liste/soziale-einrichtungs-liste.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [{
-  path: '',
+  path: 'main',
   component: MainComponent,
   canActivate: [AuthGuard],
 }, {
@@ -29,6 +33,22 @@ const routes: Routes = [{
   component: EmailVersandComponent,
   canActivate: [AuthGuard],
 }, {
+  path: 'sozEinrKarte',
+  component: SozialeEinrichtungsKarteComponent,
+  canActivate: [AuthGuard],
+}, {
+  path: 'sozEinrListe',
+  component: SozialeEinrichtungsListeComponent,
+  canActivate: [AuthGuard],
+}, {
+  path: 'profile',
+  component: ProfileComponent,
+  canActivate: [AuthGuard],
+}, {
+  path: 'AbmeldenAsk',
+  component: AbmeldenAskComponent,
+  canActivate: [AuthGuard],
+},  {
   path: 'login',
   component: LoginComponent,
 }, {
@@ -37,7 +57,7 @@ const routes: Routes = [{
 }, {
   // otherwise redirect to home
   path: '**',
-  redirectTo: ''
+  redirectTo: 'main'
 }];
 
 @NgModule({

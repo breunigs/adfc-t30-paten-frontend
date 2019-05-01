@@ -1,4 +1,16 @@
 <h1>{{ title }}</h1>
+<nav mat-tab-nav-bar *ngIf="isLoggedIn()">
+   <a mat-tab-link
+     *ngFor="let link of myNavLinks"
+     [routerLink]="link.path"
+     routerLinkActive #rla="routerLinkActive"
+     [active]="rla.isActive"
+     [ngClass]="{adfcT30TabExtra: link.extra }">
+
+      {{ link.label }} <mat-icon *ngIf="link.icon!==undefined">{{ link.icon }}</mat-icon>
+  </a>
+</nav>
+
 <router-outlet></router-outlet>
 <hr>
 Version: {{ version }}
