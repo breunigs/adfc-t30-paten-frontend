@@ -17,7 +17,8 @@ export class UserService {
     }
 
     register(user: User) {
-        return this.http.post(this.baseUrl + '/register_user.php', user);
+        let merged = Object.assign(user, {concern: "register"})
+        return this.http.post(this.baseUrl + '/portal.php', merged);
     }
 
     update(user: User) {
