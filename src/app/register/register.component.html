@@ -23,7 +23,7 @@
         <mat-error class="error-message" *ngIf="checkValidateError('passwort1', 'minlength')">Passwort zu kurz</mat-error>
       </mat-form-field>
       <mat-form-field class="t30-full-width">
-        <input matInput placeholder="Passwort wiederholen" type="password" formControlName="passwort2" required>
+        <input matInput placeholder="Passdwort wiederholen" type="password" formControlName="passwort2" required>
         <mat-error class="error-message"  *ngIf="checkValidateError('passwort2', 'notMatched')"><mat-icon>warning</mat-icon>Passwörter sind nicht identisch.</mat-error>
       </mat-form-field>
       <mat-form-field class="t30-full-width">

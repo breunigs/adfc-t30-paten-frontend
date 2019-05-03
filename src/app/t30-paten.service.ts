@@ -44,7 +44,7 @@ export class T30PatenService {
         }));
   }
   list() {
-    return this.http.get<any>(this.baseUrl + 'pate-list.php', httpOptions)
+    return this.http.get<any>(this.baseUrl + 'crud.php?entity=patenschaft', httpOptions)
       .pipe(
         map(res => {
           console.log('res', res);

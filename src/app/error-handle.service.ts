@@ -6,7 +6,8 @@ import { NotificationError } from './notification-error';
 @Injectable()
 export class ErrorHandleService implements ErrorHandler {
 
-  constructor(private readonly clientNotifierService: ErrorNotifierService) {
+  constructor(private readonly clientNotifierService: ErrorNotifierService,
+  ) {
     console.log('CREATE');
   }
 
@@ -16,10 +17,8 @@ export class ErrorHandleService implements ErrorHandler {
       console.error('Backend returned status code: ', error.status);
       console.error('Response body:', error.message);
       let msg = 'Fehler im Backend';
-      if (error.error) {
-        if (error.error.error) {
-          msg = error.error.error;
-        }
+      if (error.status === 401) {
+          msg = 'Benutzername oder Passwort ungültig';
       }
       this.clientNotifierService.addError(msg);
       // throw error;

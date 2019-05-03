@@ -57,11 +57,12 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "t30-paten:build"
+              "browserTarget": "t30-paten:build",
+              "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "t30-paten:build:production"
+                "browserTarget": "t30-paten:build:production"
             }
           }
         },
