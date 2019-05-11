@@ -16,6 +16,10 @@ export class UserService {
         return this.http.get(this.baseUrl + '/get_user.php?id=' + id);
     }
 
+    getCurrentUser() {
+      return this.http.get(this.baseUrl + '/get_current_user.php');
+    }
+
     register(user: User) {
         return this.http.post(this.baseUrl + '/register_user.php', user);
     }
