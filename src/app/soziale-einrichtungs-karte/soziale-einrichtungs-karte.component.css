@@ -1,3 +1,8 @@
-div#map {
-  height: 500px;
+.t30-map-div {
+    width: 90%;
+    height: 500px;
+}
+.adfc-map {
+  height: 100%;
+  witdth: 100%;
 }

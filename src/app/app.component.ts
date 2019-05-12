@@ -16,7 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'ADFC Tempo 30 vor sozialen Einrichtungen';
    navLinks = [
     { path: '/main', label: 'Meine T30 Eingaben', icon: 'visibility'},
-    { path: '/sozEinrListe', label: 'List der sozialen Einrichungen', icon: 'list' },
+    { path: '/sozEinrListe', label: 'Liste der sozialen Einrichungen', icon: 'list' },
     { path: '/sozEinrKarte', label: 'Karte der sozialen Einrichungen' , icon: 'map' },
     { path: '/profile', label: 'Mein Profil' , icon: 'account_circle' },
     { path: '/AbmeldenAsk', label: 'Abmelden', icon: 'power_settings_new' },

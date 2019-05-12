@@ -1,6 +1,15 @@
 <p>
   soziale-einrichtungs-aakarte works!
 </p>
+<div class="t30-map-div">
+  <yaga-map class="adfc-map" zoom="12" [(lat)]="mapLat" [(lng)]="mapLon">
+    <yaga-tile-layer [(url)]="tileLayerUrl"></yaga-tile-layer>
+    <yaga-geojson
+      [data]="geoData"
+      [pointToLayer]="pointToLayerFunc"
+    ></yaga-geojson>
+    <yaga-zoom-control></yaga-zoom-control>
 
-<div id="map">
+  </yaga-map>
+
 </div>
