@@ -11,7 +11,7 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 export class SozialeEinrichtungsListeComponent implements OnInit {
 
   public sozEinrList = new MatTableDataSource();
-  public displayedSozEinrColumns: string[] = [ 'Name', 'Strasse', 'PLZ', 'Bezirk', 'aktion'];
+  public displayedSozEinrColumns: string[] = [ 'status', 'Name', 'Strasse', 'PLZ', 'Bezirk', 'aktion'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(

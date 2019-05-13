@@ -6,7 +6,8 @@ import { YagaModule } from '@yaga/leaflet-ng2';
 import {
   MatFormFieldModule, MatInputModule, MatCheckboxModule, MatExpansionModule,
   MatSelectModule, MatIconModule, MatButtonModule, MatAutocompleteModule, MatProgressSpinnerModule,
-  MatTableModule, MatTabsModule, MatSnackBarModule, MatSortModule, MatPaginatorModule, MatPaginatorIntl
+  MatTableModule, MatTabsModule, MatSnackBarModule, MatSortModule, MatPaginatorModule, MatPaginatorIntl,
+  MatTooltipModule,
 } from '@angular/material';
 // import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
@@ -28,6 +29,11 @@ import { SozialeEinrichtungsKarteComponent } from './soziale-einrichtungs-karte/
 import { SozialeEinrichtungsListeComponent } from './soziale-einrichtungs-liste/soziale-einrichtungs-liste.component';
 import { ProfileComponent } from './profile/profile.component';
 import { getGermanPaginatorIntl } from './german-paginator-intl';
+import { SafePipe } from './safe.pipe';
+import { SozEinrButtonsComponent } from './soz-einr-buttons/soz-einr-buttons.component';
+import { T30StatusLongTextPipe } from './t30-status-long-text.pipe';
+import { T30StatusShortTextPipe } from './t30-status-short-text.pipe';
+import { T30StatusStarSvgUrlPipe } from './t30-status-star-svg-url.pipe';
 
 @NgModule({
   declarations: [
@@ -44,6 +50,11 @@ import { getGermanPaginatorIntl } from './german-paginator-intl';
     SozialeEinrichtungsKarteComponent,
     SozialeEinrichtungsListeComponent,
     ProfileComponent,
+    SafePipe,
+    SozEinrButtonsComponent,
+    T30StatusLongTextPipe,
+    T30StatusShortTextPipe,
+    T30StatusStarSvgUrlPipe,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +78,7 @@ import { getGermanPaginatorIntl } from './german-paginator-intl';
     MatTabsModule,
     YagaModule,
     HttpClientModule,
+    MatTooltipModule,
   ],
   providers: [
     ErrorHandleService,

@@ -17,19 +17,25 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-
 export class T30SozialeEinrichtungService {
   baseUrl = environment.API_BASE_URL;
 
   constructor(
     private http: HttpClient
   ) { }
-
+  getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
   list() {
     return this.http.get<any>(this.baseUrl + 'soz-einr-list.php', httpOptions)
       .pipe(
         map(res => {
           console.log('res', res);
+          for (const item of res) {
+            item.tempo30 = this.getRandomInt(0, 5);
+          }
           if (res.error) {
             throw new NotificationError(res.error);
           }
