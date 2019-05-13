@@ -23,7 +23,6 @@
     "@angular/router": "~7.2.13",
     "@types/node": "^10.12.18",
     "@yaga/leaflet-ng2": "^1.0.0",
-    "adfc-map": "git+https://github.com/ADFC-Hamburg/adfc-t30-paten-map.git#version0.3.2",
     "core-js": "^2.5.4",
     "hammerjs": "^2.0.8",
     "material-design-icons": "^3.0.1",
