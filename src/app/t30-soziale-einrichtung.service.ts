@@ -28,6 +28,18 @@ export class T30SozialeEinrichtungService {
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+  get(id) {
+    return this.http.get<any>(this.baseUrl + 'soz-einr-get.php?id=' + id, httpOptions)
+      .pipe(
+        map(res => {
+          console.log('res', res);
+          if (res.error) {
+            throw new NotificationError(res.error);
+          }
+          res.tempo30 = this.getRandomInt(0, 5);
+          return res;
+        }));
+  }
   list() {
     return this.http.get<any>(this.baseUrl + 'soz-einr-list.php', httpOptions)
       .pipe(

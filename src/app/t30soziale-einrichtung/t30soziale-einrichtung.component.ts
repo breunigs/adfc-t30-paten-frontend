@@ -106,7 +106,8 @@ export class T30sozialeEinrichtungComponent implements OnInit {
     });
   }
 
-  constructor() { }
+  constructor(
+    ) { }
 
   changeLatFB(value) {
     if (this.lat !== value) {

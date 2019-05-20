@@ -1,0 +1,98 @@
+<div [formGroup]="einrichtung">
+  <mat-form-field class="t30-full-width">
+    <input matInput placeholder="Name der Einrichtung" formControlName="name">
+  </mat-form-field>
+  <mat-form-field class="t30-full-width">
+    <input matInput placeholder="ggf. anderer Standort/ Zweigstelle/ Nebengebäude" formControlName="zusatz">
+    <mat-hint>
+      z.B. wenn es drei Standorte gibt und bei zweien Tempo 30 Sinn macht,
+      dann bitte für jeden von diesen einen eigenen Antrag ausfüllen und hier jeweils die Bezeichnung des Standortes angeben
+    </mat-hint>
+  </mat-form-field>
+
+  <mat-form-field class="t30-full-width">
+    <mat-select placeholder="Art der Einrichtung" formControlName="art">
+      <mat-option value="1">Kindergaten</mat-option>
+      <mat-option value="2">Schule</mat-option>
+      <mat-option value="3">Alten- und Pflegeheim / Tagespflege</mat-option>
+      <mat-option value="4">Krankenhaus</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <b>Adresse der Einrichtung</b>
+  <mat-form-field class="t30-full-width">
+    <input matInput placeholder="Straße und Hausnummer" formControlName="strasse">
+  </mat-form-field>
+  <mat-form-field class="t30-half-width">
+    <input matInput placeholder="PLZ" formControlName="plz">
+  </mat-form-field>
+  <mat-form-field class="t30-half-width">
+    <input matInput placeholder="Ort" formControlName="ort">
+  </mat-form-field>
+  <div class="t30-full-width-flex">
+    <div class="t30-map-div">
+      <yaga-map class="t30-map" zoom="17" [(lat)]="mapLat" [(lng)]="mapLon" (dblclick)="mapDblClick($event)">
+        <yaga-tile-layer [(url)]="tileLayerUrl"></yaga-tile-layer>
+        <yaga-zoom-control></yaga-zoom-control>
+        <yaga-circle *ngIf="isMarkerMoved()" [(lat)]="lat" [(lng)]="lon" radius="5" fillColor="blue" color="blue">
+          </yaga-circle>
+        <yaga-marker [(lat)]="newLat" [(lng)]="newLon" (moveend)="mapMoveEnd();" draggable="true">
+          <yaga-icon iconUrl="assets/marker-icon.png" shadowUrl="assets/marker-shadow.png" [(iconSize)]="marker.iconSize" [(iconAnchor)]="marker.iconAnchor" [(popupAnchor)]="marker.popupAnchor" [(tooltipAnchor)]="marker.tooltipAnchor" [(shadowSize)]="marker.shadowSize"></yaga-icon>
+        </yaga-marker>
+      </yaga-map>
+      <mat-hint>Bitte ggf. Position korrigiren: Marker mit der Maus verschieben oder Doppelkick auf neue Position</mat-hint>
+    </div>
+   <div class="t30-daneben-div">
+     <div *ngIf="isMarkerMoved()">
+       Soll die Position wirklich von der Kreisposition auf den Marker geändert werden?
+       <br>
+         <button mat-raised-button color="primary" (click)="posAenderung()">
+            <mat-icon>location_on</mat-icon> Ja
+          </button>
+          <button mat-raised-button color="basic" (click)="posReset()">
+             <mat-icon>undo</mat-icon> Nein
+           </button>
+     </div>
+    </div>
+  </div>
+<h2>Angrenzende Straßen mit Quell und Zielverkehr</h2>
+<div *ngIf="einrichtung.get('angrenzendeStrassen').length===0">
+  <mat-icon color="warn">warning</mat-icon> Hier fehlen die Straßen mit Qull- und Zielverkehr. Wir suchen freiwillige mit Ortskenntnissen!
+</div>
+
+<div formArrayName="angrenzendeStrassen"
+  *ngFor="let item of einrichtung.get('angrenzendeStrassen').controls; let i = index;">
+  <div [formGroupName]="i">
+    <mat-form-field class="t30-half-width">
+      <input matInput placeholder="Straße" formControlName="name">
+    </mat-form-field>
+    <mat-form-field class="t30-hausnummer-width">
+      <input matInput placeholder="von Hausnummer" formControlName="von">
+    </mat-form-field>
+    <mat-form-field class="t30-hausnummer-width">
+      <input matInput placeholder="bis Hausnummer" formControlName="bis">
+    </mat-form-field>
+    <mat-form-field class="t30-stand-width">
+      <mat-select placeholder="Stand der Dinge" formControlName="status">
+        <mat-option value="1">Unsicher wie der Stand ist</mat-option>
+        <mat-option value="2">Hier ist Tempo 30</mat-option>
+        <mat-option value="3">Hier sollte Tempo 30 gefordert werden</mat-option>
+        <mat-option value="4">Die Behörde hat abgelehnt Tempo 30 einzuführen</mat-option>
+        <mat-option value="5">Tempo 30 wurde angeordnet, die Schilder stehen aber noch nicht</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      matTooltip="Diesen Straßenabschnitt löschen"
+      (click)="deleteStrassenAbschnitt(i)"
+      type="submit">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>
+  <button
+    mat-raised-button
+     matTooltip="Neuen Straßenabschnitt hinzufügen"
+     type="submit"
+     (click)="addStrassenAbschnitt()">
+    Straßenabschnitt hinzufügen <mat-icon>add</mat-icon>
+  </button>
