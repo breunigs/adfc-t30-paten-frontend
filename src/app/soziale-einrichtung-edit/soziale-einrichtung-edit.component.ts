@@ -74,6 +74,9 @@ export class SozialeEinrichtungEditComponent implements OnInit {
         status: ['1'],
       });
   }
+  getStrassenAbschnitte() {
+    return this.einrichtung.get('angrenzendeStrassen') as FormArray;
+  }
   addStrassenAbschnitt() {
     const fa = this.einrichtung.get('angrenzendeStrassen') as FormArray;
     fa.push(this.createAngrStrassenFbGroup());

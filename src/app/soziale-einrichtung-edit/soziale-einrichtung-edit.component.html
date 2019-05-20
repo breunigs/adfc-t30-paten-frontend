@@ -55,12 +55,12 @@
     </div>
   </div>
 <h2>Angrenzende Straßen mit Quell und Zielverkehr</h2>
-<div *ngIf="einrichtung.get('angrenzendeStrassen').length===0">
+<div *ngIf=" getStrassenAbschnitte().length === 0">
   <mat-icon color="warn">warning</mat-icon> Hier fehlen die Straßen mit Qull- und Zielverkehr. Wir suchen freiwillige mit Ortskenntnissen!
 </div>
 
 <div formArrayName="angrenzendeStrassen"
-  *ngFor="let item of einrichtung.get('angrenzendeStrassen').controls; let i = index;">
+  *ngFor="let item of getStrassenAbschnitte().controls; let i = index;">
   <div [formGroupName]="i">
     <mat-form-field class="t30-half-width">
       <input matInput placeholder="Straße" formControlName="name">
