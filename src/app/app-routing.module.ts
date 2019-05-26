@@ -19,6 +19,7 @@ import { SozialeEinrichtungT30OkayComponent } from './soziale-einrichtung-t30-ok
 import { SozialeEinrichtungT30FehltComponent } from './soziale-einrichtung-t30-fehlt/soziale-einrichtung-t30-fehlt.component';
 import { SozialeEinrichtungT30FordernComponent } from './soziale-einrichtung-t30-fordern/soziale-einrichtung-t30-fordern.component';
 import { SozialeEinrichtungT30SchilderDaComponent } from './soziale-einrichtung-t30-schilder-da/soziale-einrichtung-t30-schilder-da.component';
+import { CanDeactivateGuard } from './can-deactivate.guard';
 
 const routes: Routes = [{
   path: 'main',
@@ -32,6 +33,7 @@ const routes: Routes = [{
   path: 'einrichtung/edit/:id',
   component: SozialeEinrichtungEditComponent,
   canActivate: [AuthGuard],
+  canDeactivate: [CanDeactivateGuard],
 }, {
   path: 'einrichtung/t30okay/:id',
   component: SozialeEinrichtungT30OkayComponent,
@@ -73,6 +75,7 @@ const routes: Routes = [{
   path: 'profile',
   component: ProfileComponent,
   canActivate: [AuthGuard],
+  canDeactivate: [CanDeactivateGuard],
 }, {
   path: 'AbmeldenAsk',
   component: AbmeldenAskComponent,

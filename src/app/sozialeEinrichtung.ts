@@ -13,6 +13,7 @@ export class SozialeEinrichtung {
   telefon: string;
   art: string;
   t50: boolean;
+  tempo30:  number;
   public constructor(init?: Partial<SozialeEinrichtung>) {
     Object.assign(this, init);
   }

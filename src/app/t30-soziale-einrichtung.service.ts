@@ -3,8 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { map } from 'rxjs/operators';
-
+import { SozialeEinrichtung } from './sozialeEinrichtung';
 import { NotificationError } from './notification-error';
+import { Observable } from 'rxjs';
+
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -28,7 +30,7 @@ export class T30SozialeEinrichtungService {
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-  get(id) {
+  get(id): Observable<SozialeEinrichtung> {
     return this.http.get<any>(this.baseUrl + 'soz-einr-get.php?id=' + id, httpOptions)
       .pipe(
         map(res => {
@@ -52,6 +54,15 @@ export class T30SozialeEinrichtungService {
             throw new NotificationError(res.error);
           }
           return res;
+        }));
+  }
+  save(einr: SozialeEinrichtung) {
+    return this.http.post<any>(this.baseUrl + 'soz-einr-save.php', einr, httpOptions)
+      .pipe(
+        map(res => {
+          if (res.error) {
+            throw new NotificationError(res.error);
+          }
         }));
   }
 }

@@ -1,3 +1,68 @@
-<p>
-  soziale-einrichtung-t30-fehlt works!
-</p>
+<h2>{{ loadedData.name }}</h2>
+Bitte setze  die entsprechenden Straßenabschnitte um
+<div [formGroup]="einrichtung">
+<ul formArrayName="angrenzendeStrassen"
+  *ngFor="let item of getStrassenAbschnitte().controls; let i = index;">
+  <li [formGroupName]="i">
+    <mat-form-field class="t30-half-width">
+      <input matInput placeholder="Straße" [matAutocomplete]="auto" (ngModelChange)="changeStrassenname($event)" formControlName="name">
+    </mat-form-field>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngIf="isLoading" class="is-loading">
+        <mat-spinner diameter="50"></mat-spinner>
+      </mat-option>
+      <ng-container *ngIf="!isLoading">
+        <mat-option *ngFor="let einr of filteredStrassen" [value]="einr">
+          <span>{{ einr}}</span>
+        </mat-option>
+      </ng-container>
+    </mat-autocomplete>
+    <mat-form-field class="t30-hausnummer-width">
+      <input matInput placeholder="von Hausnummer" formControlName="von">
+    </mat-form-field>
+    <mat-form-field class="t30-hausnummer-width">
+      <input matInput placeholder="bis Hausnummer" formControlName="bis">
+    </mat-form-field>
+    <mat-form-field class="t30-3-width">
+      <mat-select  placeholder="Haupteingang" formControlName="haupteingang">
+        <mat-option value="1">Hier ist ein Haupteingang</mat-option>
+        <mat-option value="0">Kein Haupteingang</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="t30-3-width">
+      <mat-select placeholder="Stand der Dinge" formControlName="status">
+        <mat-option value="1">Unsicher wie der Stand ist</mat-option>
+        <mat-option value="2">Hier ist Tempo 30</mat-option>
+        <mat-option value="3">Hier sollte Tempo 30 gefordert werden</mat-option>
+        <mat-option value="4">Die Behörde hat abgelehnt Tempo 30 einzuführen</mat-option>
+        <mat-option value="5">Tempo 30 wurde angeordnet, die Schilder stehen aber noch nicht</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="t30-button-width">
+    <button
+      mat-raised-button
+      matTooltip="Diesen Straßenabschnitt löschen"
+      (click)="deleteStrassenAbschnitt(i)"
+      type="submit">
+      <mat-icon>delete</mat-icon>
+    </button>
+    </div>
+  </li>
+</ul>
+  <button
+    mat-raised-button
+     matTooltip="Neuen Straßenabschnitt hinzufügen"
+     type="submit"
+     (click)="addStrassenAbschnitt()">
+    Straßenabschnitt hinzufügen <mat-icon>add</mat-icon>
+  </button>
+<hr>
+  <mat-action-row>
+    <button mat-raised-button color="primary" (click)="onSave()">
+      <mat-icon>save</mat-icon> Speichern
+    </button>
+    <button mat-raised-button  routerLink="/einrichtung/view/{{id}}">
+      <mat-icon>undo</mat-icon> Änderungen verwerfen
+    </button>
+  </mat-action-row>
+</div>

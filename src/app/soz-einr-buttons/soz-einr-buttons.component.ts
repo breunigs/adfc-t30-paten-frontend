@@ -9,6 +9,7 @@ export class SozEinrButtonsComponent implements OnInit {
 
   @Input() public id;
   @Input() public tempo30;
+  @Input() public show_view = 1;
   constructor() { }
 
   ngOnInit() {

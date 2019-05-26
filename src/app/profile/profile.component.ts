@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-
+import { CanDeactivateFormControlComponent } from '../can-deactivate-form-control/can-deactivate-form-control.component';
 import { UserService } from '../user.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { UserService } from '../user.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent  extends CanDeactivateFormControlComponent implements OnInit {
     profileForm: FormGroup;
     loading = false;
   disable = true;
@@ -20,8 +20,11 @@ export class ProfileComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     ) {
+      super();
    }
-
+  getFormControl() {
+    return this.profileForm;
+  }
   ngOnInit() {
     this.profileForm = this.formBuilder.group({
         vorname: ['', Validators.required],
