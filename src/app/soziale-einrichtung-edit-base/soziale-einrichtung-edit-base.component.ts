@@ -14,7 +14,7 @@ const HAMBURG_LON = 9.993682;
 
 export abstract class SozialeEinrichtungEditBaseComponent  extends CanDeactivateFormControlComponent implements OnInit {
   id = -1;
-  public loadedData: SozialeEinrichtung;
+  public loadedData: SozialeEinrichtung = SozialeEinrichtung.DEFAULT;
   public einrichtung: FormGroup = this.fb.group({
       id: [-1],
       lat: [HAMBURG_LAT, Validators.required],
@@ -190,7 +190,19 @@ export abstract class SozialeEinrichtungEditBaseComponent  extends CanDeactivate
     load(id) {
       this.id = id;
       this.sozService.get(id).subscribe( data => {
+        console.log(data);
+        while (data.angrenzendeStrassen.length > (this.einrichtung.get('angrenzendeStrassen') as FormArray).length) {
+          this.addStrassenAbschnitt();
+        }
+        let newLen = data.angrenzendeStrassen.length;
+        if (newLen === 0) {
+          newLen = 1;
+        }
+        while ((this.einrichtung.get('angrenzendeStrassen') as FormArray).length > newLen) {
+          this.deleteStrassenAbschnitt((this.einrichtung.get('angrenzendeStrassen') as FormArray).length);
+        }
         this.einrichtung.patchValue(data);
+        this.einrichtung.patchValue({mapLon: data.lon, mapLat: data.lat, newLon: data.lon, newLat: data.lat});
         this.loadedData = data;
       });
     }
