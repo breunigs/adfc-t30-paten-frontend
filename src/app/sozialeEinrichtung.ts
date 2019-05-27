@@ -13,8 +13,11 @@ export class SozialeEinrichtung {
   telefon: string;
   art: string;
   t50: boolean;
+  angrenzendeStrassen: any;
   public constructor(init?: Partial<SozialeEinrichtung>) {
     Object.assign(this, init);
   }
-
+  public static get DEFAULT() {
+      return new this();
+  }
 }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { AbmeldenAskComponent } from './abmelden-ask/abmelden-ask.component';
 import { TokenEingebenComponent } from './token-eingeben/token-eingeben.component';
 import { TokenBestaetigungComponent } from './token-bestaetigung/token-bestaetigung.component';
 import { EmailVersandComponent } from './email-versand/email-versand.component';
@@ -9,15 +10,34 @@ import { MainComponent } from './main/main.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './auth.guard';
+import { SozialeEinrichtungsKarteComponent } from './soziale-einrichtungs-karte/soziale-einrichtungs-karte.component';
+import { SozialeEinrichtungsListeComponent } from './soziale-einrichtungs-liste/soziale-einrichtungs-liste.component';
+import { ProfileComponent } from './profile/profile.component';
+import { SozialeEinrichtungViewComponent } from './soziale-einrichtung-view/soziale-einrichtung-view.component';
+import { SozialeEinrichtungEditComponent } from './soziale-einrichtung-edit/soziale-einrichtung-edit.component';
+import { SozialeEinrichtungT30FordernComponent } from './soziale-einrichtung-t30-fordern/soziale-einrichtung-t30-fordern.component';
+import { CanDeactivateGuard } from './can-deactivate.guard';
 
 const routes: Routes = [{
-  path: '',
+  path: 'main',
   component: MainComponent,
   canActivate: [AuthGuard],
 }, {
   path: 'patenschaft/:id',
   component: T30patenComponent,
   canActivate: [AuthGuard],
+}, {
+  path: 'einrichtung/edit/:id',
+  component: SozialeEinrichtungEditComponent,
+  canActivate: [AuthGuard],
+  canDeactivate: [CanDeactivateGuard],
+}, {
+  path: 'einrichtung/t30fordern/:id',
+  component: SozialeEinrichtungT30FordernComponent,
+  canActivate: [AuthGuard],
+}, {
+  path: 'einrichtung/view/:id',
+  component: SozialeEinrichtungViewComponent,
 }, {
   path: 'token/:fehler',
   component: TokenEingebenComponent,
@@ -29,6 +49,23 @@ const routes: Routes = [{
   component: EmailVersandComponent,
   canActivate: [AuthGuard],
 }, {
+  path: 'sozEinrKarte',
+  component: SozialeEinrichtungsKarteComponent,
+  canActivate: [AuthGuard],
+}, {
+  path: 'sozEinrListe',
+  component: SozialeEinrichtungsListeComponent,
+  canActivate: [AuthGuard],
+}, {
+  path: 'profile',
+  component: ProfileComponent,
+  canActivate: [AuthGuard],
+  canDeactivate: [CanDeactivateGuard],
+}, {
+  path: 'AbmeldenAsk',
+  component: AbmeldenAskComponent,
+  canActivate: [AuthGuard],
+},  {
   path: 'login',
   component: LoginComponent,
 }, {
@@ -37,7 +74,7 @@ const routes: Routes = [{
 }, {
   // otherwise redirect to home
   path: '**',
-  redirectTo: ''
+  redirectTo: 'main'
 }];
 
 @NgModule({

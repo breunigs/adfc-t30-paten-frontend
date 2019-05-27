@@ -1,0 +1,21 @@
+.t30-map {
+    width: 100%;
+    height: 300px;
+}
+div.line {
+  width: 100%
+}
+div.key {
+  font-weight: bold;
+  width: 30%;
+  display: inline;
+}
+div.value {
+  width: 70%;
+  display: inline;
+}
+div.half {
+  width: 50%;
+  display: inline-block;
+  vertical-align: top;
+}

@@ -6,7 +6,8 @@ import { YagaModule } from '@yaga/leaflet-ng2';
 import {
   MatFormFieldModule, MatInputModule, MatCheckboxModule, MatExpansionModule,
   MatSelectModule, MatIconModule, MatButtonModule, MatAutocompleteModule, MatProgressSpinnerModule,
-  MatTableModule, MatSnackBarModule, MatSortModule,
+  MatTableModule, MatTabsModule, MatSnackBarModule, MatSortModule, MatPaginatorModule, MatPaginatorIntl,
+  MatTooltipModule,
 } from '@angular/material';
 // import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
@@ -24,6 +25,19 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { MainComponent } from './main/main.component';
 import { JwtModule } from '@auth0/angular-jwt';
+import { AbmeldenAskComponent } from './abmelden-ask/abmelden-ask.component';
+import { SozialeEinrichtungsKarteComponent } from './soziale-einrichtungs-karte/soziale-einrichtungs-karte.component';
+import { SozialeEinrichtungsListeComponent } from './soziale-einrichtungs-liste/soziale-einrichtungs-liste.component';
+import { ProfileComponent } from './profile/profile.component';
+import { getGermanPaginatorIntl } from './german-paginator-intl';
+import { SafePipe } from './safe.pipe';
+import { SozEinrButtonsComponent } from './soz-einr-buttons/soz-einr-buttons.component';
+import { T30StatusLongTextPipe } from './t30-status-long-text.pipe';
+import { T30StatusShortTextPipe } from './t30-status-short-text.pipe';
+import { T30StatusStarSvgUrlPipe } from './t30-status-star-svg-url.pipe';
+import { SozialeEinrichtungViewComponent } from './soziale-einrichtung-view/soziale-einrichtung-view.component';
+import { SozialeEinrichtungEditComponent } from './soziale-einrichtung-edit/soziale-einrichtung-edit.component';
+import { SozialeEinrichtungT30FordernComponent } from './soziale-einrichtung-t30-fordern/soziale-einrichtung-t30-fordern.component';
 
 
 export function tokenGetter() {
@@ -41,6 +55,18 @@ export function tokenGetter() {
     LoginComponent,
     RegisterComponent,
     MainComponent,
+    AbmeldenAskComponent,
+    SozialeEinrichtungsKarteComponent,
+    SozialeEinrichtungsListeComponent,
+    ProfileComponent,
+    SafePipe,
+    SozEinrButtonsComponent,
+    T30StatusLongTextPipe,
+    T30StatusShortTextPipe,
+    T30StatusStarSvgUrlPipe,
+    SozialeEinrichtungViewComponent,
+    SozialeEinrichtungEditComponent,
+    SozialeEinrichtungT30FordernComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,11 +83,14 @@ export function tokenGetter() {
     MatButtonModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
+    MatPaginatorModule,
     MatSnackBarModule,
     MatSortModule,
     MatTableModule,
+    MatTabsModule,
     YagaModule,
     HttpClientModule,
+<<<<<<< HEAD
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -69,11 +98,15 @@ export function tokenGetter() {
         whitelistedDomains: ['tools.adfc-hamburg.de'],
       }
     })
+=======
+    MatTooltipModule,
+>>>>>>> nav-with-tabs
   ],
   providers: [
     ErrorHandleService,
     { provide: ErrorHandler, useClass: ErrorHandleService },
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: MatPaginatorIntl, useValue: getGermanPaginatorIntl() }
   ],
   bootstrap: [AppComponent],
 })
