@@ -36,10 +36,7 @@ import { T30StatusShortTextPipe } from './t30-status-short-text.pipe';
 import { T30StatusStarSvgUrlPipe } from './t30-status-star-svg-url.pipe';
 import { SozialeEinrichtungViewComponent } from './soziale-einrichtung-view/soziale-einrichtung-view.component';
 import { SozialeEinrichtungEditComponent } from './soziale-einrichtung-edit/soziale-einrichtung-edit.component';
-import { SozialeEinrichtungT30OkayComponent } from './soziale-einrichtung-t30-okay/soziale-einrichtung-t30-okay.component';
-import { SozialeEinrichtungT30FehltComponent } from './soziale-einrichtung-t30-fehlt/soziale-einrichtung-t30-fehlt.component';
 import { SozialeEinrichtungT30FordernComponent } from './soziale-einrichtung-t30-fordern/soziale-einrichtung-t30-fordern.component';
-import { SozialeEinrichtungT30SchilderDaComponent } from './soziale-einrichtung-t30-schilder-da/soziale-einrichtung-t30-schilder-da.component';
 
 @NgModule({
   declarations: [
@@ -63,10 +60,7 @@ import { SozialeEinrichtungT30SchilderDaComponent } from './soziale-einrichtung-
     T30StatusStarSvgUrlPipe,
     SozialeEinrichtungViewComponent,
     SozialeEinrichtungEditComponent,
-    SozialeEinrichtungT30OkayComponent,
-    SozialeEinrichtungT30FehltComponent,
     SozialeEinrichtungT30FordernComponent,
-    SozialeEinrichtungT30SchilderDaComponent,
   ],
   imports: [
     BrowserModule,

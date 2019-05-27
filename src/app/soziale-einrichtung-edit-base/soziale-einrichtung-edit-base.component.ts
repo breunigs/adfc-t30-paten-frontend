@@ -7,7 +7,7 @@ import { OSM_TILE_LAYER_URL } from '@yaga/leaflet-ng2';
 import { T30SozialeEinrichtungService } from '../t30-soziale-einrichtung.service';
 import { StrassenlisteService } from '../strassenliste.service';
 import { SozialeEinrichtung } from '../sozialeEinrichtung';
-
+import { NotificationError } from '../notification-error';
 
 const HAMBURG_LAT = 53.551086;
 const HAMBURG_LON = 9.993682;
@@ -184,8 +184,40 @@ export abstract class SozialeEinrichtungEditBaseComponent  extends CanDeactivate
             this.router.navigate(['main']);
           });
         } else {
-              console.log('INVALID', this.einrichtung);
+          console.log('INVALID', this.einrichtung);
+          throw new NotificationError('Bitte Fehler korrigieren.');
         }
+      }
+      public onSaveAndFordern() {
+        console.log('saveAndFordern');
+        let valid = false;
+        let unsicher = false;
+        this.getStrassenAbschnitte().controls.forEach( abschnitt => {
+            if (abschnitt.get('status').value === '3') {
+              valid = true;
+            }
+            if (abschnitt.get('status').value === '1') {
+              unsicher = true;
+            }
+        });
+        console.log(valid);
+        if (!valid) {
+          throw new NotificationError('Bitte Straßenabschnitte angeben für die Tempo 30 fehlt.');
+        }
+        if (unsicher) {
+          throw new NotificationError('Bitte unklare Straßenabschnitte prüfen.');
+        }
+        this.einrichtung.get('id').setValue(this.id);
+          this.validateAllFormFields(this.einrichtung);
+          if (this.einrichtung.valid) {
+            this.sozService.save(new SozialeEinrichtung(this.einrichtung.value)).subscribe(results => {
+              this.router.navigate(['einrichtung', 't30fordern', this.id]);
+            });
+          } else {
+            console.log('INVALID', this.einrichtung);
+            throw new NotificationError('Bitte Fehler korrigieren.');
+            }
+
       }
     load(id) {
       this.id = id;

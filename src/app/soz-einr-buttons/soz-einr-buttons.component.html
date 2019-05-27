@@ -4,27 +4,11 @@
    matTooltip="Details ansehen"
    routerLink="/einrichtung/view/{{id}}"
    type="submit">
-  <mat-icon>domain</mat-icon>
+  <mat-icon>visibility</mat-icon> Details
 </button>
 <button
    mat-raised-button
-   *ngIf="(tempo30==0)"
-   matTooltip="Hier ist schon ausreichend Tempo 30."
-   routerLink="/einrichtung/t30okay/{{id}}"
-   type="submit">
-  <mat-icon>sentiment_satisfied_alt</mat-icon>
-</button>
-<button
-  mat-raised-button
-  *ngIf="(tempo30==0)"
-   matTooltip="Hier ist nicht ausreichend Tempo 30."
-   routerLink="/einrichtung/t30fehlt/{{id}}"
-   type="submit">
-  <mat-icon>sentiment_very_dissatisfied</mat-icon>
-</button>
-<button
-   mat-raised-button
-  *ngIf="(tempo30<2)"
+  *ngIf="(tempo30==1)"
   matTooltip="Ich möchte hier Tempo 30 fordern."
   routerLink="/einrichtung/t30fordern/{{id}}"
   type="submit">
@@ -33,17 +17,9 @@
   <mat-icon>sentiment_satisfied_alt</mat-icon>
 </button>
 <button
-  mat-raised-button
-  *ngIf="(tempo30==3)"
-  matTooltip="Die Tempo 30 Schilder sind aufgestellt."
-  routerLink="/einrichtung/t30schilder_da/{{id}}"
-  type="submit">
-  <mat-icon>sentiment_satisfied_alt</mat-icon>
-</button>
-<button
    mat-raised-button
    matTooltip="Einrichtung bearbeiten oder Fehler korrigieren"
    routerLink="/einrichtung/edit/{{id}}"
    type="submit">
-   <mat-icon>edit</mat-icon>
+   <mat-icon>edit</mat-icon> Bearbeiten
 </button>

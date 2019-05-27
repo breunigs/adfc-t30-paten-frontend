@@ -20,7 +20,7 @@
   </mat-form-field>
   <b>Adresse der Einrichtung</b>
   <mat-form-field class="t30-full-width">
-    <input matInput placeholder="Straße und Hausnummer" formControlName="strasse">
+    <input matInput placeholder="Straße und Hausnummer" autocomplete="false" formControlName="strasse">
   </mat-form-field>
   <mat-form-field class="t30-half-width">
     <input matInput placeholder="PLZ" formControlName="plz">
@@ -63,7 +63,7 @@
   <ul formArrayName="angrenzendeStrassen" *ngFor="let item of getStrassenAbschnitte().controls; let i = index;">
     <li [formGroupName]="i">
       <mat-form-field class="t30-half-width">
-        <input matInput placeholder="Straße" [matAutocomplete]="auto" (ngModelChange)="changeStrassenname($event)" formControlName="name">
+        <input matInput placeholder="Straße" [matAutocomplete]="auto" autocomplete="false" (ngModelChange)="changeStrassenname($event)" formControlName="name">
       </mat-form-field>
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngIf="isLoading" class="is-loading">
@@ -82,9 +82,10 @@
         <input matInput placeholder="bis Hausnummer" formControlName="bis">
       </mat-form-field>
       <mat-form-field class="t30-3-width">
-        <mat-select placeholder="Haupteingang" formControlName="haupteingang">
-          <mat-option value="1">Hier ist ein Haupteingang</mat-option>
-          <mat-option value="0">Kein Haupteingang</mat-option>
+        <mat-select placeholder="Forderungsgrund" formControlName="haupteingang">
+          <mat-option value="2">Haupteingang und An- und Abreiseverkehr</mat-option>
+          <mat-option value="1">Haupteingang</mat-option>
+          <mat-option value="0">An- und Abreiseverkehr</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="t30-3-width">
@@ -111,6 +112,17 @@
     <button mat-raised-button color="primary" (click)="onSave()">
       <mat-icon>save</mat-icon> Speichern
     </button>
+    <button mat-raised-button
+  matTooltip="Speichern und hier Tempo 30 fordern."
+  (click)="onSaveAndFordern()"
+  type="submit">
+  <mat-icon>save</mat-icon>
+  <mat-icon>arrow_forward</mat-icon>
+  <mat-icon>mail</mat-icon>
+  <mat-icon>arrow_forward</mat-icon>
+  <mat-icon>sentiment_satisfied_alt</mat-icon>
+  Tempo 30 fordern
+</button>
     <button mat-raised-button routerLink="/einrichtung/view/{{id}}">
       <mat-icon>undo</mat-icon> Änderungen verwerfen
     </button>
