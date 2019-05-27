@@ -20,7 +20,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class T30SozialeEinrichtungService {
-  baseUrl = environment.API_BASE_URL;
+  baseUrl = environment.API_STUB_BASE_URL;
 
   constructor(
     private http: HttpClient

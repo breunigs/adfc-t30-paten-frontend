@@ -90,17 +90,14 @@ export function tokenGetter() {
     MatTabsModule,
     YagaModule,
     HttpClientModule,
-<<<<<<< HEAD
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
         headerName: 'Access-Control-Allow-Credentials',
         whitelistedDomains: ['tools.adfc-hamburg.de'],
       }
-    })
-=======
+    }),
     MatTooltipModule,
->>>>>>> nav-with-tabs
   ],
   providers: [
     ErrorHandleService,

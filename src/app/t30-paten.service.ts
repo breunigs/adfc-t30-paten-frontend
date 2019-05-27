@@ -18,7 +18,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class T30PatenService {
-  baseUrl = environment.API_BASE_URL;
+  baseUrl = environment.API_STUB_BASE_URL;
 
   constructor(private http: HttpClient) {
   }
@@ -44,7 +44,7 @@ export class T30PatenService {
         }));
   }
   list() {
-    return this.http.get<any>(this.baseUrl + 'crud.php?entity=patenschaft', httpOptions)
+    return this.http.get<any>(this.baseUrl + 'pate-list.php', httpOptions)
       .pipe(
         map(res => {
           console.log('res', res);

@@ -5,7 +5,7 @@ import { User } from './user';
 
 @Injectable({ providedIn: 'root' })
 export class StrassenlisteService {
-  baseUrl = environment.API_BASE_URL;
+  baseUrl = environment.API_STUB_BASE_URL;
     constructor(private http: HttpClient) { }
 
     getAll() {
