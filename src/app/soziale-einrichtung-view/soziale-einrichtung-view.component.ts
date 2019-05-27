@@ -15,8 +15,15 @@ import { Point } from 'leaflet';
 export class SozialeEinrichtungViewComponent implements OnInit {
 
   id = -1;
-  public einrichtung = {
+  public einrichtung: any = {
     'name': '',
+    'zusatz': '',
+    'art': 0,
+    'strasse': '',
+    'plz': '',
+    'ort': '',
+    'id': -1,
+    'tempo30': 1,
   };
     lat = HAMBURG_LAT;
     lon = HAMBURG_LON;

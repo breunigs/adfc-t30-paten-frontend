@@ -7,7 +7,7 @@ Bitte setze  die entsprechenden Straßenabschnitte um
 <h3>Angrenzende Strassen</h3>
 <p>Bist du der Meinung, dass es mehr oder andere Straßen gibt für die Tempo 30 geprüft werden muss, klick unten auf bearbeiten.</p>
 <ul formArrayName="angrenzendeStrassen"
-  *ngFor="let item of einrichtung.controls.angrenzendeStrassen.controls; let i = index;">
+  *ngFor="let item of getStrassenAbschnitte().controls; let i = index;">
   <li [formGroupName]="i">
     {{ item.controls.name.value }}
   {{ item.controls.von.value }} bis

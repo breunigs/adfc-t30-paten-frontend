@@ -8,7 +8,7 @@
 <h3>Angrenzende Straßen</h3>
 <div [formGroup]="einrichtung">
 <ul formArrayName="angrenzendeStrassen"
-  *ngFor="let item of einrichtung.controls.angrenzendeStrassen.controls; let i = index;">
+  *ngFor="let item of getStrassenAbschnitte().controls; let i = index;">
   <li [formGroupName]="i">
     {{ item.controls.name.value }}
   {{ item.controls.von.value }} bis

@@ -1,13 +1,14 @@
 <h2>{{ einrichtung.controls.name.value }}</h2>
 
-FIXME: Hier kommt noch ein Text hin:  Tempo30 Okay
+<p>FIXME: Hier kommt noch ein Text hin:  Tempo30 Okay</p>
 
+<h2>Angrenzende Straßen</h2>
 Bitte setze  die entsprechenden Straßenabschnitte um
 <div [formGroup]="einrichtung">
-  {{ einrichtung.controls.angrenzendeStrassen.controls.length }}
+
 
 <ul formArrayName="angrenzendeStrassen"
-  *ngFor="let item of einrichtung.controls.angrenzendeStrassen.controls; let i = index;">
+  *ngFor="let item of getStrassenAbschnitte().controls; let i = index;">
   <li [formGroupName]="i">
     {{ item.controls.name.value }}
   {{ item.controls.von.value }} bis
@@ -24,7 +25,6 @@ Bitte setze  die entsprechenden Straßenabschnitte um
         <mat-option value="5">Tempo 30 wurde angeordnet, die Schilder stehen aber noch nicht</mat-option>
       </mat-select>
     </mat-form-field>
-
   </li>
 </ul>
 <hr>
