@@ -66,7 +66,7 @@ export abstract class SozialeEinrichtungEditBaseComponent  extends CanDeactivate
         });
     }
     constructor(
-      private fb: FormBuilder,
+      protected fb: FormBuilder,
       private router: Router,
       private route: ActivatedRoute,
       private sozService: T30SozialeEinrichtungService,
