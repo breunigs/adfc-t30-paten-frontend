@@ -4,5 +4,5 @@ node_js:
 addons:
   chrome: stable
 script:
-  - yarn run ng build
-  - yarn run ng test
+#  - yarn run ng build
+  - MACHINE_ID=$(cat /var/lib/dbus/machine-id) yarn run ng test
