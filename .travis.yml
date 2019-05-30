@@ -3,6 +3,8 @@ node_js:
   - '8'
 addons:
   chrome: stable
+before_install:
+  - sudo dbus-uuidgen > /etc/machine-id
 script:
 #  - yarn run ng build
-  - MACHINE_ID=$(cat /var/lib/dbus/machine-id) yarn run ng test
+  - yarn run ng test
