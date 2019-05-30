@@ -2,5 +2,5 @@ language: node_js
 node_js:
   - '8'
 script:
-  - npm run ng build
-  - npm run ng test
+  - yarn run ng build
+  - yarn run ng test
