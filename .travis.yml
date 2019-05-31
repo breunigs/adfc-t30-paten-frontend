@@ -5,7 +5,7 @@ addons:
   chrome: stable
 sudo: required
 before_install:
-  - sudo dbus-uuidgen > /etc/machine-id
+  - sudo dbus-uuidgen --ensure=/etc/machine-id
 script:
 #  - yarn run ng build
   - yarn run ng test
