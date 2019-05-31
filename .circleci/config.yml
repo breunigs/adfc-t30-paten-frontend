@@ -21,7 +21,7 @@ jobs:
           command: yarn ng -- build --prod --aot --no-progress
       - run:
           name: angular-test
-          command: yarn test -- --no-progress
+          command: yarn ng test -- --no-progress --browsers ChromeHeadless
       - store_artifacts:
           path: test-results.xml
           prefix: tests

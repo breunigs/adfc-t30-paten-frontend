@@ -8,4 +8,4 @@ before_install:
   - sudo dbus-uuidgen --ensure=/etc/machine-id
 script:
 #  - yarn run ng build
-  - yarn run ng test
+  - yarn run ng test --browsers ChromeHeadless
